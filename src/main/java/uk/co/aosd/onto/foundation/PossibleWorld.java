@@ -2,6 +2,6 @@ package uk.co.aosd.onto.foundation;
 
 import java.util.Set;
 
-public interface PossibleWorld extends Set<Object>, Individual {
-
+public interface PossibleWorld extends Individual {
+    Set<Object> members();
 }
