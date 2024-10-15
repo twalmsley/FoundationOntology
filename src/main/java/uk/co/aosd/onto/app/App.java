@@ -1,4 +1,4 @@
-package uk.co.aosd.onto;
+package uk.co.aosd.onto.app;
 
 /**
  *

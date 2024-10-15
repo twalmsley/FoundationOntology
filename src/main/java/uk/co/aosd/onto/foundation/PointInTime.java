@@ -2,6 +2,6 @@ package uk.co.aosd.onto.foundation;
 
 import java.time.Instant;
 
-public interface PointInTime {
-  Instant when();
+public interface PointInTime extends Event {
+    Instant when();
 }
