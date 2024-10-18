@@ -1,4 +1,4 @@
-package uk.co.aosd.onto.foundation;
+package uk.co.aosd.onto.temporal;
 
 public interface PeriodOfTime extends TemporallyBounded {
 
