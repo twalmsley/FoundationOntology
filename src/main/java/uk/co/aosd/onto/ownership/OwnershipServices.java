@@ -5,5 +5,7 @@ import uk.co.aosd.onto.temporal.Event;
 
 public interface OwnershipServices {
 
-    TransferringOfOwnership transfer(Owning from, Individual to, Event when);
+    Owning createOwning(Individual owned, Individual owner, Event when);
+
+    TransferringOfOwnership transfer(Owning from, Individual newOwner, Event when);
 }

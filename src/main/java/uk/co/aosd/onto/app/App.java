@@ -4,6 +4,7 @@ package uk.co.aosd.onto.app;
  *
  */
 public class App {
-  public static void main(String[] args) {
-  }
+
+    public static void main(final String[] args) {
+    }
 }
