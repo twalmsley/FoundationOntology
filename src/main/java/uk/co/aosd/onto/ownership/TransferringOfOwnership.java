@@ -1,8 +1,8 @@
 package uk.co.aosd.onto.ownership;
 
-import uk.co.aosd.onto.foundation.Individual;
+import uk.co.aosd.onto.foundation.Activity;
 
-public interface TransferringOfOwnership extends Individual {
+public interface TransferringOfOwnership extends Activity {
 
     Owning from();
 
