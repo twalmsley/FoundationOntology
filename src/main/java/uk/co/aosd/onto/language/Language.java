@@ -2,6 +2,9 @@ package uk.co.aosd.onto.language;
 
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 
+/**
+ * A language used for communication, which could be a human language, computer language, or any other language.
+ */
 public interface Language extends UniquelyIdentifiable {
 
     String name();

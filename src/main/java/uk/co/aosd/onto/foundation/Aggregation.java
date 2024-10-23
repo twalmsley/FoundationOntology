@@ -1,7 +1,8 @@
 package uk.co.aosd.onto.foundation;
 
-import java.util.Set;
-
-public interface Aggregation extends Individual {
-    Set<Object> members();
+/**
+ * A quantity of similar things, e.g. a pile of sand or a collection of water molecules in a glass of water.
+ */
+public interface Aggregation<T extends Number, U extends Unit> extends Individual {
+    ScalarValue<T, U> quantity();
 }

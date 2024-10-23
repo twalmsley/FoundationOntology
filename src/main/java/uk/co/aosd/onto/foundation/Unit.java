@@ -1,9 +1,8 @@
 package uk.co.aosd.onto.foundation;
 
 /**
- * 
+ * A unit of measure or quantity.
  */
-
 public interface Unit extends UniquelyIdentifiable  {
     String name();
 }

@@ -9,6 +9,9 @@ import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.signifying.Signifying;
 
+/**
+ * An example implementation of the Human interface. This may need to change.
+ */
 public record Person(
     String identifier,
     Optional<Event> beginning,
