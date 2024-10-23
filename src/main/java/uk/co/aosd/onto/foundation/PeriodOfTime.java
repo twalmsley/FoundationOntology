@@ -1,4 +1,4 @@
-package uk.co.aosd.onto.temporal;
+package uk.co.aosd.onto.foundation;
 
 /**
  * There are no PointInTime objects, there are only small time periods.
