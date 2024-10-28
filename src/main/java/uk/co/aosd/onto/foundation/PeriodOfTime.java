@@ -3,11 +3,11 @@ package uk.co.aosd.onto.foundation;
 /**
  * There are no PointInTime objects, there are only small time periods.
  */
-public interface PeriodOfTime extends TemporallyBounded {
+public interface PeriodOfTime<T extends Number, U extends Unit> extends TemporallyBounded {
     /**
-     * The duration in milliseconds.
+     * The duration.
      *
-     * @return long
+     * @return ScalarValue
      */
-    long duration();
+    ScalarValue<T, U> duration();
 }
