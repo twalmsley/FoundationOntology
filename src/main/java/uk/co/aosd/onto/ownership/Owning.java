@@ -2,13 +2,14 @@ package uk.co.aosd.onto.ownership;
 
 import uk.co.aosd.onto.foundation.Activity;
 import uk.co.aosd.onto.foundation.Individual;
+import uk.co.aosd.onto.foundation.Unit;
 
 /**
  * The activity of owning something.
  */
-public interface Owning extends Activity {
+public interface Owning<T extends Number, U extends Unit> extends Activity<T, U> {
 
-    Individual owner();
+    Individual<T, U> owner();
 
-    Individual owned();
+    Individual<T, U> owned();
 }

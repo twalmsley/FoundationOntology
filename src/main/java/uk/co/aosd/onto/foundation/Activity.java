@@ -3,7 +3,7 @@ package uk.co.aosd.onto.foundation;
 /**
  * An activity is a partially ordered set of actions.
  */
-public interface Activity extends Individual {
+public interface Activity<T extends Number, U extends Unit> extends Individual<T, U> {
 
     /**
      * A description of the actions that comprise activity.

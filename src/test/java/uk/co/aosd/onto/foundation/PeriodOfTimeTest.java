@@ -12,6 +12,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the PeriodOfTime class.
+ * 
+ * <p>
+ * Create a PeriodOfTime of OneDayInSeconds, bounded by two ParticularSeconds.
+ * </p>
  */
 public class PeriodOfTimeTest {
 
@@ -19,8 +23,7 @@ public class PeriodOfTimeTest {
     public void test() {
         final var now = Instant.now();
         final var from = new ParticularSecond(now);
-        final var to = new ParticularSecond(now.plusSeconds(OneDayInSeconds.oneDay.value()));
-        final var oneDayStartingNow = new OneDayInSeconds(from, to);
+        final var oneDayStartingNow = new OneDayInSeconds(from);
 
         assertNotNull(oneDayStartingNow.beginning());
         assertTrue(oneDayStartingNow.beginning().isPresent());
@@ -32,6 +35,9 @@ public class PeriodOfTimeTest {
     }
 }
 
+/**
+ * A particular 24-hour period beginning some time during a given second and ending 24 hours worth of seconds later.
+ */
 class OneDayInSeconds implements PeriodOfTime<Long, Seconds> {
 
     public static DurationInSeconds oneDay = new DurationInSeconds(Long.valueOf(3600 * 24));
@@ -46,19 +52,19 @@ class OneDayInSeconds implements PeriodOfTime<Long, Seconds> {
         return id;
     }
 
-    public OneDayInSeconds(final ParticularSecond from, final ParticularSecond to) {
+    public OneDayInSeconds(final ParticularSecond from) {
         this.from = from;
-        this.to = to;
+        this.to = new ParticularSecond(from.getWhen().plusSeconds(oneDay.value()));
         this.id = UUID.nameUUIDFromBytes((from.identifier() + to.identifier()).getBytes()).toString();
     }
 
     @Override
-    public Optional<Event> beginning() {
+    public Optional<Event<Long, Seconds>> beginning() {
         return Optional.ofNullable(from);
     }
 
     @Override
-    public Optional<Event> ending() {
+    public Optional<Event<Long, Seconds>> ending() {
         return Optional.ofNullable(to);
     }
 
@@ -69,7 +75,10 @@ class OneDayInSeconds implements PeriodOfTime<Long, Seconds> {
 
 }
 
-class ParticularSecond implements Event {
+/**
+ * An Event representing a particular second of time, represented as an Instant.
+ */
+class ParticularSecond implements Event<Long, Seconds> {
 
     private final String id;
 
@@ -92,12 +101,12 @@ class ParticularSecond implements Event {
     }
 
     @Override
-    public Optional<Event> beginning() {
+    public Optional<Event<Long, Seconds>> beginning() {
         return Optional.of(this);
     }
 
     @Override
-    public Optional<Event> ending() {
+    public Optional<Event<Long, Seconds>> ending() {
         return Optional.of(this);
     }
 
@@ -108,6 +117,9 @@ class ParticularSecond implements Event {
 
 }
 
+/**
+ * A number of seconds.
+ */
 class DurationInSeconds implements ScalarValue<Long, Seconds> {
 
     private final Long seconds;
@@ -128,6 +140,9 @@ class DurationInSeconds implements ScalarValue<Long, Seconds> {
 
 }
 
+/**
+ * The 'Seconds' unit of time.
+ */
 class Seconds implements Unit {
 
     public static final Seconds units = new Seconds();
