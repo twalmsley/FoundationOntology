@@ -6,9 +6,9 @@ package uk.co.aosd.onto.foundation;
 public interface Activity<T extends Number, U extends Unit> extends Individual<T, U> {
 
     /**
-     * A description of the actions that comprise activity.
+     * A description of the actions that comprise the activity.
      *
-     * @return String Could be modelled better at some point.
+     * @return String This will be modelled better at some point.
      */
     String actionsDescription();
 }
