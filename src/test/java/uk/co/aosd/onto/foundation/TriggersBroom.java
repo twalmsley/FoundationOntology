@@ -14,6 +14,16 @@ import org.junit.jupiter.api.Test;
  * a bracket to connect the handle to the head. In this example we construct a
  * broom and replace some or all of its parts.
  * </p>
+ *
+ * <p>
+ * The Broom class represents a composition of the BroomHandle and the
+ * BroomHeadWithBracketAssembly, which then also has nested parts. In this
+ * example the composition reflects the way the broom was constructed, but it is
+ * also possible to use a flatter structure in which the broom has the four
+ * parts as immediate child properties. In this second case it may be necessary
+ * to construct the broom in one go, or to make the parts Optional, however this
+ * would not capture the 4D aspects of the object relationships correctly.
+ * </p>
  */
 public class TriggersBroom {
 
