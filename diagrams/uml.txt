@@ -70,7 +70,7 @@ interface uk.co.aosd.onto.foundation.ScalarValue {
 
 
 interface uk.co.aosd.onto.foundation.State {
-	{method}  {abstract} +individual () : uk.co.aosd.onto.foundation.UniquelyIdentifiable
+	{method}  {abstract} +individual () : uk.co.aosd.onto.foundation.Individual
 }
 
 
