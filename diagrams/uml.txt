@@ -1,0 +1,156 @@
+@startuml
+
+interface uk.co.aosd.onto.biological.DNA {
+	{method}  {abstract} +dna () : String
+}
+
+
+interface uk.co.aosd.onto.biological.GenomicBiologicalEntity {
+	{method}  {abstract} +dna () : java.util.Optional
+}
+
+
+interface uk.co.aosd.onto.biological.Human {
+	{method}  {abstract} +languages () : uk.co.aosd.onto.foundation.Class
+	{method}  {abstract} +nativeLanguage () : uk.co.aosd.onto.language.Language
+}
+
+
+interface uk.co.aosd.onto.foundation.Activity {
+	{method}  {abstract} +actionsDescription () : String
+}
+
+
+interface uk.co.aosd.onto.foundation.Agglomerate {
+	{method}  {abstract} +members () : java.util.Set
+}
+
+
+interface uk.co.aosd.onto.foundation.Aggregation {
+	{method}  {abstract} +quantity () : uk.co.aosd.onto.foundation.ScalarValue
+}
+
+
+interface uk.co.aosd.onto.foundation.Class {
+	{method}  {abstract} +members () : java.util.Set
+}
+
+
+interface uk.co.aosd.onto.foundation.Event {
+}
+
+
+interface uk.co.aosd.onto.foundation.Individual {
+}
+
+
+interface uk.co.aosd.onto.foundation.PeriodOfTime {
+	{method}  {abstract} +duration () : uk.co.aosd.onto.foundation.ScalarValue
+}
+
+
+interface uk.co.aosd.onto.foundation.PossibleWorld {
+	{method}  {abstract} +members () : java.util.Set
+}
+
+
+interface uk.co.aosd.onto.foundation.Property {
+	{method}  {abstract} +property () : Object
+}
+
+
+interface uk.co.aosd.onto.foundation.ScalarProperty {
+}
+
+
+interface uk.co.aosd.onto.foundation.ScalarValue {
+	{method}  {abstract} +unit () : uk.co.aosd.onto.foundation.Unit
+	{method}  {abstract} +value () : Number
+}
+
+
+interface uk.co.aosd.onto.foundation.State {
+	{method}  {abstract} +individual () : uk.co.aosd.onto.foundation.UniquelyIdentifiable
+}
+
+
+interface uk.co.aosd.onto.foundation.TemporallyBounded {
+	{method}  {abstract} +beginning () : java.util.Optional
+	{method}  {abstract} +ending () : java.util.Optional
+}
+
+
+interface uk.co.aosd.onto.foundation.UniquelyIdentifiable {
+	{method}  {abstract} +identifier () : String
+}
+
+
+interface uk.co.aosd.onto.foundation.Unit {
+	{method}  {abstract} +name () : String
+}
+
+
+interface uk.co.aosd.onto.language.Language {
+	{method}  {abstract} +name () : String
+}
+
+
+interface uk.co.aosd.onto.organisation.Organisation {
+}
+
+
+interface uk.co.aosd.onto.ownership.Owning {
+	{method}  {abstract} +owned () : uk.co.aosd.onto.foundation.Individual
+	{method}  {abstract} +owner () : uk.co.aosd.onto.foundation.Individual
+}
+
+
+interface uk.co.aosd.onto.ownership.TransferringOfOwnership {
+	{method}  {abstract} +from () : uk.co.aosd.onto.ownership.Owning
+	{method}  {abstract} +to () : uk.co.aosd.onto.ownership.Owning
+}
+
+
+interface uk.co.aosd.onto.signifying.Named {
+	{method}  {abstract} +names () : uk.co.aosd.onto.foundation.Class
+}
+
+
+interface uk.co.aosd.onto.signifying.Signifying {
+	{method}  {abstract} +name () : Object
+	{method}  {abstract} +named () : uk.co.aosd.onto.foundation.UniquelyIdentifiable
+}
+
+
+
+
+uk.co.aosd.onto.biological.GenomicBiologicalEntity ..|>  uk.co.aosd.onto.foundation.Individual
+uk.co.aosd.onto.biological.Human ..|>  uk.co.aosd.onto.biological.GenomicBiologicalEntity
+uk.co.aosd.onto.biological.Human ..|>  uk.co.aosd.onto.signifying.Named
+uk.co.aosd.onto.foundation.Activity ..|>  uk.co.aosd.onto.foundation.Individual
+uk.co.aosd.onto.foundation.Agglomerate ..|>  uk.co.aosd.onto.foundation.Individual
+uk.co.aosd.onto.foundation.Aggregation ..|>  uk.co.aosd.onto.foundation.Individual
+uk.co.aosd.onto.foundation.Class ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
+uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.PeriodOfTime
+uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
+uk.co.aosd.onto.foundation.Individual ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
+uk.co.aosd.onto.foundation.Individual ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
+uk.co.aosd.onto.foundation.PeriodOfTime ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
+uk.co.aosd.onto.foundation.PossibleWorld ..|>  uk.co.aosd.onto.foundation.Individual
+uk.co.aosd.onto.foundation.Property ..|>  uk.co.aosd.onto.foundation.Class
+uk.co.aosd.onto.foundation.ScalarProperty ..|>  uk.co.aosd.onto.foundation.Property
+uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
+uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
+uk.co.aosd.onto.foundation.Unit ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
+uk.co.aosd.onto.language.Language ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
+uk.co.aosd.onto.organisation.Organisation ..|>  uk.co.aosd.onto.foundation.Individual
+uk.co.aosd.onto.organisation.Organisation ..|>  uk.co.aosd.onto.signifying.Named
+uk.co.aosd.onto.ownership.Owning ..|>  uk.co.aosd.onto.foundation.Activity
+uk.co.aosd.onto.ownership.TransferringOfOwnership ..|>  uk.co.aosd.onto.foundation.Activity
+uk.co.aosd.onto.signifying.Signifying ..|>  uk.co.aosd.onto.foundation.Activity
+
+hide fields
+hide methods
+hide null
+
+@enduml

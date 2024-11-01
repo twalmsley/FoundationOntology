@@ -1,38 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>uk.co.aosd.onto</groupId>
-  <artifactId>functional-ontology</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+    <groupId>uk.co.aosd.onto</groupId>
+    <artifactId>functional-ontology</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
-  <name>functional-ontology</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+    <name>functional-ontology</name>
+    <!-- FIXME change it to the project's website -->
+    <url>http://www.example.com</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>22</maven.compiler.source>
-    <maven.compiler.target>22</maven.compiler.target>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>22</maven.compiler.source>
+        <maven.compiler.target>22</maven.compiler.target>
+    </properties>
 
-  <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-    <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>5.11.0</version>
-        <scope>test</scope>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.11.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-  <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
+    <build>
+        <pluginManagement>            <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <plugins>
 
-      </plugins>
-    </pluginManagement>
-  </build>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <artifactId>plantuml-generator-maven-plugin</artifactId>
+                <groupId>de.elnarion.maven</groupId>
+                <version>2.4.1</version>
+                <executions>
+                    <execution>
+                        <id>generate-simple-diagram</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-test-sources</phase>
+                        <configuration>
+                            <outputDirectory>./diagrams</outputDirectory>
+                            <outputFilename>uml.txt</outputFilename>
+                            <scanPackages>
+                                <scanPackage>
+				uk.co.aosd.onto.biological
+                                </scanPackage>
+                                <scanPackage>
+				uk.co.aosd.onto.foundation
+                                </scanPackage>
+                                <scanPackage>
+				uk.co.aosd.onto.language
+                                </scanPackage>
+                                <scanPackage>
+				uk.co.aosd.onto.organisation
+                                </scanPackage>
+                                <scanPackage>
+				uk.co.aosd.onto.ownership
+                                </scanPackage>
+                                <scanPackage>
+				uk.co.aosd.onto.signifying
+                                </scanPackage>
+                            </scanPackages>
+                            <hideFields>true</hideFields>
+                            <hideMethods>true</hideMethods>
+                            <hideClasses>
+                                <hideClass>
+                                </hideClass>
+                            </hideClasses>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
