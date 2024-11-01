@@ -12,6 +12,8 @@ import uk.co.aosd.onto.signifying.Signifying;
 
 /**
  * An example implementation of the Human interface. This may need to change.
+ *
+ * @author Tony Walmsley
  */
 public record Person<T extends Number, U extends Unit>(
     String identifier,

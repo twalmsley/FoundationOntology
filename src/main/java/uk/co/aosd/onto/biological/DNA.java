@@ -2,6 +2,8 @@ package uk.co.aosd.onto.biological;
 
 /**
  * DeoxyRibonucleic Acid sequence for an organism.
+ *
+ * @author Tony Walmsley
  */
 public interface DNA {
     /**

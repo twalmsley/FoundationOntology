@@ -6,6 +6,8 @@ import uk.co.aosd.onto.foundation.Unit;
 
 /**
  * The activity of owning something.
+ *
+ * @author Tony Walmsley
  */
 public interface Owning<T extends Number, U extends Unit> extends Activity<T, U> {
 

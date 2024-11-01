@@ -7,6 +7,8 @@ import uk.co.aosd.onto.foundation.Unit;
 
 /**
  * A living thing or a dead thing with intact DNA.
+ *
+ * @author Tony Walmsley
  */
 public interface GenomicBiologicalEntity<T extends Number, U extends Unit> extends Individual<T, U> {
 

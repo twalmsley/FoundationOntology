@@ -5,6 +5,8 @@ import uk.co.aosd.onto.foundation.Unit;
 
 /**
  * The activity of transferring ownership of something.
+ *
+ * @author Tony Walmsley
  */
 public interface TransferringOfOwnership<T extends Number, U extends Unit> extends Activity<T, U> {
 

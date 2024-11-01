@@ -24,6 +24,8 @@ import org.junit.jupiter.api.Test;
  * to construct the broom in one go, or to make the parts Optional, however this
  * would not capture the 4D aspects of the object relationships correctly.
  * </p>
+ *
+ * @author Tony Walmsley
  */
 public class TriggersBroom {
 

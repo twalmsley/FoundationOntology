@@ -2,6 +2,8 @@ package uk.co.aosd.onto.foundation;
 
 /**
  * An activity is a partially ordered set of actions.
+ *
+ * @author Tony Walmsley
  */
 public interface Activity<T extends Number, U extends Unit> extends Individual<T, U> {
 

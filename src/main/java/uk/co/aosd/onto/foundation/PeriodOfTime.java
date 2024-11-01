@@ -2,6 +2,8 @@ package uk.co.aosd.onto.foundation;
 
 /**
  * There are no PointInTime objects, there are only small time periods.
+ *
+ * @author Tony Walmsley
  */
 public interface PeriodOfTime<T extends Number, U extends Unit> extends TemporallyBounded<T, U> {
     /**

@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
  * <p>
  * Create a PeriodOfTime of OneDayInSeconds, bounded by two ParticularSeconds.
  * </p>
+ *
+ * @author Tony Walmsley
  */
 public class PeriodOfTimeTest {
 

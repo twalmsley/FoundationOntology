@@ -7,6 +7,8 @@ import uk.co.aosd.onto.signifying.Named;
 
 /**
  * Distinguishing characteristics of Humans.
+ *
+ * @author Tony Walmsley
  */
 public interface Human<T extends Number, U extends Unit> extends Named<T, U>, GenomicBiologicalEntity<T, U> {
 
