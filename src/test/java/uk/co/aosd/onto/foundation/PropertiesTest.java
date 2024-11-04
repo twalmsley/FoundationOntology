@@ -1,12 +1,16 @@
 package uk.co.aosd.onto.foundation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.awt.Color;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +29,7 @@ public class PropertiesTest {
     @Test
     public void testUsingStates() {
         final var car1 = new Car("car1", LIFE_START, UNKNOWN_END);
-        final var carState1 = new StateOfCar("carState1", car1, LIFE_START, UNKNOWN_END); // This would have temporal bounds.
+        final var carState1 = new StateOfCar("carState1", car1, LIFE_START, UNKNOWN_END);
         final var redCars = new ColouredCars("redCars", Color.RED, Set.of(carState1));
 
         assertSame(car1, redCars.members().iterator().next().individual());
@@ -40,6 +44,38 @@ public class PropertiesTest {
         final var car1IsRed = new ColouredCar(car1, Color.RED, LIFE_START, UNKNOWN_END);
 
         assertSame(car1, car1IsRed.individual());
+    }
+
+    /**
+     * Demonstrate the Property/Attribute isomorphism.
+     */
+    @Test
+    public void isomorphism() {
+        final var car1 = new Car("car1", LIFE_START, UNKNOWN_END);
+        final var carState1 = new StateOfCar("carState1", car1, LIFE_START, UNKNOWN_END);
+        final var redCars = new ColouredCars("redCars", Color.RED, Set.of(carState1));
+
+        // Convert the ColouredCars property into a list of ColouredCar Attributes
+        final List<ColouredCar> attributes = redCars
+            .members()
+            .stream()
+            .map(state -> {
+                return new ColouredCar(state.individual(), redCars.property(), state.beginning(), state.ending());
+            }).toList();
+
+        // Convert the list of ColouredCar Attributes into a Property
+        final ColouredCars redCars2 = new ColouredCars(
+            "redCars2",
+            Color.RED,
+            attributes
+                .stream()
+                .map(attr -> {
+                    return new StateOfCar(UUID.randomUUID().toString(), attr.individual(), attr.beginning(),
+                        attr.ending());
+                }).collect(Collectors.toSet()));
+
+        // Apart from the IDs, redCars and redCars2 will be identical
+        assertEquals(redCars.members().size(), redCars2.members().size());
     }
 }
 
