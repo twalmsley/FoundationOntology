@@ -6,7 +6,7 @@ package uk.co.aosd.onto.foundation;
  * @author Tony Walmsley
  */
 public interface Attribute<I extends Individual, P>
-    extends PeriodOfTime {
+    extends TemporallyBounded {
 
     I individual();
 

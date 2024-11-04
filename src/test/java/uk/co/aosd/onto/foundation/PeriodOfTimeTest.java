@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,9 +23,8 @@ public class PeriodOfTimeTest {
 
     @Test
     public void test() {
-        final var now = Instant.now();
-        final var from = new ParticularSecond(now);
-        final var oneDayStartingNow = new OneDayInSeconds(from);
+        final var from = Instant.now();
+        final var oneDayStartingNow = new OneDay(Optional.of(from));
 
         assertNotNull(oneDayStartingNow.beginning());
         assertTrue(oneDayStartingNow.beginning().isPresent());
@@ -42,79 +40,18 @@ public class PeriodOfTimeTest {
  * A particular 24-hour period beginning some time during a given second and
  * ending 24 hours worth of seconds later.
  */
-class OneDayInSeconds implements PeriodOfTime {
+record OneDay(Optional<Instant> beginning) implements PeriodOfTime {
 
     public static Duration oneDay = Duration.ofSeconds(3600 * 24);
-
-    private final ParticularSecond from;
-
-    private final ParticularSecond to;
-
-    private final String id;
-
-    public String getId() {
-        return id;
-    }
-
-    public OneDayInSeconds(final ParticularSecond from) {
-        this.from = from;
-        this.to = new ParticularSecond(from.getWhen().plusSeconds(3600 * 24));
-        this.id = UUID.nameUUIDFromBytes((from.identifier() + to.identifier()).getBytes()).toString();
-    }
-
-    @Override
-    public Optional<Event> beginning() {
-        return Optional.ofNullable(from);
-    }
-
-    @Override
-    public Optional<Event> ending() {
-        return Optional.ofNullable(to);
-    }
 
     @Override
     public Duration duration() {
         return oneDay;
     }
 
-}
-
-/**
- * An Event representing a particular second of time, represented as an Instant.
- */
-class ParticularSecond implements Event {
-
-    private final String id;
-
-    private final Instant when;
-
-    public Instant getWhen() {
-        return when;
-    }
-
-    public ParticularSecond(final Instant when) {
-        this.when = when;
-        id = UUID.nameUUIDFromBytes(when.toString().getBytes()).toString();
-    }
-
     @Override
-    public Duration duration() {
-        return Duration.ofSeconds(1L);
-    }
-
-    @Override
-    public Optional<Event> beginning() {
-        return Optional.of(this);
-    }
-
-    @Override
-    public Optional<Event> ending() {
-        return Optional.of(this);
-    }
-
-    @Override
-    public String identifier() {
-        return id;
+    public Optional<Instant> ending() {
+        return beginning.map(from -> from.plus(oneDay));
     }
 
 }

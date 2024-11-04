@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.foundation;
 
+import java.time.Instant;
 import java.util.Optional;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Optional;
  * @author Tony Walmsley
  */
 public interface TemporallyBounded {
-    Optional<Event> beginning();
+    Optional<Instant> beginning();
 
-    Optional<Event> ending();
+    Optional<Instant> ending();
 }

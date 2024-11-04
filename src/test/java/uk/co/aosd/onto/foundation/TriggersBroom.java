@@ -2,6 +2,7 @@ package uk.co.aosd.onto.foundation;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
+import java.time.Instant;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,10 @@ public class TriggersBroom {
     private static final String BROOM_HEAD_ASSEMBLY_1_ID = "Broom Head Assembly 1";
     private static final String BROOM_HEAD_WITH_BRACKET_ASSEMBLY_1_ID = "Broom Head Assembly With Bracket 1";
     private static final String BROOM_1_ID = "Broom 1";
+    private static final Optional<Instant> LIFE_START = Optional.of(Instant.parse("2024-01-01T12:00:00.00Z"));
+    private static final Optional<Instant> UNKNOWN_END = Optional.empty();
+    private static final Optional<Instant> ASSEMBLY_START = Optional.of(Instant.parse("2024-11-01T12:00:00.00Z"));
+    private static final Optional<Instant> ASSEMBLY_END = Optional.empty();
 
     @Test
     public void test() {
@@ -42,34 +47,36 @@ public class TriggersBroom {
         // Create the parts (ignoring their beginning and ending events to keep the
         // example simple).
         //
-        final var broomHandle = new BroomHandle(BROOM_HANDLE_1_ID);
-        final var broomHead = new BroomHead(BROOM_HEAD_1_ID);
-        final var bristles = new Bristles(BRISTLES_1_ID);
-        final var broomBracket = new BroomBracket(BROOM_BRACKET_1_ID);
+        final var broomHandle = new BroomHandle(BROOM_HANDLE_1_ID, LIFE_START, UNKNOWN_END);
+        final var broomHead = new BroomHead(BROOM_HEAD_1_ID, LIFE_START, UNKNOWN_END);
+        final var bristles = new Bristles(BRISTLES_1_ID, LIFE_START, UNKNOWN_END);
+        final var broomBracket = new BroomBracket(BROOM_BRACKET_1_ID, LIFE_START, UNKNOWN_END);
 
         //
         // Fit the bristles in the head.
         //
-        final var broomHeadAssembly = fitBristles(BROOM_HEAD_ASSEMBLY_1_ID, broomHead, bristles);
+        final var broomHeadAssembly = fitBristles(BROOM_HEAD_ASSEMBLY_1_ID, broomHead, bristles, ASSEMBLY_START,
+            ASSEMBLY_END);
 
         //
         // Attach the bracket to the head.
         //
         final var broomHeadWithBracketAssembly = fitBracket(BROOM_HEAD_WITH_BRACKET_ASSEMBLY_1_ID, broomHeadAssembly,
-            broomBracket);
+            broomBracket, ASSEMBLY_START, ASSEMBLY_END);
 
         //
         // Attach the handle to the bracket to complete the broom.
         //
-        final var broom = fitHandle(BROOM_1_ID, broomHandle, broomHeadWithBracketAssembly);
+        final var broom = fitHandle(BROOM_1_ID, broomHandle, broomHeadWithBracketAssembly, ASSEMBLY_START,
+            ASSEMBLY_END);
 
         //
         // Check the composition is correct.
         //
-        assertSame(broom.getHandle(), broomHandle);
-        assertSame(broom.getHeadWithBracketAssembly().getBracket(), broomBracket);
-        assertSame(broom.getHeadWithBracketAssembly().getHeadAssembly().getBristles(), bristles);
-        assertSame(broom.getHeadWithBracketAssembly().getHeadAssembly().getHead(), broomHead);
+        assertSame(broom.handle(), broomHandle);
+        assertSame(broom.headWithBracketAssembly().bracket(), broomBracket);
+        assertSame(broom.headWithBracketAssembly().headAssembly().bristles(), bristles);
+        assertSame(broom.headWithBracketAssembly().headAssembly().head(), broomHead);
     }
 
     /**
@@ -85,8 +92,9 @@ public class TriggersBroom {
      * @return Broom
      */
     private Broom fitHandle(final String id, final BroomHandle broomHandle,
-        final BroomHeadWithBracketAssembly broomHeadWithBracketAssembly) {
-        return new Broom(id, broomHandle, broomHeadWithBracketAssembly);
+        final BroomHeadWithBracketAssembly broomHeadWithBracketAssembly, final Optional<Instant> beginning,
+        final Optional<Instant> ending) {
+        return new Broom(id, broomHandle, broomHeadWithBracketAssembly, beginning, ending);
     }
 
     /**
@@ -101,8 +109,8 @@ public class TriggersBroom {
      * @return BroomHeadWithBracketAssembly
      */
     private static BroomHeadWithBracketAssembly fitBracket(final String id, final BroomHeadAssembly broomHeadAssembly,
-        final BroomBracket broomBracket) {
-        return new BroomHeadWithBracketAssembly(id, broomHeadAssembly, broomBracket);
+        final BroomBracket broomBracket, final Optional<Instant> beginning, final Optional<Instant> ending) {
+        return new BroomHeadWithBracketAssembly(id, broomHeadAssembly, broomBracket, beginning, ending);
     }
 
     /**
@@ -117,227 +125,36 @@ public class TriggersBroom {
      *            Bristles
      * @return BroomHeadAssembly
      */
-    private static BroomHeadAssembly fitBristles(final String id, final BroomHead head, final Bristles bristles) {
-        return new BroomHeadAssembly(id, head, bristles);
+    private static BroomHeadAssembly fitBristles(final String id, final BroomHead head, final Bristles bristles,
+        final Optional<Instant> beginning, final Optional<Instant> ending) {
+        return new BroomHeadAssembly(id, head, bristles, beginning, ending);
     }
 
 }
 
-class Broom implements Individual {
-
-    private final String id;
-
-    private final BroomHandle handle;
-
-    private final BroomHeadWithBracketAssembly headWithBracketAssembly;
-
-    public Broom(final String id, final BroomHandle handle,
-        final BroomHeadWithBracketAssembly headWithBracketAssembly) {
-        this.id = id;
-        this.handle = handle;
-        this.headWithBracketAssembly = headWithBracketAssembly;
-    }
-
-    public BroomHandle getHandle() {
-        return handle;
-    }
-
-    public BroomHeadWithBracketAssembly getHeadWithBracketAssembly() {
-        return headWithBracketAssembly;
-    }
-
-    @Override
-    public Optional<Event> beginning() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Event> ending() {
-        return Optional.empty();
-    }
-
-    @Override
-    public String identifier() {
-        return id;
-    }
-
+record Broom(String identifier, BroomHandle handle, BroomHeadWithBracketAssembly headWithBracketAssembly,
+    Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
 }
 
-class BroomHeadAssembly implements Individual {
-
-    private final String id;
-
-    private final BroomHead head;
-
-    private final Bristles bristles;
-
-    public BroomHeadAssembly(final String id, final BroomHead head, final Bristles bristles) {
-        this.id = id;
-        this.head = head;
-        this.bristles = bristles;
-    }
-
-    public BroomHead getHead() {
-        return head;
-    }
-
-    public Bristles getBristles() {
-        return bristles;
-    }
-
-    @Override
-    public Optional<Event> beginning() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Event> ending() {
-        return Optional.empty();
-    }
-
-    @Override
-    public String identifier() {
-        return id;
-    }
-
+record BroomHeadAssembly(String identifier, BroomHead head, Bristles bristles, Optional<Instant> beginning,
+    Optional<Instant> ending) implements Individual {
 }
 
-class BroomHeadWithBracketAssembly implements Individual {
-
-    private final String id;
-
-    private final BroomHeadAssembly headAssembly;
-
-    private final BroomBracket bracket;
-
-    public BroomHeadWithBracketAssembly(final String id, final BroomHeadAssembly headAssembly,
-        final BroomBracket bracket) {
-        this.id = id;
-        this.headAssembly = headAssembly;
-        this.bracket = bracket;
-    }
-
-    public BroomHeadAssembly getHeadAssembly() {
-        return headAssembly;
-    }
-
-    public BroomBracket getBracket() {
-        return bracket;
-    }
-
-    @Override
-    public Optional<Event> beginning() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Event> ending() {
-        return Optional.empty();
-    }
-
-    @Override
-    public String identifier() {
-        return id;
-    }
-
+record BroomHeadWithBracketAssembly(String identifier, BroomHeadAssembly headAssembly, BroomBracket bracket,
+    Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
 }
 
-class BroomHandle implements Individual {
-
-    private final String id;
-
-    public BroomHandle(final String id) {
-        this.id = id;
-    }
-
-    @Override
-    public Optional<Event> beginning() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Event> ending() {
-        return Optional.empty();
-    }
-
-    @Override
-    public String identifier() {
-        return id;
-    }
-
+record BroomHandle(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
 }
 
-class BroomHead implements Individual {
-
-    private final String id;
-
-    public BroomHead(final String id) {
-        this.id = id;
-    }
-
-    @Override
-    public Optional<Event> beginning() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Event> ending() {
-        return Optional.empty();
-    }
-
-    @Override
-    public String identifier() {
-        return id;
-    }
-
+record BroomHead(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
 }
 
-class Bristles implements Individual {
-
-    private final String id;
-
-    public Bristles(final String id) {
-        this.id = id;
-    }
-
-    @Override
-    public Optional<Event> beginning() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Event> ending() {
-        return Optional.empty();
-    }
-
-    @Override
-    public String identifier() {
-        return id;
-    }
-
+record Bristles(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
 }
 
-class BroomBracket implements Individual {
+record BroomBracket(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+}
 
-    private final String id;
-
-    public BroomBracket(final String id) {
-        this.id = id;
-    }
-
-    @Override
-    public Optional<Event> beginning() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Event> ending() {
-        return Optional.empty();
-    }
-
-    @Override
-    public String identifier() {
-        return id;
-    }
-
+record Lifetime(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Event {
 }
