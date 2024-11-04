@@ -6,7 +6,6 @@ import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
 import uk.co.aosd.onto.foundation.Class;
 import uk.co.aosd.onto.foundation.Event;
-import uk.co.aosd.onto.foundation.Unit;
 import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.signifying.Signifying;
 
@@ -15,13 +14,13 @@ import uk.co.aosd.onto.signifying.Signifying;
  *
  * @author Tony Walmsley
  */
-public record Person<T extends Number, U extends Unit>(
+public record Person(
     String identifier,
-    Optional<Event<T, U>> beginning,
-    Optional<Event<T, U>> ending,
-    Class<Signifying<T, U, String>> names,
+    Optional<Event> beginning,
+    Optional<Event> ending,
+    Class<Signifying<String>> names,
     Language nativeLanguage,
     Class<Language> languages,
-    Optional<DNA> dna) implements Human<T, U> {
+    Optional<DNA> dna) implements Human {
 
 }

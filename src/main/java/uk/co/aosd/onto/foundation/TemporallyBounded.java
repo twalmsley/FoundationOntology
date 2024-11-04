@@ -7,8 +7,8 @@ import java.util.Optional;
  *
  * @author Tony Walmsley
  */
-public interface TemporallyBounded<T extends Number, U extends Unit> {
-    Optional<Event<T, U>> beginning();
+public interface TemporallyBounded {
+    Optional<Event> beginning();
 
-    Optional<Event<T, U>> ending();
+    Optional<Event> ending();
 }

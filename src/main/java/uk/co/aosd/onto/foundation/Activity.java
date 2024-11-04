@@ -5,7 +5,7 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface Activity<T extends Number, U extends Unit> extends Individual<T, U> {
+public interface Activity extends Individual {
 
     /**
      * A description of the actions that comprise the activity.

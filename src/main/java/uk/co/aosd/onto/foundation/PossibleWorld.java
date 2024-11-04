@@ -8,6 +8,6 @@ import java.util.Set;
  *
  * @author Tony Walmsley
  */
-public interface PossibleWorld<T extends Number, U extends Unit> extends Individual<T, U> {
-    Set<Individual<T, U>> members();
+public interface PossibleWorld extends Individual {
+    Set<Individual> members();
 }

@@ -5,6 +5,6 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface State<T extends Number, U extends Unit, V extends Individual<T, U>> extends TemporallyBounded<T, U>, UniquelyIdentifiable {
+public interface State<V extends Individual> extends PeriodOfTime, UniquelyIdentifiable {
     V individual();
 }

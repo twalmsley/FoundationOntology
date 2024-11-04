@@ -3,7 +3,6 @@ package uk.co.aosd.onto.foundation;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
@@ -124,7 +123,7 @@ public class TriggersBroom {
 
 }
 
-class Broom implements Individual<Integer, Days> {
+class Broom implements Individual {
 
     private final String id;
 
@@ -148,12 +147,12 @@ class Broom implements Individual<Integer, Days> {
     }
 
     @Override
-    public Optional<Event<Integer, Days>> beginning() {
+    public Optional<Event> beginning() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Event<Integer, Days>> ending() {
+    public Optional<Event> ending() {
         return Optional.empty();
     }
 
@@ -164,7 +163,7 @@ class Broom implements Individual<Integer, Days> {
 
 }
 
-class BroomHeadAssembly implements Individual<Integer, Days> {
+class BroomHeadAssembly implements Individual {
 
     private final String id;
 
@@ -187,12 +186,12 @@ class BroomHeadAssembly implements Individual<Integer, Days> {
     }
 
     @Override
-    public Optional<Event<Integer, Days>> beginning() {
+    public Optional<Event> beginning() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Event<Integer, Days>> ending() {
+    public Optional<Event> ending() {
         return Optional.empty();
     }
 
@@ -203,7 +202,7 @@ class BroomHeadAssembly implements Individual<Integer, Days> {
 
 }
 
-class BroomHeadWithBracketAssembly implements Individual<Integer, Days> {
+class BroomHeadWithBracketAssembly implements Individual {
 
     private final String id;
 
@@ -227,12 +226,12 @@ class BroomHeadWithBracketAssembly implements Individual<Integer, Days> {
     }
 
     @Override
-    public Optional<Event<Integer, Days>> beginning() {
+    public Optional<Event> beginning() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Event<Integer, Days>> ending() {
+    public Optional<Event> ending() {
         return Optional.empty();
     }
 
@@ -243,7 +242,7 @@ class BroomHeadWithBracketAssembly implements Individual<Integer, Days> {
 
 }
 
-class BroomHandle implements Individual<Integer, Days> {
+class BroomHandle implements Individual {
 
     private final String id;
 
@@ -252,12 +251,12 @@ class BroomHandle implements Individual<Integer, Days> {
     }
 
     @Override
-    public Optional<Event<Integer, Days>> beginning() {
+    public Optional<Event> beginning() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Event<Integer, Days>> ending() {
+    public Optional<Event> ending() {
         return Optional.empty();
     }
 
@@ -268,7 +267,7 @@ class BroomHandle implements Individual<Integer, Days> {
 
 }
 
-class BroomHead implements Individual<Integer, Days> {
+class BroomHead implements Individual {
 
     private final String id;
 
@@ -277,12 +276,12 @@ class BroomHead implements Individual<Integer, Days> {
     }
 
     @Override
-    public Optional<Event<Integer, Days>> beginning() {
+    public Optional<Event> beginning() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Event<Integer, Days>> ending() {
+    public Optional<Event> ending() {
         return Optional.empty();
     }
 
@@ -293,7 +292,7 @@ class BroomHead implements Individual<Integer, Days> {
 
 }
 
-class Bristles implements Individual<Integer, Days> {
+class Bristles implements Individual {
 
     private final String id;
 
@@ -302,12 +301,12 @@ class Bristles implements Individual<Integer, Days> {
     }
 
     @Override
-    public Optional<Event<Integer, Days>> beginning() {
+    public Optional<Event> beginning() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Event<Integer, Days>> ending() {
+    public Optional<Event> ending() {
         return Optional.empty();
     }
 
@@ -318,7 +317,7 @@ class Bristles implements Individual<Integer, Days> {
 
 }
 
-class BroomBracket implements Individual<Integer, Days> {
+class BroomBracket implements Individual {
 
     private final String id;
 
@@ -327,42 +326,18 @@ class BroomBracket implements Individual<Integer, Days> {
     }
 
     @Override
-    public Optional<Event<Integer, Days>> beginning() {
+    public Optional<Event> beginning() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Event<Integer, Days>> ending() {
+    public Optional<Event> ending() {
         return Optional.empty();
     }
 
     @Override
     public String identifier() {
         return id;
-    }
-
-}
-
-/**
- * The 'Days' unit of time.
- */
-class Days implements Unit {
-
-    public static final Days units = new Days();
-
-    private final String id = UUID.nameUUIDFromBytes("Days".getBytes()).toString();
-
-    private Days() {
-    }
-
-    @Override
-    public String identifier() {
-        return id;
-    }
-
-    @Override
-    public String name() {
-        return "Days";
     }
 
 }

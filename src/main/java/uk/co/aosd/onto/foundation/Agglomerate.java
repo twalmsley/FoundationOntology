@@ -8,6 +8,6 @@ import java.util.Set;
  *
  * @author Tony Walmsley
  */
-public interface Agglomerate<T extends Number, U extends Unit> extends Individual<T, U> {
-    Set<Individual<T, U>> members();
+public interface Agglomerate extends Individual {
+    Set<Individual> members();
 }

@@ -6,6 +6,6 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface Individual<T extends Number, U extends Unit> extends TemporallyBounded<T, U>, UniquelyIdentifiable {
+public interface Individual extends TemporallyBounded, UniquelyIdentifiable {
 
 }

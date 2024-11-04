@@ -1,16 +1,15 @@
 package uk.co.aosd.onto.ownership;
 
 import uk.co.aosd.onto.foundation.Activity;
-import uk.co.aosd.onto.foundation.Unit;
 
 /**
  * The activity of transferring ownership of something.
  *
  * @author Tony Walmsley
  */
-public interface TransferringOfOwnership<T extends Number, U extends Unit> extends Activity<T, U> {
+public interface TransferringOfOwnership extends Activity {
 
-    Owning<T, U> from();
+    Owning from();
 
-    Owning<T, U> to();
+    Owning to();
 }

@@ -5,7 +5,7 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface Event<T extends Number, U extends Unit> extends PeriodOfTime<T, U>, UniquelyIdentifiable {
+public interface Event extends PeriodOfTime, UniquelyIdentifiable {
 
 }
 
