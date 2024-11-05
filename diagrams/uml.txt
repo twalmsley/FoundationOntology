@@ -101,8 +101,22 @@ interface uk.co.aosd.onto.language.Language {
 }
 
 
+interface uk.co.aosd.onto.organisation.Employment {
+	{method}  {abstract} +contract () : java.util.Optional
+	{method}  {abstract} +employee () : uk.co.aosd.onto.biological.Human
+	{method}  {abstract} +employer () : uk.co.aosd.onto.organisation.Organisation
+}
+
+
+interface uk.co.aosd.onto.organisation.Membership {
+	{method}  {abstract} +member () : uk.co.aosd.onto.biological.Human
+}
+
+
 interface uk.co.aosd.onto.organisation.Organisation {
+	{method}  {abstract} +members () : uk.co.aosd.onto.foundation.Class
 	{method}  {abstract} +purpose () : String
+	{method}  {abstract} +units () : uk.co.aosd.onto.foundation.Class
 }
 
 
@@ -120,6 +134,11 @@ interface uk.co.aosd.onto.ownership.TransferringOfOwnership {
 
 interface uk.co.aosd.onto.signifying.Named {
 	{method}  {abstract} +names () : uk.co.aosd.onto.foundation.Class
+}
+
+
+interface uk.co.aosd.onto.signifying.Signifier {
+	{method}  {abstract} +name () : Object
 }
 
 
@@ -151,10 +170,13 @@ uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.TemporallyBoun
 uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.Unit ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.language.Language ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
+uk.co.aosd.onto.organisation.Employment ..|>  uk.co.aosd.onto.foundation.Activity
+uk.co.aosd.onto.organisation.Membership ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.organisation.Organisation ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.organisation.Organisation ..|>  uk.co.aosd.onto.signifying.Named
 uk.co.aosd.onto.ownership.Owning ..|>  uk.co.aosd.onto.foundation.Activity
 uk.co.aosd.onto.ownership.TransferringOfOwnership ..|>  uk.co.aosd.onto.foundation.Activity
+uk.co.aosd.onto.signifying.Signifier ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.signifying.Signifying ..|>  uk.co.aosd.onto.foundation.Activity
 
 hide fields

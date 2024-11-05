@@ -9,5 +9,5 @@ import uk.co.aosd.onto.foundation.Class;
  */
 public interface Named {
 
-    Class<Signifying<String>> names();
+    Class<Signifier<String>> names();
 }
