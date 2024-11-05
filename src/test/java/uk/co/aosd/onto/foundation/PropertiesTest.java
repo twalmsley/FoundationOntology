@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.awt.Color;
-import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -84,12 +83,6 @@ record Car(String identifier, Optional<Instant> beginning, Optional<Instant> end
 
 record StateOfCar(String identifier, Car individual, Optional<Instant> beginning, Optional<Instant> ending)
     implements State<Car> {
-
-    @Override
-    public Duration duration() {
-        return null; // For now
-    }
-
 }
 
 record ColouredCars(String identifier, Color property, Set<StateOfCar> members) implements Property<StateOfCar, Color> {

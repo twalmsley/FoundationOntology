@@ -45,11 +45,6 @@ record OneDay(Optional<Instant> beginning) implements TemporallyBounded {
     public static Duration oneDay = Duration.ofSeconds(3600 * 24);
 
     @Override
-    public Duration duration() {
-        return oneDay;
-    }
-
-    @Override
     public Optional<Instant> ending() {
         return beginning.map(from -> from.plus(oneDay));
     }
