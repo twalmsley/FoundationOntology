@@ -9,8 +9,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <name>functional-ontology</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <url>https://github.com/twalmsley/FoundationOntology</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,11 +28,6 @@
     </dependencies>
 
     <build>
-        <pluginManagement>            <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-            <plugins>
-
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <artifactId>plantuml-generator-maven-plugin</artifactId>
@@ -45,7 +39,7 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
-                        <phase>generate-test-sources</phase>
+                        <phase>package</phase>
                         <configuration>
                             <outputDirectory>./diagrams</outputDirectory>
                             <outputFilename>uml.txt</outputFilename>
