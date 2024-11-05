@@ -102,6 +102,7 @@ interface uk.co.aosd.onto.language.Language {
 
 
 interface uk.co.aosd.onto.organisation.Organisation {
+	{method}  {abstract} +purpose () : String
 }
 
 

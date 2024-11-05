@@ -9,5 +9,10 @@ import uk.co.aosd.onto.signifying.Named;
  * @author Tony Walmsley
  */
 public interface Organisation extends Named, Individual {
-
+    /**
+     * Organisations have a common purpose that distinguishes them from other groupings of people.
+     *
+     * @return String A description of the purpose.
+     */
+    String purpose();
 }
