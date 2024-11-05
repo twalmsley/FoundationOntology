@@ -44,14 +44,27 @@ public class TriggersBroom {
     @Test
     public void test() {
         //
-        // Create the parts (ignoring their beginning and ending events to keep the
-        // example simple).
+        // Create the parts
         //
         final var broomHandle = new BroomHandle(BROOM_HANDLE_1_ID, LIFE_START, UNKNOWN_END);
         final var broomHead = new BroomHead(BROOM_HEAD_1_ID, LIFE_START, UNKNOWN_END);
         final var bristles = new Bristles(BRISTLES_1_ID, LIFE_START, UNKNOWN_END);
         final var broomBracket = new BroomBracket(BROOM_BRACKET_1_ID, LIFE_START, UNKNOWN_END);
 
+        // Assemble the broom
+        final var broom = assembleBroom(broomHead, bristles, broomBracket, broomHandle);
+
+        //
+        // Check the composition is correct.
+        //
+        assertSame(broom.handle(), broomHandle);
+        assertSame(broom.headWithBracketAssembly().bracket(), broomBracket);
+        assertSame(broom.headWithBracketAssembly().headAssembly().bristles(), bristles);
+        assertSame(broom.headWithBracketAssembly().headAssembly().head(), broomHead);
+    }
+
+    private Broom assembleBroom(final BroomHead broomHead, final Bristles bristles, final BroomBracket broomBracket,
+        final BroomHandle broomHandle) {
         //
         // Fit the bristles in the head.
         //
@@ -67,16 +80,8 @@ public class TriggersBroom {
         //
         // Attach the handle to the bracket to complete the broom.
         //
-        final var broom = fitHandle(BROOM_1_ID, broomHandle, broomHeadWithBracketAssembly, ASSEMBLY_START,
+        return fitHandle(BROOM_1_ID, broomHandle, broomHeadWithBracketAssembly, ASSEMBLY_START,
             ASSEMBLY_END);
-
-        //
-        // Check the composition is correct.
-        //
-        assertSame(broom.handle(), broomHandle);
-        assertSame(broom.headWithBracketAssembly().bracket(), broomBracket);
-        assertSame(broom.headWithBracketAssembly().headAssembly().bristles(), bristles);
-        assertSame(broom.headWithBracketAssembly().headAssembly().head(), broomHead);
     }
 
     /**
