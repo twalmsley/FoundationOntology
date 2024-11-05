@@ -40,7 +40,7 @@ public class PeriodOfTimeTest {
  * A particular 24-hour period beginning some time during a given second and
  * ending 24 hours worth of seconds later.
  */
-record OneDay(Optional<Instant> beginning) implements PeriodOfTime {
+record OneDay(Optional<Instant> beginning) implements TemporallyBounded {
 
     public static Duration oneDay = Duration.ofSeconds(3600 * 24);
 

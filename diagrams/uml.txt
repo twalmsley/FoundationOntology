@@ -22,7 +22,7 @@ interface uk.co.aosd.onto.foundation.Activity {
 
 
 interface uk.co.aosd.onto.foundation.Agglomerate {
-	{method}  {abstract} +members () : java.util.Set
+	{method}  {abstract} +parts () : java.util.Set
 }
 
 
@@ -50,13 +50,8 @@ interface uk.co.aosd.onto.foundation.Individual {
 }
 
 
-interface uk.co.aosd.onto.foundation.PeriodOfTime {
-	{method}  {abstract} +duration () : java.time.Duration
-}
-
-
 interface uk.co.aosd.onto.foundation.PossibleWorld {
-	{method}  {abstract} +members () : java.util.Set
+	{method}  {abstract} +parts () : java.util.Set
 }
 
 
@@ -86,6 +81,7 @@ interface uk.co.aosd.onto.foundation.State {
 
 interface uk.co.aosd.onto.foundation.TemporallyBounded {
 	{method}  {abstract} +beginning () : java.util.Optional
+	{method} +duration () : java.time.Duration
 	{method}  {abstract} +ending () : java.util.Optional
 }
 
@@ -146,12 +142,11 @@ uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.TemporallyBoun
 uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.Individual ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
 uk.co.aosd.onto.foundation.Individual ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
-uk.co.aosd.onto.foundation.PeriodOfTime ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
 uk.co.aosd.onto.foundation.PossibleWorld ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.foundation.Property ..|>  uk.co.aosd.onto.foundation.Class
 uk.co.aosd.onto.foundation.ScalarAttribute ..|>  uk.co.aosd.onto.foundation.Attribute
 uk.co.aosd.onto.foundation.ScalarProperty ..|>  uk.co.aosd.onto.foundation.Property
-uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.PeriodOfTime
+uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
 uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.Unit ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.language.Language ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable

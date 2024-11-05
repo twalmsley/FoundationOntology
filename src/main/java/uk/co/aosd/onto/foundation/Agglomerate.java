@@ -9,5 +9,5 @@ import java.util.Set;
  * @author Tony Walmsley
  */
 public interface Agglomerate extends Individual {
-    Set<Individual> members();
+    Set<Individual> parts();
 }
