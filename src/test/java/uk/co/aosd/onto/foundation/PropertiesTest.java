@@ -12,6 +12,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
+import uk.co.aosd.onto.reference.IndividualImpl;
+import uk.co.aosd.onto.reference.StateImpl;
 
 /**
  * Test that the representation of properties is usable.
@@ -27,8 +29,8 @@ public class PropertiesTest {
      */
     @Test
     public void testUsingStates() {
-        final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
-        final var carState1 = new StateOfCar(randString(), car1, LIFE_START, UNKNOWN_END);
+        final var car1 = new IndividualImpl(randString(), LIFE_START, UNKNOWN_END);
+        final var carState1 = new StateImpl<Individual>(randString(), car1, LIFE_START, UNKNOWN_END);
         final var redCars = new ColouredCars(randString(), Color.RED, Set.of(carState1));
 
         assertSame(car1, redCars.members().iterator().next().individual());
@@ -39,7 +41,7 @@ public class PropertiesTest {
      */
     @Test
     public void testWithoutStates() {
-        final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
+        final var car1 = new IndividualImpl(randString(), LIFE_START, UNKNOWN_END);
         final var car1IsRed = new ColouredCar(car1, Color.RED, LIFE_START, UNKNOWN_END);
 
         assertSame(car1, car1IsRed.individual());
@@ -50,9 +52,9 @@ public class PropertiesTest {
      */
     @Test
     public void isomorphism() {
-        final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
-        final var carState1 = new StateOfCar(randString(), car1, LIFE_START, UNKNOWN_END);
-        final var redCars = new ColouredCars(randString(), Color.RED, Set.of(carState1));
+        final Individual car1 = new IndividualImpl(randString(), LIFE_START, UNKNOWN_END);
+        final State<Individual> carState1 = new StateImpl<>(randString(), car1, LIFE_START, UNKNOWN_END);
+        final Property<State<Individual>, Color> redCars = new ColouredCars(randString(), Color.RED, Set.of(carState1));
 
         // Convert the ColouredCars property into a list of ColouredCar Attributes
         final List<ColouredCar> attributes = redCars
@@ -69,29 +71,23 @@ public class PropertiesTest {
             attributes
                 .stream()
                 .map(attr -> {
-                    return new StateOfCar(randString(), attr.individual(), attr.beginning(),
+                    return new StateImpl<Individual>(randString(), attr.individual(), attr.beginning(),
                         attr.ending());
                 }).collect(Collectors.toSet()));
 
         // Apart from the IDs, redCars and redCars2 will be identical
         assertEquals(redCars.members().size(), redCars2.members().size());
     }
-    
+
     private static String randString() {
         return UUID.randomUUID().toString();
     }
 }
 
-record Car(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+record ColouredCars(String identifier, Color property, Set<State<Individual>> members)
+    implements Property<State<Individual>, Color> {
 }
 
-record StateOfCar(String identifier, Car individual, Optional<Instant> beginning, Optional<Instant> ending)
-    implements State<Car> {
-}
-
-record ColouredCars(String identifier, Color property, Set<StateOfCar> members) implements Property<StateOfCar, Color> {
-}
-
-record ColouredCar(Car individual, Color property, Optional<Instant> beginning, Optional<Instant> ending)
-    implements Attribute<Car, Color> {
+record ColouredCar(Individual individual, Color property, Optional<Instant> beginning, Optional<Instant> ending)
+    implements Attribute<Individual, Color> {
 }

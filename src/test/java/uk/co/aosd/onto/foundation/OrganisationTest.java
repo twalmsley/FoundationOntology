@@ -3,6 +3,7 @@ package uk.co.aosd.onto.foundation;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -16,7 +17,9 @@ import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.reference.ClassImpl;
 import uk.co.aosd.onto.reference.HumanImpl;
 import uk.co.aosd.onto.reference.LanguageImpl;
+import uk.co.aosd.onto.reference.MembershipImpl;
 import uk.co.aosd.onto.reference.OrganisationImpl;
+import uk.co.aosd.onto.reference.PossibleWorldImpl;
 import uk.co.aosd.onto.reference.SignifierImpl;
 import uk.co.aosd.onto.signifying.Signifier;
 
@@ -40,7 +43,7 @@ public class OrganisationTest {
 
         // The signifiers need to be added to Classes (Sets)
         final Class<Signifier<String>> person1Names = new ClassImpl<>(randString(),
-            Set.of(personSignifier1, personSignifier2));
+                Set.of(personSignifier1, personSignifier2));
         final Class<Signifier<String>> orgNames = new ClassImpl<>(randString(), Set.of(acmeSignifier1, acmeSignifier2));
 
         // Create the languages that the person uses.
@@ -52,22 +55,28 @@ public class OrganisationTest {
         final Human alice = new HumanImpl(randString(), FROM, TO, person1Names, english, languages, UNKNOWN_DNA);
 
         // Create a Class of memberships for the person as a member of something.
-        final Membership ceoMembership = new AcmeMembership(randString(), alice, FROM, TO);
+        final Membership ceoMembership = new MembershipImpl(randString(), alice, FROM, TO);
         final Class<Membership> acmeTeamMemberships = new ClassImpl<>(randString(), Set.of(ceoMembership));
 
         // Create an organisation with memberships and no sub-units.
         final Class<Organisation> units = new ClassImpl<>(randString(), Set.of());
         final OrganisationImpl acme = new OrganisationImpl(randString(), acmeTeamMemberships, "ACME makes widgets",
-            units, orgNames, FROM, TO);
+                units, orgNames, FROM, TO);
 
         assertNotNull(acme);
+
+        // Add the objects to a Possible World
+        final PossibleWorld world = new PossibleWorldImpl(randString(), new HashSet<>(), FROM, TO);
+        world.parts().add(personSignifier1);
+        world.parts().add(personSignifier2);
+        world.parts().add(acmeSignifier1);
+        world.parts().add(acmeSignifier2);
+        world.parts().add(alice);
+        world.parts().add(ceoMembership);
+        world.parts().add(acme);
     }
 
     private static String randString() {
         return UUID.randomUUID().toString();
     }
-}
-
-record AcmeMembership(String identifier, Human member, Optional<Instant> beginning,
-    Optional<Instant> ending) implements Membership {
 }
