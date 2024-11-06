@@ -30,15 +30,18 @@ public class OrganisationTest {
     @Test
     public void testCreateOrganisations() {
 
-        final Signifier<String> personSignifier = new SignifierImpl<>("1", "Alice Cooper", FROM, TO);
-        final Signifier<String> acmeSignifier = new SignifierImpl<>("2", "ACME Ltd", TO, FROM);
+        final Signifier<String> personSignifier1 = new SignifierImpl<>("1", "Alice Cooper", FROM, TO);
+        final Signifier<String> personSignifier2 = new SignifierImpl<>("2", "Vincent Damon Furnier", FROM, TO);
+        final Signifier<String> acmeSignifier1 = new SignifierImpl<>("3", "ACME Widgets Ltd", FROM, TO);
+        final Signifier<String> acmeSignifier2 = new SignifierImpl<>("4", "ACME Ltd", FROM, TO);
 
-        final Class<Signifier<String>> person1Names = new ClassImpl<>("person1Names", Set.of(personSignifier));
-        final Class<Signifier<String>> orgNames = new ClassImpl<>("orgNames1", Set.of(acmeSignifier));
+        final Class<Signifier<String>> person1Names = new ClassImpl<>("person1Names", Set.of(personSignifier1, personSignifier2));
+        final Class<Signifier<String>> orgNames = new ClassImpl<>("orgNames1", Set.of(acmeSignifier1, acmeSignifier2));
 
         final Language english = new LanguageImpl("en-GB", "British English");
-        final Class<Language> languages = new ClassImpl<>("languages1", Set.of(english));
-        final Human alice = new HumanImpl("Alice", TO, FROM, person1Names, english, languages, UNKNOWN_DNA);
+        final Language german = new LanguageImpl("de", "German");
+        final Class<Language> languages = new ClassImpl<>("languages1", Set.of(english, german));
+        final Human alice = new HumanImpl("Alice", FROM, TO, person1Names, english, languages, UNKNOWN_DNA);
 
         final Membership ceoMembership = new AcmeMembership("ceo", alice, FROM, TO);
         final Set<Membership> memberships = Set.of(ceoMembership);
