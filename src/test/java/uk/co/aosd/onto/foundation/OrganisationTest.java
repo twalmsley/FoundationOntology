@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
@@ -15,6 +16,7 @@ import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.reference.ClassImpl;
 import uk.co.aosd.onto.reference.HumanImpl;
 import uk.co.aosd.onto.reference.LanguageImpl;
+import uk.co.aosd.onto.reference.OrganisationImpl;
 import uk.co.aosd.onto.reference.SignifierImpl;
 import uk.co.aosd.onto.signifying.Signifier;
 
@@ -30,32 +32,33 @@ public class OrganisationTest {
     @Test
     public void testCreateOrganisations() {
 
-        final Signifier<String> personSignifier1 = new SignifierImpl<>("1", "Alice Cooper", FROM, TO);
-        final Signifier<String> personSignifier2 = new SignifierImpl<>("2", "Vincent Damon Furnier", FROM, TO);
-        final Signifier<String> acmeSignifier1 = new SignifierImpl<>("3", "ACME Widgets Ltd", FROM, TO);
-        final Signifier<String> acmeSignifier2 = new SignifierImpl<>("4", "ACME Ltd", FROM, TO);
+        final Signifier<String> personSignifier1 = new SignifierImpl<>(randString(), "Alice Cooper", FROM, TO);
+        final Signifier<String> personSignifier2 = new SignifierImpl<>(randString(), "Vincent Damon Furnier", FROM, TO);
+        final Signifier<String> acmeSignifier1 = new SignifierImpl<>(randString(), "ACME Widgets Ltd", FROM, TO);
+        final Signifier<String> acmeSignifier2 = new SignifierImpl<>(randString(), "ACME Ltd", FROM, TO);
 
-        final Class<Signifier<String>> person1Names = new ClassImpl<>("person1Names", Set.of(personSignifier1, personSignifier2));
-        final Class<Signifier<String>> orgNames = new ClassImpl<>("orgNames1", Set.of(acmeSignifier1, acmeSignifier2));
+        final Class<Signifier<String>> person1Names = new ClassImpl<>(randString(),
+            Set.of(personSignifier1, personSignifier2));
+        final Class<Signifier<String>> orgNames = new ClassImpl<>(randString(), Set.of(acmeSignifier1, acmeSignifier2));
 
-        final Language english = new LanguageImpl("en-GB", "British English");
-        final Language german = new LanguageImpl("de", "German");
-        final Class<Language> languages = new ClassImpl<>("languages1", Set.of(english, german));
-        final Human alice = new HumanImpl("Alice", FROM, TO, person1Names, english, languages, UNKNOWN_DNA);
+        final Language english = new LanguageImpl(randString(), "British English");
+        final Language german = new LanguageImpl(randString(), "Deutsch");
+        final Class<Language> languages = new ClassImpl<>(randString(), Set.of(english, german));
+        final Human alice = new HumanImpl(randString(), FROM, TO, person1Names, english, languages, UNKNOWN_DNA);
 
-        final Membership ceoMembership = new AcmeMembership("ceo", alice, FROM, TO);
+        final Membership ceoMembership = new AcmeMembership(randString(), alice, FROM, TO);
         final Set<Membership> memberships = Set.of(ceoMembership);
-        final Class<Membership> acmeTeamMemberships = new ClassImpl<>("acmeTopLevelTeam", memberships);
+        final Class<Membership> acmeTeamMemberships = new ClassImpl<>(randString(), memberships);
 
-        final Class<Organisation> units = new ClassImpl<>("units1", Set.of());
-        final Org acme = new Org("org1", acmeTeamMemberships, "ACME makes widgets", units, orgNames, FROM, TO);
+        final Class<Organisation> units = new ClassImpl<>(randString(), Set.of());
+        final OrganisationImpl acme = new OrganisationImpl(randString(), acmeTeamMemberships, "ACME makes widgets", units, orgNames, FROM, TO);
 
         assertNotNull(acme);
     }
-}
-
-record Org(String identifier, Class<Membership> members, String purpose, Class<Organisation> units,
-    Class<Signifier<String>> names, Optional<Instant> beginning, Optional<Instant> ending) implements Organisation {
+    
+    private static String randString() {
+        return UUID.randomUUID().toString();
+    }
 }
 
 record AcmeMembership(String identifier, Human member, Optional<Instant> beginning,

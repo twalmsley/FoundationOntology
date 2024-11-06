@@ -27,9 +27,9 @@ public class PropertiesTest {
      */
     @Test
     public void testUsingStates() {
-        final var car1 = new Car("car1", LIFE_START, UNKNOWN_END);
-        final var carState1 = new StateOfCar("carState1", car1, LIFE_START, UNKNOWN_END);
-        final var redCars = new ColouredCars("redCars", Color.RED, Set.of(carState1));
+        final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
+        final var carState1 = new StateOfCar(randString(), car1, LIFE_START, UNKNOWN_END);
+        final var redCars = new ColouredCars(randString(), Color.RED, Set.of(carState1));
 
         assertSame(car1, redCars.members().iterator().next().individual());
     }
@@ -39,7 +39,7 @@ public class PropertiesTest {
      */
     @Test
     public void testWithoutStates() {
-        final var car1 = new Car("car1", LIFE_START, UNKNOWN_END);
+        final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
         final var car1IsRed = new ColouredCar(car1, Color.RED, LIFE_START, UNKNOWN_END);
 
         assertSame(car1, car1IsRed.individual());
@@ -50,9 +50,9 @@ public class PropertiesTest {
      */
     @Test
     public void isomorphism() {
-        final var car1 = new Car("car1", LIFE_START, UNKNOWN_END);
-        final var carState1 = new StateOfCar("carState1", car1, LIFE_START, UNKNOWN_END);
-        final var redCars = new ColouredCars("redCars", Color.RED, Set.of(carState1));
+        final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
+        final var carState1 = new StateOfCar(randString(), car1, LIFE_START, UNKNOWN_END);
+        final var redCars = new ColouredCars(randString(), Color.RED, Set.of(carState1));
 
         // Convert the ColouredCars property into a list of ColouredCar Attributes
         final List<ColouredCar> attributes = redCars
@@ -62,19 +62,23 @@ public class PropertiesTest {
                 return new ColouredCar(state.individual(), redCars.property(), state.beginning(), state.ending());
             }).toList();
 
-        // Convert the list of ColouredCar Attributes into a Property
+        // Convert the list of ColouredCar Attributes into a ColouredCars Property
         final ColouredCars redCars2 = new ColouredCars(
-            "redCars2",
+            randString(),
             Color.RED,
             attributes
                 .stream()
                 .map(attr -> {
-                    return new StateOfCar(UUID.randomUUID().toString(), attr.individual(), attr.beginning(),
+                    return new StateOfCar(randString(), attr.individual(), attr.beginning(),
                         attr.ending());
                 }).collect(Collectors.toSet()));
 
         // Apart from the IDs, redCars and redCars2 will be identical
         assertEquals(redCars.members().size(), redCars2.members().size());
+    }
+    
+    private static String randString() {
+        return UUID.randomUUID().toString();
     }
 }
 

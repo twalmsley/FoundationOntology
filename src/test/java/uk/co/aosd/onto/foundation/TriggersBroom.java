@@ -160,6 +160,3 @@ record Bristles(String identifier, Optional<Instant> beginning, Optional<Instant
 
 record BroomBracket(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
 }
-
-record Lifetime(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Event {
-}
