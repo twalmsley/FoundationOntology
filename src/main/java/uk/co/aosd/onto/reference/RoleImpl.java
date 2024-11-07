@@ -1,0 +1,12 @@
+package uk.co.aosd.onto.reference;
+
+import uk.co.aosd.onto.foundation.Role;
+
+/**
+ * An implementation of the Role interface.
+ *
+ * @author Tony Walmsley
+ */
+public record RoleImpl(String name) implements Role {
+
+}

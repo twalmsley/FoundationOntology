@@ -20,11 +20,14 @@ import uk.co.aosd.onto.reference.LanguageImpl;
 import uk.co.aosd.onto.reference.MembershipImpl;
 import uk.co.aosd.onto.reference.OrganisationImpl;
 import uk.co.aosd.onto.reference.PossibleWorldImpl;
+import uk.co.aosd.onto.reference.RoleImpl;
 import uk.co.aosd.onto.reference.SignifierImpl;
 import uk.co.aosd.onto.signifying.Signifier;
 
 /**
  * Test that Organisations can be created.
+ *
+ * @author Tony Walmsley
  */
 public class OrganisationTest {
 
@@ -43,7 +46,7 @@ public class OrganisationTest {
 
         // The signifiers need to be added to Classes (Sets)
         final Class<Signifier<String>> person1Names = new ClassImpl<>(randString(),
-                Set.of(personSignifier1, personSignifier2));
+            Set.of(personSignifier1, personSignifier2));
         final Class<Signifier<String>> orgNames = new ClassImpl<>(randString(), Set.of(acmeSignifier1, acmeSignifier2));
 
         // Create the languages that the person uses.
@@ -55,13 +58,14 @@ public class OrganisationTest {
         final Human alice = new HumanImpl(randString(), FROM, TO, person1Names, english, languages, UNKNOWN_DNA);
 
         // Create a Class of memberships for the person as a member of something.
-        final Membership ceoMembership = new MembershipImpl(randString(), alice, FROM, TO);
+        final Role ceoRole = new RoleImpl("CEO");
+        final Membership ceoMembership = new MembershipImpl(randString(), alice, ceoRole, FROM, TO);
         final Class<Membership> acmeTeamMemberships = new ClassImpl<>(randString(), Set.of(ceoMembership));
 
         // Create an organisation with memberships and no sub-units.
         final Class<Organisation> units = new ClassImpl<>(randString(), Set.of());
         final OrganisationImpl acme = new OrganisationImpl(randString(), acmeTeamMemberships, "ACME makes widgets",
-                units, orgNames, FROM, TO);
+            units, orgNames, FROM, TO);
 
         assertNotNull(acme);
 

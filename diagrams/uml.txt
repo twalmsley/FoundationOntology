@@ -60,6 +60,11 @@ interface uk.co.aosd.onto.foundation.Property {
 }
 
 
+interface uk.co.aosd.onto.foundation.Role {
+	{method}  {abstract} +name () : String
+}
+
+
 interface uk.co.aosd.onto.foundation.ScalarAttribute {
 }
 
@@ -110,6 +115,7 @@ interface uk.co.aosd.onto.organisation.Employment {
 
 interface uk.co.aosd.onto.organisation.Membership {
 	{method}  {abstract} +member () : uk.co.aosd.onto.biological.Human
+	{method}  {abstract} +role () : uk.co.aosd.onto.foundation.Role
 }
 
 
