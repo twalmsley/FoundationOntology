@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Instant;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
+import uk.co.aosd.onto.reference.EventImpl;
 
 /**
  * An example to show object composition and how it changes over time.
@@ -29,27 +31,20 @@ import org.junit.jupiter.api.Test;
  */
 public class TriggersBroom {
 
-    private static final String BROOM_HANDLE_1_ID = "Broom Handle 1";
-    private static final String BROOM_HEAD_1_ID = "Broom Head 1";
-    private static final String BRISTLES_1_ID = "Bristles 1";
-    private static final String BROOM_BRACKET_1_ID = "Broom Bracket 1";
-    private static final String BROOM_HEAD_ASSEMBLY_1_ID = "Broom Head Assembly 1";
-    private static final String BROOM_HEAD_WITH_BRACKET_ASSEMBLY_1_ID = "Broom Head Assembly With Bracket 1";
-    private static final String BROOM_1_ID = "Broom 1";
-    private static final Optional<Instant> LIFE_START = Optional.of(Instant.parse("2024-01-01T12:00:00.00Z"));
-    private static final Optional<Instant> UNKNOWN_END = Optional.empty();
-    private static final Optional<Instant> ASSEMBLY_START = Optional.of(Instant.parse("2024-11-01T12:00:00.00Z"));
-    private static final Optional<Instant> ASSEMBLY_END = Optional.empty();
+    private static final Event LIFE_START = mkEvent("2024-01-01T12:00:00.00Z", "2024-01-01T12:00:00.00Z");
+    private static final Event UNKNOWN_END = mkOngoingEvent();
+    private static final Event ASSEMBLY_START = mkEvent("2024-11-01T12:00:00.00Z", "2024-11-01T12:00:00.00Z");
+    private static final Event ASSEMBLY_END = mkOngoingEvent();
 
     @Test
     public void test() {
         //
         // Create the parts
         //
-        final var broomHandle = new BroomHandle(BROOM_HANDLE_1_ID, LIFE_START, UNKNOWN_END);
-        final var broomHead = new BroomHead(BROOM_HEAD_1_ID, LIFE_START, UNKNOWN_END);
-        final var bristles = new Bristles(BRISTLES_1_ID, LIFE_START, UNKNOWN_END);
-        final var broomBracket = new BroomBracket(BROOM_BRACKET_1_ID, LIFE_START, UNKNOWN_END);
+        final var broomHandle = new BroomHandle(randStr(), LIFE_START, UNKNOWN_END);
+        final var broomHead = new BroomHead(randStr(), LIFE_START, UNKNOWN_END);
+        final var bristles = new Bristles(randStr(), LIFE_START, UNKNOWN_END);
+        final var broomBracket = new BroomBracket(randStr(), LIFE_START, UNKNOWN_END);
 
         // Assemble the broom
         final var broom = assembleBroom(broomHead, bristles, broomBracket, broomHandle);
@@ -68,19 +63,19 @@ public class TriggersBroom {
         //
         // Fit the bristles in the head.
         //
-        final var broomHeadAssembly = fitBristles(BROOM_HEAD_ASSEMBLY_1_ID, broomHead, bristles, ASSEMBLY_START,
+        final var broomHeadAssembly = fitBristles(randStr(), broomHead, bristles, ASSEMBLY_START,
             ASSEMBLY_END);
 
         //
         // Attach the bracket to the head.
         //
-        final var broomHeadWithBracketAssembly = fitBracket(BROOM_HEAD_WITH_BRACKET_ASSEMBLY_1_ID, broomHeadAssembly,
+        final var broomHeadWithBracketAssembly = fitBracket(randStr(), broomHeadAssembly,
             broomBracket, ASSEMBLY_START, ASSEMBLY_END);
 
         //
         // Attach the handle to the bracket to complete the broom.
         //
-        return fitHandle(BROOM_1_ID, broomHandle, broomHeadWithBracketAssembly, ASSEMBLY_START,
+        return fitHandle(randStr(), broomHandle, broomHeadWithBracketAssembly, ASSEMBLY_START,
             ASSEMBLY_END);
     }
 
@@ -97,8 +92,8 @@ public class TriggersBroom {
      * @return Broom
      */
     private Broom fitHandle(final String id, final BroomHandle broomHandle,
-        final BroomHeadWithBracketAssembly broomHeadWithBracketAssembly, final Optional<Instant> beginning,
-        final Optional<Instant> ending) {
+        final BroomHeadWithBracketAssembly broomHeadWithBracketAssembly, final Event beginning,
+        final Event ending) {
         return new Broom(id, broomHandle, broomHeadWithBracketAssembly, beginning, ending);
     }
 
@@ -114,7 +109,7 @@ public class TriggersBroom {
      * @return BroomHeadWithBracketAssembly
      */
     private static BroomHeadWithBracketAssembly fitBracket(final String id, final BroomHeadAssembly broomHeadAssembly,
-        final BroomBracket broomBracket, final Optional<Instant> beginning, final Optional<Instant> ending) {
+        final BroomBracket broomBracket, final Event beginning, final Event ending) {
         return new BroomHeadWithBracketAssembly(id, broomHeadAssembly, broomBracket, beginning, ending);
     }
 
@@ -131,32 +126,43 @@ public class TriggersBroom {
      * @return BroomHeadAssembly
      */
     private static BroomHeadAssembly fitBristles(final String id, final BroomHead head, final Bristles bristles,
-        final Optional<Instant> beginning, final Optional<Instant> ending) {
+        final Event beginning, final Event ending) {
         return new BroomHeadAssembly(id, head, bristles, beginning, ending);
     }
 
+    private static String randStr() {
+        return UUID.randomUUID().toString();
+    }
+
+    private static Event mkOngoingEvent() {
+        return new EventImpl(randStr(), Optional.empty(), Optional.empty());
+    }
+
+    private static Event mkEvent(final String from, final String to) {
+        return new EventImpl(randStr(), Optional.of(Instant.parse(from)), Optional.of(Instant.parse(to)));
+    }
 }
 
 record Broom(String identifier, BroomHandle handle, BroomHeadWithBracketAssembly headWithBracketAssembly,
-    Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+    Event beginning, Event ending) implements Individual {
 }
 
-record BroomHeadAssembly(String identifier, BroomHead head, Bristles bristles, Optional<Instant> beginning,
-    Optional<Instant> ending) implements Individual {
+record BroomHeadAssembly(String identifier, BroomHead head, Bristles bristles, Event beginning,
+    Event ending) implements Individual {
 }
 
 record BroomHeadWithBracketAssembly(String identifier, BroomHeadAssembly headAssembly, BroomBracket bracket,
-    Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+    Event beginning, Event ending) implements Individual {
 }
 
-record BroomHandle(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+record BroomHandle(String identifier, Event beginning, Event ending) implements Individual {
 }
 
-record BroomHead(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+record BroomHead(String identifier, Event beginning, Event ending) implements Individual {
 }
 
-record Bristles(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+record Bristles(String identifier, Event beginning, Event ending) implements Individual {
 }
 
-record BroomBracket(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+record BroomBracket(String identifier, Event beginning, Event ending) implements Individual {
 }

@@ -1,8 +1,6 @@
 package uk.co.aosd.onto.reference;
 
-import java.time.Instant;
-import java.util.Optional;
-
+import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
 import uk.co.aosd.onto.ownership.Owning;
 
@@ -12,6 +10,6 @@ import uk.co.aosd.onto.ownership.Owning;
  * @author Tony Walmsley
  */
 public record OwningImpl(String identifier, String actionsDescription, Individual owner, Individual owned,
-    Optional<Instant> beginning, Optional<Instant> ending) implements Owning {
+    Event beginning, Event ending) implements Owning {
 
 }

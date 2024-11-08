@@ -1,8 +1,6 @@
 package uk.co.aosd.onto.reference;
 
-import java.time.Instant;
-import java.util.Optional;
-
+import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.signifying.Signifying;
 
@@ -12,6 +10,6 @@ import uk.co.aosd.onto.signifying.Signifying;
  * @author Tony Walmsley
  */
 public record SignifyingImpl<T>(String identifier, String actionsDescription, T name, UniquelyIdentifiable named,
-    Optional<Instant> beginning, Optional<Instant> ending) implements Signifying<T> {
+    Event beginning, Event ending) implements Signifying<T> {
 
 }

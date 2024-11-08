@@ -1,8 +1,6 @@
 package uk.co.aosd.onto.reference;
 
-import java.time.Instant;
-import java.util.Optional;
-
+import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
 
 /**
@@ -10,5 +8,5 @@ import uk.co.aosd.onto.foundation.Individual;
  *
  * @author Tony Walmsley
  */
-public record IndividualImpl(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+public record IndividualImpl(String identifier, Event beginning, Event ending) implements Individual {
 }

@@ -46,6 +46,12 @@ interface uk.co.aosd.onto.foundation.Event {
 }
 
 
+interface uk.co.aosd.onto.foundation.EventBounded {
+	{method}  {abstract} +beginning () : uk.co.aosd.onto.foundation.Event
+	{method}  {abstract} +ending () : uk.co.aosd.onto.foundation.Event
+}
+
+
 interface uk.co.aosd.onto.foundation.Individual {
 }
 
@@ -84,10 +90,10 @@ interface uk.co.aosd.onto.foundation.State {
 }
 
 
-interface uk.co.aosd.onto.foundation.TemporallyBounded {
-	{method}  {abstract} +beginning () : java.util.Optional
-	{method} +duration () : java.time.Duration
-	{method}  {abstract} +ending () : java.util.Optional
+interface uk.co.aosd.onto.foundation.TimePeriod {
+	{method} +duration () : java.util.Optional
+	{method}  {abstract} +from () : java.util.Optional
+	{method}  {abstract} +to () : java.util.Optional
 }
 
 
@@ -162,17 +168,17 @@ uk.co.aosd.onto.biological.Human ..|>  uk.co.aosd.onto.signifying.Named
 uk.co.aosd.onto.foundation.Activity ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.foundation.Agglomerate ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.foundation.Aggregation ..|>  uk.co.aosd.onto.foundation.Individual
-uk.co.aosd.onto.foundation.Attribute ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
+uk.co.aosd.onto.foundation.Attribute ..|>  uk.co.aosd.onto.foundation.TimePeriod
 uk.co.aosd.onto.foundation.Class ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
-uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
+uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.TimePeriod
 uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
-uk.co.aosd.onto.foundation.Individual ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
+uk.co.aosd.onto.foundation.Individual ..|>  uk.co.aosd.onto.foundation.EventBounded
 uk.co.aosd.onto.foundation.Individual ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.PossibleWorld ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.foundation.Property ..|>  uk.co.aosd.onto.foundation.Class
 uk.co.aosd.onto.foundation.ScalarAttribute ..|>  uk.co.aosd.onto.foundation.Attribute
 uk.co.aosd.onto.foundation.ScalarProperty ..|>  uk.co.aosd.onto.foundation.Property
-uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.TemporallyBounded
+uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.EventBounded
 uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.Unit ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.language.Language ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable

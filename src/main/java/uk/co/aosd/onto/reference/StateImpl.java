@@ -1,8 +1,6 @@
 package uk.co.aosd.onto.reference;
 
-import java.time.Instant;
-import java.util.Optional;
-
+import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
 import uk.co.aosd.onto.foundation.State;
 
@@ -11,7 +9,7 @@ import uk.co.aosd.onto.foundation.State;
  *
  * @author Tony Walmsley
  */
-public record StateImpl<V extends Individual>(String identifier, V individual, Optional<Instant> beginning,
-    Optional<Instant> ending) implements State<V> {
+public record StateImpl<V extends Individual>(String identifier, V individual, Event beginning,
+    Event ending) implements State<V> {
 
 }

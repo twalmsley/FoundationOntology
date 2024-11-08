@@ -1,10 +1,9 @@
 package uk.co.aosd.onto.reference;
 
-import java.time.Instant;
-import java.util.Optional;
 import java.util.Set;
 
 import uk.co.aosd.onto.foundation.Agglomerate;
+import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
 
 /**
@@ -12,7 +11,7 @@ import uk.co.aosd.onto.foundation.Individual;
  *
  * @author Tony Walmsley
  */
-public record AgglomerateImpl(String identifier, Set<Individual> parts, Optional<Instant> beginning,
-    Optional<Instant> ending) implements Agglomerate {
+public record AgglomerateImpl(String identifier, Set<Individual> parts, Event beginning,
+    Event ending) implements Agglomerate {
 
 }

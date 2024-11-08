@@ -26,13 +26,15 @@ public class PeriodOfTimeTest {
         final var from = Instant.now();
         final var oneDayStartingNow = new OneDay(Optional.of(from));
 
-        assertNotNull(oneDayStartingNow.beginning());
-        assertTrue(oneDayStartingNow.beginning().isPresent());
+        assertNotNull(oneDayStartingNow.from());
+        assertTrue(oneDayStartingNow.from().isPresent());
 
-        assertNotNull(oneDayStartingNow.ending());
-        assertTrue(oneDayStartingNow.ending().isPresent());
+        assertNotNull(oneDayStartingNow.to());
+        assertTrue(oneDayStartingNow.to().isPresent());
 
-        assertEquals(oneDayStartingNow.duration(), Duration.ofSeconds(Long.valueOf(3600 * 24)));
+        final Optional<Duration> duration = oneDayStartingNow.duration();
+        assertTrue(duration.isPresent());
+        assertEquals(duration.get(), Duration.ofSeconds(Long.valueOf(3600 * 24)));
     }
 }
 
@@ -40,13 +42,13 @@ public class PeriodOfTimeTest {
  * A particular 24-hour period beginning some time during a given second and
  * ending 24 hours worth of seconds later.
  */
-record OneDay(Optional<Instant> beginning) implements TemporallyBounded {
+record OneDay(Optional<Instant> from) implements TimePeriod {
 
     public static Duration oneDay = Duration.ofSeconds(3600 * 24);
 
     @Override
-    public Optional<Instant> ending() {
-        return beginning.map(from -> from.plus(oneDay));
+    public Optional<Instant> to() {
+        return from.map(from -> from.plus(oneDay));
     }
 
 }

@@ -14,7 +14,7 @@ import uk.co.aosd.onto.foundation.Unit;
  * @author Tony Walmsley
  */
 public record ScalarAttributeImpl<I extends Individual, N extends Number, U extends Unit>(I individual,
-    ScalarValue<N, U> property, Optional<Instant> beginning, Optional<Instant> ending)
+    ScalarValue<N, U> property, Optional<Instant> from, Optional<Instant> to)
     implements ScalarAttribute<I, N, U> {
 
 }

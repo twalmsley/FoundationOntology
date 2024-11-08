@@ -1,8 +1,6 @@
 package uk.co.aosd.onto.reference;
 
-import java.time.Instant;
-import java.util.Optional;
-
+import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.signifying.Signifier;
 
 /**
@@ -10,7 +8,7 @@ import uk.co.aosd.onto.signifying.Signifier;
  *
  * @author Tony Walmsley
  */
-public record SignifierImpl<T>(String identifier, T name, Optional<Instant> beginning, Optional<Instant> ending)
+public record SignifierImpl<T>(String identifier, T name, Event beginning, Event ending)
     implements Signifier<T> {
 
 }

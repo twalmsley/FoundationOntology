@@ -14,6 +14,7 @@ import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.reference.ClassImpl;
+import uk.co.aosd.onto.reference.EventImpl;
 import uk.co.aosd.onto.reference.HumanImpl;
 import uk.co.aosd.onto.reference.LanguageImpl;
 import uk.co.aosd.onto.reference.MembershipImpl;
@@ -34,37 +35,43 @@ import uk.co.aosd.onto.signifying.Signifier;
  */
 public class PotusTest {
 
-    private static final String PURPOSE = "To occupy its territory and serve its people.";
     private static final Optional<DNA> UNKNOWN_DNA = Optional.empty();
-    private static final Optional<Instant> USA_FROM = Optional.of(Instant.parse("1776-06-04T00:00:00.00Z"));
-    private static final Optional<Instant> ONGOING = Optional.empty();
-    private static final Optional<Instant> TRUMP_FROM = Optional.of(Instant.parse("1946-06-14T00:00:00.00Z"));
-    private static final Optional<Instant> TRUMP_POTUS_START_1 = Optional.of(Instant.parse("2017-01-20T00:00:00.00Z"));
-    private static final Optional<Instant> TRUMP_POTUS_END_1 = Optional.of(Instant.parse("2021-01-20T00:00:00.00Z"));
-    private static final Optional<Instant> TRUMP_POTUS_START_2 = Optional.of(Instant.parse("2025-01-20T00:00:00.00Z"));
+    private static final String PURPOSE = "To occupy its territory and serve its people.";
+    private static final Event USA_FROM = mkEvent("1776-06-04T00:00:00.00Z", "1776-06-04T23:59:59.99Z");
+    private static final Event USA_TO = mkOngoingEvent();
+    private static final Event TRUMP_DIED = mkOngoingEvent();
+    private static final Event TRUMP_BORN = mkEvent("1946-06-14T00:00:00.00Z", "1946-06-14T23:59:59.99Z");
+    private static final Event TRUMP_POTUS_START_1 = mkEvent("2017-01-20T00:00:00.00Z", "2017-01-20T23:59:59.99Z");
+    private static final Event TRUMP_POTUS_END_1 = mkEvent("2021-01-20T00:00:00.00Z", "2017-01-20T23:59:59.99Z");
+    private static final Event TRUMP_POTUS_START_2 = mkEvent("2025-01-20T00:00:00.00Z", "2017-01-20T23:59:59.99Z");
+    private static final Event TRUMP_POTUS_END_2 = mkOngoingEvent();
+    private static final Event TRUMP_CITIZENSHIP_ENDS = mkOngoingEvent();
 
     @Test
     public void test() {
 
         // Create Donald Trump
-        final Signifier<String> personSignifier1 = new SignifierImpl<>(randStr(), "Donald Trump", TRUMP_FROM, ONGOING);
+        final Signifier<String> personSignifier1 = new SignifierImpl<>(randStr(), "Donald Trump", TRUMP_BORN, TRUMP_DIED);
         final Class<Signifier<String>> person1Names = new ClassImpl<>(randStr(), Set.of(personSignifier1));
         final Language nativeLanguage = new LanguageImpl(randStr(), "American English");
         final Class<Language> languages = new ClassImpl<>(randStr(), Set.of(nativeLanguage));
 
-        final Human donaldTrump = new HumanImpl(randStr(), TRUMP_FROM, ONGOING, person1Names, nativeLanguage, languages, UNKNOWN_DNA);
+        final Human donaldTrump = new HumanImpl(randStr(), TRUMP_BORN, TRUMP_DIED, person1Names, nativeLanguage, languages,
+            UNKNOWN_DNA);
 
         // Create the names of the USA
-        final Signifier<String> usaSignifier1 = new SignifierImpl<>(randStr(), "USA", USA_FROM, ONGOING);
-        final Signifier<String> usaSignifier2 = new SignifierImpl<>(randStr(), "United States of America", USA_FROM, ONGOING);
-        final Signifier<String> usaSignifier3 = new SignifierImpl<>(randStr(), "US", USA_FROM, ONGOING);
-        final Signifier<String> usaSignifier4 = new SignifierImpl<>(randStr(), "United States", USA_FROM, ONGOING);
-        final Signifier<String> usaSignifier5 = new SignifierImpl<>(randStr(), "America", USA_FROM, ONGOING);
+        final Signifier<String> usaSignifier1 = new SignifierImpl<>(randStr(), "USA", USA_FROM, USA_TO);
+        final Signifier<String> usaSignifier2 = new SignifierImpl<>(randStr(), "United States of America", USA_FROM,
+            USA_TO);
+        final Signifier<String> usaSignifier3 = new SignifierImpl<>(randStr(), "US", USA_FROM, USA_TO);
+        final Signifier<String> usaSignifier4 = new SignifierImpl<>(randStr(), "United States", USA_FROM, USA_TO);
+        final Signifier<String> usaSignifier5 = new SignifierImpl<>(randStr(), "America", USA_FROM, USA_TO);
         final Set<Signifier<String>> setOfSignifiers = Set.of(usaSignifier1, usaSignifier2, usaSignifier3, usaSignifier4, usaSignifier5);
         final Class<Signifier<String>> namesOfTheUsa = new ClassImpl<>(randStr(), setOfSignifiers);
 
         // Create the name of the USA Government
-        final Signifier<String> usaGovSignifier1 = new SignifierImpl<>(randStr(), "The Government of the United States of America", USA_FROM, ONGOING);
+        final Signifier<String> usaGovSignifier1 = new SignifierImpl<>(randStr(), "The Government of the United States of America", USA_FROM,
+            USA_TO);
         final Class<Signifier<String>> namesOfTheUsaGov = new ClassImpl<>(randStr(), Set.of(usaGovSignifier1));
 
         // Create the POTUS and Citizen roles.
@@ -73,23 +80,25 @@ public class PotusTest {
 
         // Register Donald Trump's memberships of the US Government in the role of POTUS
         final Membership potus1 = new MembershipImpl(randStr(), donaldTrump, presidentRole, TRUMP_POTUS_START_1, TRUMP_POTUS_END_1);
-        final Membership potus2 = new MembershipImpl(randStr(), donaldTrump, presidentRole, TRUMP_POTUS_START_2, ONGOING);
+        final Membership potus2 = new MembershipImpl(randStr(), donaldTrump, presidentRole, TRUMP_POTUS_START_2, TRUMP_POTUS_END_2);
         final Class<Membership> memberships = new ClassImpl<>(randStr(), Set.of(potus1, potus2));
 
         // Register Donald Trump as a member of the USA in the role of citizen.
-        final Membership citizen1 = new MembershipImpl(randStr(), donaldTrump, citizenRole, TRUMP_FROM, ONGOING);
+        final Membership citizen1 = new MembershipImpl(randStr(), donaldTrump, citizenRole, TRUMP_BORN, TRUMP_CITIZENSHIP_ENDS);
         final Class<Membership> citizenships = new ClassImpl<>(randStr(), Set.of(citizen1));
 
         // Create the US Government
         final Class<Organisation> units = new ClassImpl<>(randStr(), Set.of());
-        final Organisation usGovt = new OrganisationImpl(randStr(), memberships, "To govern the USA", units, namesOfTheUsaGov, USA_FROM, ONGOING);
+        final Organisation usGovt = new OrganisationImpl(randStr(), memberships, "To govern the USA", units, namesOfTheUsaGov, USA_FROM,
+            USA_TO);
 
         // Sub-organisations of the USA
         final Class<Organisation> usaUnits = new ClassImpl<>(randStr(), Set.of(usGovt));
 
         // Create the USA
-        final Territory usaTerritory = new Territory(randStr(), USA_FROM, ONGOING);
-        final Nation usa = new Nation(randStr(), usaTerritory, citizenships, PURPOSE, namesOfTheUsa, usaUnits, USA_FROM, ONGOING);
+        final Territory usaTerritory = new Territory(randStr(), USA_FROM, USA_TO);
+        final Nation usa = new Nation(randStr(), usaTerritory, citizenships, PURPOSE, namesOfTheUsa, usaUnits, USA_FROM,
+            USA_TO);
 
         assertNotNull(usa);
     }
@@ -97,13 +106,21 @@ public class PotusTest {
     private static String randStr() {
         return UUID.randomUUID().toString();
     }
+
+    private static Event mkOngoingEvent() {
+        return new EventImpl(randStr(), Optional.empty(), Optional.empty());
+    }
+
+    private static Event mkEvent(final String from, final String to) {
+        return new EventImpl(randStr(), Optional.of(Instant.parse(from)), Optional.of(Instant.parse(to)));
+    }
 }
 
 record Nation(String identifier, Territory territory, Class<Membership> members, String purpose,
-    Class<Signifier<String>> names, Class<Organisation> units, Optional<Instant> beginning, Optional<Instant> ending)
+    Class<Signifier<String>> names, Class<Organisation> units, Event beginning, Event ending)
     implements Organisation {
 }
 
-record Territory(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Individual {
+record Territory(String identifier, Event beginning, Event ending) implements Individual {
 
 }

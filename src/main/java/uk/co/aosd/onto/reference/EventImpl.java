@@ -10,6 +10,6 @@ import uk.co.aosd.onto.foundation.Event;
  *
  * @author Tony Walmsley
  */
-public record EventImpl(String identifier, Optional<Instant> beginning, Optional<Instant> ending) implements Event {
+public record EventImpl(String identifier, Optional<Instant> from, Optional<Instant> to) implements Event {
 
 }

@@ -5,6 +5,6 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface State<V extends Individual> extends TemporallyBounded, UniquelyIdentifiable {
+public interface State<V extends Individual> extends EventBounded, UniquelyIdentifiable {
     V individual();
 }

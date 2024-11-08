@@ -1,9 +1,7 @@
 package uk.co.aosd.onto.reference;
 
-import java.time.Instant;
-import java.util.Optional;
-
 import uk.co.aosd.onto.biological.Human;
+import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Role;
 import uk.co.aosd.onto.organisation.Membership;
 
@@ -12,6 +10,6 @@ import uk.co.aosd.onto.organisation.Membership;
  *
  * @author Tony Walmsley
  */
-public record MembershipImpl(String identifier, Human member, Role role, Optional<Instant> beginning,
-    Optional<Instant> ending) implements Membership {
+public record MembershipImpl(String identifier, Human member, Role role, Event beginning,
+    Event ending) implements Membership {
 }

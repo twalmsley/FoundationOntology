@@ -5,8 +5,7 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface Attribute<I extends Individual, P>
-    extends TemporallyBounded {
+public interface Attribute<I extends Individual, P> extends TimePeriod {
 
     I individual();
 

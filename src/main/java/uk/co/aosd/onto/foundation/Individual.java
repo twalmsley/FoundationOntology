@@ -6,6 +6,6 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface Individual extends TemporallyBounded, UniquelyIdentifiable {
+public interface Individual extends EventBounded, UniquelyIdentifiable {
 
 }

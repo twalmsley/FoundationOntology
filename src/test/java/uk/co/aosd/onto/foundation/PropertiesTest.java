@@ -12,6 +12,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
+import uk.co.aosd.onto.reference.EventImpl;
 import uk.co.aosd.onto.reference.IndividualImpl;
 import uk.co.aosd.onto.reference.StateImpl;
 
@@ -21,8 +22,10 @@ import uk.co.aosd.onto.reference.StateImpl;
  * @author Tony Walmsley
  */
 public class PropertiesTest {
-    private static final Optional<Instant> LIFE_START = Optional.of(Instant.parse("2024-01-01T12:00:00.00Z"));
-    private static final Optional<Instant> UNKNOWN_END = Optional.empty();
+    private static final Optional<Instant> LIFE_START_TIME = Optional.of(Instant.parse("2024-01-01T12:00:00.00Z"));
+    private static final Optional<Instant> UNKNOWN_END_TIME = Optional.empty();
+    private static final Event LIFE_START = new EventImpl(randString(), Optional.of(Instant.parse("2024-01-01T12:00:00.00Z")), UNKNOWN_END_TIME);
+    private static final Event UNKNOWN_END = new EventImpl(randString(), UNKNOWN_END_TIME, UNKNOWN_END_TIME);
 
     /**
      * Show how to represent properties using explicit States.
@@ -42,7 +45,7 @@ public class PropertiesTest {
     @Test
     public void testWithoutStates() {
         final var car1 = new IndividualImpl(randString(), LIFE_START, UNKNOWN_END);
-        final var car1IsRed = new ColouredCar(car1, Color.RED, LIFE_START, UNKNOWN_END);
+        final var car1IsRed = new ColouredCar(car1, Color.RED, LIFE_START_TIME, UNKNOWN_END_TIME);
 
         assertSame(car1, car1IsRed.individual());
     }
@@ -61,7 +64,7 @@ public class PropertiesTest {
             .members()
             .stream()
             .map(state -> {
-                return new ColouredCar(state.individual(), redCars.property(), state.beginning(), state.ending());
+                return new ColouredCar(state.individual(), redCars.property(), state.beginning().from(), state.ending().from());
             }).toList();
 
         // Convert the list of ColouredCar Attributes into a ColouredCars Property
@@ -71,8 +74,8 @@ public class PropertiesTest {
             attributes
                 .stream()
                 .map(attr -> {
-                    return new StateImpl<Individual>(randString(), attr.individual(), attr.beginning(),
-                        attr.ending());
+                    return new StateImpl<Individual>(randString(), attr.individual(), new EventImpl(randString(), attr.from(), UNKNOWN_END_TIME),
+                        new EventImpl(randString(), attr.to(), UNKNOWN_END_TIME));
                 }).collect(Collectors.toSet()));
 
         // Apart from the IDs, redCars and redCars2 will be identical
@@ -88,6 +91,6 @@ record ColouredCars(String identifier, Color property, Set<State<Individual>> me
     implements Property<State<Individual>, Color> {
 }
 
-record ColouredCar(Individual individual, Color property, Optional<Instant> beginning, Optional<Instant> ending)
+record ColouredCar(Individual individual, Color property, Optional<Instant> from, Optional<Instant> to)
     implements Attribute<Individual, Color> {
 }

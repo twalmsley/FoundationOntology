@@ -11,7 +11,7 @@ import uk.co.aosd.onto.foundation.Individual;
  *
  * @author Tony Walmsley
  */
-public record AttributeImpl<I extends Individual, P>(I individual, P property, Optional<Instant> beginning,
-    Optional<Instant> ending) implements Attribute<I, P> {
+public record AttributeImpl<I extends Individual, P>(I individual, P property, Optional<Instant> from,
+    Optional<Instant> to) implements Attribute<I, P> {
 
 }
