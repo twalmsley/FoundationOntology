@@ -101,6 +101,8 @@ public class PotusTest {
             USA_TO);
 
         assertNotNull(usa);
+
+        JsonUtils.dumpJson(usa);
     }
 
     private static String randStr() {

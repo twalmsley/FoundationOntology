@@ -56,6 +56,8 @@ public class TriggersBroom {
         assertSame(broom.headWithBracketAssembly().bracket(), broomBracket);
         assertSame(broom.headWithBracketAssembly().headAssembly().bristles(), bristles);
         assertSame(broom.headWithBracketAssembly().headAssembly().head(), broomHead);
+    
+        JsonUtils.dumpJson(broom);
     }
 
     private Broom assembleBroom(final BroomHead broomHead, final Bristles bristles, final BroomBracket broomBracket,

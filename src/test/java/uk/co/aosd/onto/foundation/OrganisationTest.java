@@ -3,7 +3,6 @@ package uk.co.aosd.onto.foundation;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -80,14 +79,19 @@ public class OrganisationTest {
         assertNotNull(acme);
 
         // Add the objects to a Possible World
-        final PossibleWorld world = new PossibleWorldImpl(randString(), new HashSet<>(), epochStart, epochEnd);
-        world.parts().add(personSignifier1);
-        world.parts().add(personSignifier2);
-        world.parts().add(acmeSignifier1);
-        world.parts().add(acmeSignifier2);
-        world.parts().add(alice);
-        world.parts().add(ceoMembership);
-        world.parts().add(acme);
+        final var parts = Set.of(
+            personSignifier1,
+            personSignifier2,
+            acmeSignifier1,
+            acmeSignifier2,
+            alice,
+            ceoMembership,
+            acme);
+
+        final PossibleWorld world = new PossibleWorldImpl(randString(), parts, epochStart, epochEnd);
+        assertNotNull(world);
+
+        JsonUtils.dumpJson(world);
     }
 
     private static String randString() {
