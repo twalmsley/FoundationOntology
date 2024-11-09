@@ -6,7 +6,6 @@ import java.time.Instant;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
-import uk.co.aosd.onto.reference.EventImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
 import uk.co.aosd.onto.services.OntologyServices;
 
@@ -139,13 +138,6 @@ public class TriggersBroom {
         return UUID.randomUUID().toString();
     }
 
-    private static Event mkOngoingEvent() {
-        return new EventImpl(randStr(), null, null);
-    }
-
-    private static Event mkEvent(final String from, final String to) {
-        return new EventImpl(randStr(), Instant.parse(from), Instant.parse(to));
-    }
 }
 
 record Broom(String identifier, BroomHandle handle, BroomHeadWithBracketAssembly headWithBracketAssembly,

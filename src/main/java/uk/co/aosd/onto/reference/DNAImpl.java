@@ -7,6 +7,6 @@ import uk.co.aosd.onto.biological.DNA;
  *
  * @author Tony Walmsley
  */
-public record DNAImpl(String dna) implements DNA {
+public record DNAImpl(String identifier, String dna) implements DNA {
 
 }

@@ -88,8 +88,8 @@ public class OntologyServicesImpl implements OntologyServices {
     }
 
     @Override
-    public DNA createDna(final String dna) {
-        return new DNAImpl(dna);
+    public DNA createDna(final String identifier, final String dna) {
+        return new DNAImpl(identifier, dna);
     }
 
     @Override

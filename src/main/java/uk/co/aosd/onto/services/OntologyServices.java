@@ -48,7 +48,7 @@ public interface OntologyServices {
 
     <T extends Individual> State<T> createState(String randString, T individual, Event from, Event to);
 
-    DNA createDna(String dna);
+    DNA createDna(String identifier, String dna);
 
     Owning createOwnership(String identifier, String actionsDescription, Individual owner, Individual owned, Event from, Event to);
 

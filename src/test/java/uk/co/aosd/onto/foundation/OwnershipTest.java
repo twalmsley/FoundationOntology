@@ -20,7 +20,7 @@ public class OwnershipTest {
     public void testTransferOfOwnership() {
         
         // We're not recording DNA
-        final var dna = svc.createDna(null);
+        final var dna = svc.createDna("unknown", null);
         
         // Create a language and class
         final var english = svc.createLanguage("en-GB", "British English");
