@@ -79,7 +79,7 @@ public class OntologyServicesImpl implements OntologyServices {
 
     @Override
     public <T extends Individual> State<T> createState(final String identifier, final T individual, final Event from, final Event to) {
-        return new StateImpl<T>(identifier, null, from, to);
+        return new StateImpl<T>(identifier, individual, from, to);
     }
 
 }
