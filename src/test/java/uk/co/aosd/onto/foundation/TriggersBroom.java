@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.reference.EventImpl;
+import uk.co.aosd.onto.reference.OntologyServicesImpl;
+import uk.co.aosd.onto.services.OntologyServices;
 
 /**
  * An example to show object composition and how it changes over time.
@@ -30,10 +32,12 @@ import uk.co.aosd.onto.reference.EventImpl;
  */
 public class TriggersBroom {
 
-    private static final Event LIFE_START = mkEvent("2024-01-01T12:00:00.00Z", "2024-01-01T12:00:00.00Z");
-    private static final Event UNKNOWN_END = mkOngoingEvent();
-    private static final Event ASSEMBLY_START = mkEvent("2024-11-01T12:00:00.00Z", "2024-11-01T12:00:00.00Z");
-    private static final Event ASSEMBLY_END = mkOngoingEvent();
+    private static OntologyServices svc = new OntologyServicesImpl();
+
+    private static final Event LIFE_START = svc.createEvent(randStr(), Instant.parse("2024-01-01T12:00:00.00Z"), Instant.parse("2024-01-01T12:00:00.00Z"));
+    private static final Event UNKNOWN_END = svc.createEvent(randStr(), null, null);
+    private static final Event ASSEMBLY_START = svc.createEvent(randStr(), Instant.parse("2024-11-01T12:00:00.00Z"), Instant.parse("2024-11-01T12:00:00.00Z"));
+    private static final Event ASSEMBLY_END = svc.createEvent(randStr(), null, null);
 
     @Test
     public void test() {

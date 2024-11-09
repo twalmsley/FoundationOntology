@@ -8,20 +8,9 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
-import uk.co.aosd.onto.biological.Human;
-import uk.co.aosd.onto.language.Language;
-import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
-import uk.co.aosd.onto.reference.ClassImpl;
-import uk.co.aosd.onto.reference.EventImpl;
-import uk.co.aosd.onto.reference.HumanImpl;
-import uk.co.aosd.onto.reference.LanguageImpl;
-import uk.co.aosd.onto.reference.MembershipImpl;
-import uk.co.aosd.onto.reference.OrganisationImpl;
-import uk.co.aosd.onto.reference.PossibleWorldImpl;
-import uk.co.aosd.onto.reference.RoleImpl;
-import uk.co.aosd.onto.reference.SignifierImpl;
-import uk.co.aosd.onto.signifying.Signifier;
+import uk.co.aosd.onto.reference.OntologyServicesImpl;
+import uk.co.aosd.onto.services.OntologyServices;
 
 /**
  * Test that Organisations can be created.
@@ -38,44 +27,46 @@ public class OrganisationTest {
     @Test
     public void testCreateOrganisations() {
 
+        final OntologyServices svc = new OntologyServicesImpl();
+
         // Create the required Events
-        final Event born = new EventImpl(randString(), FROM, TO);
-        final Event died = new EventImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final Event incorporated = new EventImpl(randString(), FROM, TO);
-        final Event dissolved = new EventImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final Event appointed = new EventImpl(randString(), FROM, TO);
-        final Event dismissed = new EventImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final Event epochStart = new EventImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final Event epochEnd = new EventImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var born = svc.createEvent(randString(), FROM, TO);
+        final var died = svc.createEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var incorporated = svc.createEvent(randString(), FROM, TO);
+        final var dissolved = svc.createEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var appointed = svc.createEvent(randString(), FROM, TO);
+        final var dismissed = svc.createEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var epochStart = svc.createEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var epochEnd = svc.createEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
         
         // Create the languages
-        final Language english = new LanguageImpl(randString(), "British English");
-        final Language german = new LanguageImpl(randString(), "Deutsch");
+        final var english = svc.createLanguage(randString(), "British English");
+        final var german = svc.createLanguage(randString(), "Deutsch");
 
         // Create some Signifiers for the person and the organisation.
-        final Signifier<String> personSignifier1 = new SignifierImpl<>(randString(), "Alice Cooper", english, born, died);
-        final Signifier<String> personSignifier2 = new SignifierImpl<>(randString(), "Vincent Damon Furnier", english, born, died);
-        final Signifier<String> acmeSignifier1 = new SignifierImpl<>(randString(), "ACME Widgets Ltd", english, incorporated, dissolved);
-        final Signifier<String> acmeSignifier2 = new SignifierImpl<>(randString(), "ACME Ltd", english, incorporated, dissolved);
+        final var personSignifier1 = svc.createSignifier(randString(), "Alice Cooper", english, born, died);
+        final var personSignifier2 = svc.createSignifier(randString(), "Vincent Damon Furnier", english, born, died);
+        final var acmeSignifier1 = svc.createSignifier(randString(), "ACME Widgets Ltd", english, incorporated, dissolved);
+        final var acmeSignifier2 = svc.createSignifier(randString(), "ACME Ltd", english, incorporated, dissolved);
 
         // The signifiers need to be added to Classes (Sets)
-        final Class<Signifier<String>> person1Names = new ClassImpl<>(randString(), Set.of(personSignifier1, personSignifier2));
-        final Class<Signifier<String>> orgNames = new ClassImpl<>(randString(), Set.of(acmeSignifier1, acmeSignifier2));
+        final var person1Names = svc.createClass(randString(), Set.of(personSignifier1, personSignifier2));
+        final var orgNames = svc.createClass(randString(), Set.of(acmeSignifier1, acmeSignifier2));
 
         // Create the languages that the person uses.
-        final Class<Language> languages = new ClassImpl<>(randString(), Set.of(english, german));
+        final var languages = svc.createClass(randString(), Set.of(english, german));
 
         // Create the person
-        final Human alice = new HumanImpl(randString(), born, died, person1Names, english, languages, UNKNOWN_DNA);
+        final var alice = svc.createHuman(randString(), born, died, person1Names, english, languages, UNKNOWN_DNA);
 
         // Create a Class of memberships for the person as a member of something.
-        final Role ceoRole = new RoleImpl("CEO");
-        final Membership ceoMembership = new MembershipImpl(randString(), alice, ceoRole, appointed, dismissed);
-        final Class<Membership> acmeTeamMemberships = new ClassImpl<>(randString(), Set.of(ceoMembership));
+        final var ceoRole = svc.createRole("CEO");
+        final var ceoMembership = svc.createMembership(randString(), alice, ceoRole, appointed, dismissed);
+        final var acmeTeamMemberships = svc.createClass(randString(), Set.of(ceoMembership));
 
         // Create an organisation with memberships and no sub-units.
-        final Class<Organisation> units = new ClassImpl<>(randString(), Set.of());
-        final OrganisationImpl acme = new OrganisationImpl(randString(), acmeTeamMemberships, "ACME makes widgets", units, orgNames, incorporated, dissolved);
+        final Class<Organisation> units = svc.createClass(randString(), Set.of());
+        final var acme = svc.createOrganisation(randString(), acmeTeamMemberships, "ACME makes widgets", units, orgNames, incorporated, dissolved);
 
         assertNotNull(acme);
 
@@ -89,7 +80,7 @@ public class OrganisationTest {
             ceoMembership,
             acme);
 
-        final PossibleWorld world = new PossibleWorldImpl(randString(), parts, epochStart, epochEnd);
+        final var world = svc.createPossibleWorld(randString(), parts, epochStart, epochEnd);
         assertNotNull(world);
 
         JsonUtils.dumpJson(world);
