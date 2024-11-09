@@ -2,6 +2,7 @@ package uk.co.aosd.onto.reference;
 
 import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
+import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.signifying.Signifying;
 
 /**
@@ -9,7 +10,7 @@ import uk.co.aosd.onto.signifying.Signifying;
  *
  * @author Tony Walmsley
  */
-public record SignifyingImpl<T>(String identifier, String actionsDescription, T name, UniquelyIdentifiable named,
+public record SignifyingImpl<T>(String identifier, String actionsDescription, T name, Language language, UniquelyIdentifiable named,
     Event beginning, Event ending) implements Signifying<T> {
 
 }

@@ -47,20 +47,22 @@ public class OrganisationTest {
         final Event dismissed = new EventImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
         final Event epochStart = new EventImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
         final Event epochEnd = new EventImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        
+        // Create the languages
+        final Language english = new LanguageImpl(randString(), "British English");
+        final Language german = new LanguageImpl(randString(), "Deutsch");
 
         // Create some Signifiers for the person and the organisation.
-        final Signifier<String> personSignifier1 = new SignifierImpl<>(randString(), "Alice Cooper", born, died);
-        final Signifier<String> personSignifier2 = new SignifierImpl<>(randString(), "Vincent Damon Furnier", born, died);
-        final Signifier<String> acmeSignifier1 = new SignifierImpl<>(randString(), "ACME Widgets Ltd", incorporated, dissolved);
-        final Signifier<String> acmeSignifier2 = new SignifierImpl<>(randString(), "ACME Ltd", incorporated, dissolved);
+        final Signifier<String> personSignifier1 = new SignifierImpl<>(randString(), "Alice Cooper", english, born, died);
+        final Signifier<String> personSignifier2 = new SignifierImpl<>(randString(), "Vincent Damon Furnier", english, born, died);
+        final Signifier<String> acmeSignifier1 = new SignifierImpl<>(randString(), "ACME Widgets Ltd", english, incorporated, dissolved);
+        final Signifier<String> acmeSignifier2 = new SignifierImpl<>(randString(), "ACME Ltd", english, incorporated, dissolved);
 
         // The signifiers need to be added to Classes (Sets)
         final Class<Signifier<String>> person1Names = new ClassImpl<>(randString(), Set.of(personSignifier1, personSignifier2));
         final Class<Signifier<String>> orgNames = new ClassImpl<>(randString(), Set.of(acmeSignifier1, acmeSignifier2));
 
         // Create the languages that the person uses.
-        final Language english = new LanguageImpl(randString(), "British English");
-        final Language german = new LanguageImpl(randString(), "Deutsch");
         final Class<Language> languages = new ClassImpl<>(randString(), Set.of(english, german));
 
         // Create the person

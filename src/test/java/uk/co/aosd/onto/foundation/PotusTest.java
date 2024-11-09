@@ -50,26 +50,26 @@ public class PotusTest {
     public void test() {
 
         // Create Donald Trump
-        final Signifier<String> personSignifier1 = new SignifierImpl<>(randStr(), "Donald Trump", TRUMP_BORN, TRUMP_DIED);
+        final Language usEnglish = new LanguageImpl(randStr(), "American English");
+        final Class<Language> languages = new ClassImpl<>(randStr(), Set.of(usEnglish));
+        final Signifier<String> personSignifier1 = new SignifierImpl<>(randStr(), "Donald Trump", usEnglish, TRUMP_BORN, TRUMP_DIED);
         final Class<Signifier<String>> person1Names = new ClassImpl<>(randStr(), Set.of(personSignifier1));
-        final Language nativeLanguage = new LanguageImpl(randStr(), "American English");
-        final Class<Language> languages = new ClassImpl<>(randStr(), Set.of(nativeLanguage));
 
-        final Human donaldTrump = new HumanImpl(randStr(), TRUMP_BORN, TRUMP_DIED, person1Names, nativeLanguage, languages,
+        final Human donaldTrump = new HumanImpl(randStr(), TRUMP_BORN, TRUMP_DIED, person1Names, usEnglish, languages,
             UNKNOWN_DNA);
 
         // Create the names of the USA
-        final Signifier<String> usaSignifier1 = new SignifierImpl<>(randStr(), "USA", USA_FROM, USA_TO);
-        final Signifier<String> usaSignifier2 = new SignifierImpl<>(randStr(), "United States of America", USA_FROM,
+        final Signifier<String> usaSignifier1 = new SignifierImpl<>(randStr(), "USA", usEnglish, USA_FROM, USA_TO);
+        final Signifier<String> usaSignifier2 = new SignifierImpl<>(randStr(), "United States of America", usEnglish, USA_FROM,
             USA_TO);
-        final Signifier<String> usaSignifier3 = new SignifierImpl<>(randStr(), "US", USA_FROM, USA_TO);
-        final Signifier<String> usaSignifier4 = new SignifierImpl<>(randStr(), "United States", USA_FROM, USA_TO);
-        final Signifier<String> usaSignifier5 = new SignifierImpl<>(randStr(), "America", USA_FROM, USA_TO);
+        final Signifier<String> usaSignifier3 = new SignifierImpl<>(randStr(), "US", usEnglish, USA_FROM, USA_TO);
+        final Signifier<String> usaSignifier4 = new SignifierImpl<>(randStr(), "United States", usEnglish, USA_FROM, USA_TO);
+        final Signifier<String> usaSignifier5 = new SignifierImpl<>(randStr(), "America", usEnglish, USA_FROM, USA_TO);
         final Set<Signifier<String>> setOfSignifiers = Set.of(usaSignifier1, usaSignifier2, usaSignifier3, usaSignifier4, usaSignifier5);
         final Class<Signifier<String>> namesOfTheUsa = new ClassImpl<>(randStr(), setOfSignifiers);
 
         // Create the name of the USA Government
-        final Signifier<String> usaGovSignifier1 = new SignifierImpl<>(randStr(), "The Government of the United States of America", USA_FROM,
+        final Signifier<String> usaGovSignifier1 = new SignifierImpl<>(randStr(), "The Government of the United States of America", usEnglish, USA_FROM,
             USA_TO);
         final Class<Signifier<String>> namesOfTheUsaGov = new ClassImpl<>(randStr(), Set.of(usaGovSignifier1));
 

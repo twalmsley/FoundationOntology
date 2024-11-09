@@ -1,6 +1,7 @@
 package uk.co.aosd.onto.reference;
 
 import uk.co.aosd.onto.foundation.Event;
+import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.signifying.Signifier;
 
 /**
@@ -8,7 +9,7 @@ import uk.co.aosd.onto.signifying.Signifier;
  *
  * @author Tony Walmsley
  */
-public record SignifierImpl<T>(String identifier, T name, Event beginning, Event ending)
+public record SignifierImpl<T>(String identifier, T name, Language language, Event beginning, Event ending)
     implements Signifier<T> {
 
 }
