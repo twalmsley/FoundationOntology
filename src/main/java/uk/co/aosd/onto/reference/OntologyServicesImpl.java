@@ -16,6 +16,7 @@ import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.ownership.Owning;
+import uk.co.aosd.onto.ownership.TransferringOfOwnership;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.signifying.Signifier;
 
@@ -99,7 +100,7 @@ public class OntologyServicesImpl implements OntologyServices {
     }
 
     @Override
-    public Object transferOwnership(final String identifier, final String actionsDescription, final Owning current, final Individual newOwner,
+    public TransferringOfOwnership transferOwnership(final String identifier, final String actionsDescription, final Owning current, final Individual newOwner,
         final Event from, final Event to) {
         // The previous owneship ends at the from event.
         final var endOwnership = createOwnership(current.identifier(), current.actionsDescription(), current.owner(), current.owned(), current.beginning(),

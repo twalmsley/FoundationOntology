@@ -16,6 +16,7 @@ import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.ownership.Owning;
+import uk.co.aosd.onto.ownership.TransferringOfOwnership;
 import uk.co.aosd.onto.signifying.Signifier;
 
 /**
@@ -52,5 +53,5 @@ public interface OntologyServices {
 
     Owning createOwnership(String identifier, String actionsDescription, Individual owner, Individual owned, Event from, Event to);
 
-    Object transferOwnership(String string, String actionsDescription, Owning current, Individual newOwner, Event from, Event to);
+    TransferringOfOwnership transferOwnership(String string, String actionsDescription, Owning current, Individual newOwner, Event from, Event to);
 }
