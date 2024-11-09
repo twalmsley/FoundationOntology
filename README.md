@@ -4,7 +4,7 @@ This library is a work-in-progress to define a Top Level Ontology in Java that i
 
 **Note: For the moment the focus will be on the foundation package and the other packages will be developed fully later.**
 
-See [this blog post](https://twalmsley.github.io/blog1/blog1.html) for a discussion of HQDM and [this blog post](https://twalmsley.github.io/blog1/blog2.html) for the background to this library.
+See [this blog post](https://twalmsley.github.io/blog1/blog1.html) for a discussion of HQDM and [this blog post](https://twalmsley.github.io/blog2/blog2.html) for the background to this library.
 
 ![UML Diagram](./diagrams/uml.png)
 
