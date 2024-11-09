@@ -1,7 +1,5 @@
 package uk.co.aosd.onto.reference;
 
-import java.util.Optional;
-
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
 import uk.co.aosd.onto.foundation.Class;
@@ -21,6 +19,6 @@ public record HumanImpl(
     Class<Signifier<String>> names,
     Language nativeLanguage,
     Class<Language> languages,
-    Optional<DNA> dna) implements Human {
+    DNA dna) implements Human {
 
 }

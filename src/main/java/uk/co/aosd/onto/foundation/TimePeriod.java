@@ -10,9 +10,9 @@ import java.util.Optional;
  * @author Tony Walmsley
  */
 public interface TimePeriod {
-    Optional<Instant> from();
+    Instant from();
 
-    Optional<Instant> to();
+    Instant to();
 
     /**
      * A default calculation of the duration between the beginning and ending
@@ -23,8 +23,8 @@ public interface TimePeriod {
     default Optional<Duration> duration() {
         final var beginning = from();
         final var ending = to();
-        if (beginning.isPresent() && ending.isPresent()) {
-            return Optional.of(Duration.between(beginning.get(), ending.get()));
+        if (beginning != null && ending != null) {
+            return Optional.of(Duration.between(beginning, ending));
         }
         return Optional.empty();
     }

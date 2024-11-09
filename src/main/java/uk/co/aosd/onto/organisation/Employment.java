@@ -1,7 +1,5 @@
 package uk.co.aosd.onto.organisation;
 
-import java.util.Optional;
-
 import uk.co.aosd.onto.biological.Human;
 import uk.co.aosd.onto.foundation.Activity;
 
@@ -15,5 +13,5 @@ public interface Employment<C> extends Activity {
 
     Organisation employer();
 
-    Optional<C> contract();
+    C contract();
 }

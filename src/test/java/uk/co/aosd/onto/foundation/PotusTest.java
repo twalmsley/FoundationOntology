@@ -3,7 +3,6 @@ package uk.co.aosd.onto.foundation;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -35,7 +34,7 @@ import uk.co.aosd.onto.signifying.Signifier;
  */
 public class PotusTest {
 
-    private static final Optional<DNA> UNKNOWN_DNA = Optional.empty();
+    private static final DNA UNKNOWN_DNA = null;
     private static final String PURPOSE = "To occupy its territory and serve its people.";
     private static final Event USA_FROM = mkEvent("1776-06-04T00:00:00.00Z", "1776-06-04T23:59:59.99Z");
     private static final Event USA_TO = mkOngoingEvent();
@@ -110,11 +109,11 @@ public class PotusTest {
     }
 
     private static Event mkOngoingEvent() {
-        return new EventImpl(randStr(), Optional.empty(), Optional.empty());
+        return new EventImpl(randStr(), null, null);
     }
 
     private static Event mkEvent(final String from, final String to) {
-        return new EventImpl(randStr(), Optional.of(Instant.parse(from)), Optional.of(Instant.parse(to)));
+        return new EventImpl(randStr(), Instant.parse(from), Instant.parse(to));
     }
 }
 

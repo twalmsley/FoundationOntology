@@ -3,7 +3,6 @@ package uk.co.aosd.onto.foundation;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,10 +30,10 @@ import uk.co.aosd.onto.signifying.Signifier;
  */
 public class OrganisationTest {
 
-    private static final Optional<Instant> FROM = Optional.of(Instant.parse("2024-01-01T00:00:00.00Z"));
-    private static final Optional<Instant> TO = Optional.empty();
-    private static final Optional<Instant> UNKNOWN_TIME = Optional.empty();
-    private static final Optional<DNA> UNKNOWN_DNA = Optional.empty();
+    private static final Instant FROM = Instant.parse("2024-01-01T00:00:00.00Z");
+    private static final Instant TO = null;
+    private static final Instant UNKNOWN_TIME = null;
+    private static final DNA UNKNOWN_DNA = null;
 
     @Test
     public void testCreateOrganisations() {

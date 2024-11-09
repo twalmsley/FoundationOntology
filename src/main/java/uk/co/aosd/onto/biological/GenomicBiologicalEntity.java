@@ -1,7 +1,5 @@
 package uk.co.aosd.onto.biological;
 
-import java.util.Optional;
-
 import uk.co.aosd.onto.foundation.Individual;
 
 /**
@@ -16,5 +14,5 @@ public interface GenomicBiologicalEntity extends Individual {
      *
      * @return Optional DNA.
      */
-    Optional<DNA> dna();
+    DNA dna();
 }

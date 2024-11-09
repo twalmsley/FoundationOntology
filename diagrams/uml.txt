@@ -6,7 +6,7 @@ interface uk.co.aosd.onto.biological.DNA {
 
 
 interface uk.co.aosd.onto.biological.GenomicBiologicalEntity {
-	{method}  {abstract} +dna () : java.util.Optional
+	{method}  {abstract} +dna () : uk.co.aosd.onto.biological.DNA
 }
 
 
@@ -92,8 +92,8 @@ interface uk.co.aosd.onto.foundation.State {
 
 interface uk.co.aosd.onto.foundation.TimePeriod {
 	{method} +duration () : java.util.Optional
-	{method}  {abstract} +from () : java.util.Optional
-	{method}  {abstract} +to () : java.util.Optional
+	{method}  {abstract} +from () : java.time.Instant
+	{method}  {abstract} +to () : java.time.Instant
 }
 
 
@@ -113,7 +113,7 @@ interface uk.co.aosd.onto.language.Language {
 
 
 interface uk.co.aosd.onto.organisation.Employment {
-	{method}  {abstract} +contract () : java.util.Optional
+	{method}  {abstract} +contract () : Object
 	{method}  {abstract} +employee () : uk.co.aosd.onto.biological.Human
 	{method}  {abstract} +employer () : uk.co.aosd.onto.organisation.Organisation
 }

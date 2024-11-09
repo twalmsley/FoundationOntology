@@ -3,7 +3,6 @@ package uk.co.aosd.onto.foundation;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -137,11 +136,11 @@ public class TriggersBroom {
     }
 
     private static Event mkOngoingEvent() {
-        return new EventImpl(randStr(), Optional.empty(), Optional.empty());
+        return new EventImpl(randStr(), null, null);
     }
 
     private static Event mkEvent(final String from, final String to) {
-        return new EventImpl(randStr(), Optional.of(Instant.parse(from)), Optional.of(Instant.parse(to)));
+        return new EventImpl(randStr(), Instant.parse(from), Instant.parse(to));
     }
 }
 
