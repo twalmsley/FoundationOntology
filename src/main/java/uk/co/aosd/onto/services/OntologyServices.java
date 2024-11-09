@@ -15,6 +15,7 @@ import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
+import uk.co.aosd.onto.ownership.Owning;
 import uk.co.aosd.onto.signifying.Signifier;
 
 /**
@@ -46,4 +47,10 @@ public interface OntologyServices {
     Individual createIndividual(String randString, Event from, Event to);
 
     <T extends Individual> State<T> createState(String randString, T individual, Event from, Event to);
+
+    DNA createDna(String dna);
+
+    Owning createOwnership(String identifier, String actionsDescription, Individual owner, Individual owned, Event from, Event to);
+
+    Object transferOwnership(String string, String actionsDescription, Owning current, Individual newOwner, Event from, Event to);
 }

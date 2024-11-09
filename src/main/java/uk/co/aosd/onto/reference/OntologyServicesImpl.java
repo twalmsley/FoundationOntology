@@ -15,11 +15,16 @@ import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
+import uk.co.aosd.onto.ownership.Owning;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.signifying.Signifier;
 
 /**
  * A reference implementation of the OntologyServices interface.
+ *
+ * <p>
+ * This allows users of the library to code to the ontology interfaces without knowing about the implementation classes directly.
+ * </p>
  *
  * @author Tony Walmsley
  */
@@ -80,6 +85,30 @@ public class OntologyServicesImpl implements OntologyServices {
     @Override
     public <T extends Individual> State<T> createState(final String identifier, final T individual, final Event from, final Event to) {
         return new StateImpl<T>(identifier, individual, from, to);
+    }
+
+    @Override
+    public DNA createDna(final String dna) {
+        return new DNAImpl(dna);
+    }
+
+    @Override
+    public Owning createOwnership(final String identifier, final String actionsDescription, final Individual owner, final Individual owned, final Event from,
+        final Event to) {
+        return new OwningImpl(identifier, actionsDescription, owner, owned, from, to);
+    }
+
+    @Override
+    public Object transferOwnership(final String identifier, final String actionsDescription, final Owning current, final Individual newOwner,
+        final Event from, final Event to) {
+        // The previous owneship ends at the from event.
+        final var endOwnership = createOwnership(current.identifier(), current.actionsDescription(), current.owner(), current.owned(), current.beginning(),
+            from);
+        // The new ownership starts at the from event.
+        final var newOwnership = createOwnership(identifier, actionsDescription, newOwner, current.owned(), from, to);
+
+        // The transfer happens at the from event and finishes at the from event.
+        return new TransferringOfOwnershipImpl(identifier, actionsDescription, endOwnership, newOwnership, from, from);
     }
 
 }
