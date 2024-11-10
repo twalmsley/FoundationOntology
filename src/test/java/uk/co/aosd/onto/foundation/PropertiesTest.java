@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import java.awt.Color;
 import java.time.Instant;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -83,8 +82,10 @@ public class PropertiesTest {
         assertEquals(redCars.members().size(), redCars2.members().size());
     }
 
+    private static int id;
+
     private static String randString() {
-        return UUID.randomUUID().toString();
+        return Integer.toString(id++);
     }
 }
 

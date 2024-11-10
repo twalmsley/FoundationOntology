@@ -3,7 +3,6 @@ package uk.co.aosd.onto.foundation;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Instant;
-import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
@@ -134,8 +133,10 @@ public class TriggersBroom {
         return new BroomHeadAssembly(id, head, bristles, beginning, ending);
     }
 
+    private static int id;
+
     private static String randStr() {
-        return UUID.randomUUID().toString();
+        return Integer.toString(id++);
     }
 
 }
