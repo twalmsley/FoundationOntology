@@ -23,7 +23,7 @@ import uk.co.aosd.onto.signifying.Signifier;
  *
  * @author Tony Walmsley
  */
-public class PotusTest {
+public class PotusExample {
 
     private static OntologyServices svc = new OntologyServicesImpl();
 

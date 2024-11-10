@@ -10,6 +10,7 @@ import uk.co.aosd.onto.services.OntologyServices;
 
 /**
  * An example to show object composition and how it changes over time.
+ *
  * <p>
  * Trigger's broom consists of some bristles, a broom head, a broom handle, and
  * a bracket to connect the handle to the head. In this example we construct a
