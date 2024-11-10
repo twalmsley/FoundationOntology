@@ -3,6 +3,7 @@ package uk.co.aosd.onto.reference;
 import java.time.Instant;
 import java.util.Set;
 
+import org.decimal4j.immutable.Decimal3f;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
 import uk.co.aosd.onto.foundation.Class;
@@ -13,6 +14,8 @@ import uk.co.aosd.onto.foundation.Role;
 import uk.co.aosd.onto.foundation.State;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.language.Language;
+import uk.co.aosd.onto.money.Currency;
+import uk.co.aosd.onto.money.MonetaryValue;
 import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.ownership.Owning;
@@ -110,6 +113,16 @@ public class OntologyServicesImpl implements OntologyServices {
 
         // The transfer happens at the from event and finishes at the from event.
         return new TransferringOfOwnershipImpl(identifier, actionsDescription, endOwnership, newOwnership, from, from);
+    }
+
+    @Override
+    public Currency createCurrency(final String identifier, final String code, final String name, final char symbol) {
+        return new CurrencyImpl(identifier, code, name, symbol);
+    }
+
+    @Override
+    public <U extends Currency> MonetaryValue<U> createMonetaryValue(final Decimal3f value, final U unit) {
+        return new MonetaryValueImpl<U>(value, unit);
     }
 
 }

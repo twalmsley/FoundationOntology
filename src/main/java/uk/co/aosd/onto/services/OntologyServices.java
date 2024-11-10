@@ -3,6 +3,7 @@ package uk.co.aosd.onto.services;
 import java.time.Instant;
 import java.util.Set;
 
+import org.decimal4j.immutable.Decimal3f;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
 import uk.co.aosd.onto.foundation.Class;
@@ -13,6 +14,8 @@ import uk.co.aosd.onto.foundation.Role;
 import uk.co.aosd.onto.foundation.State;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.language.Language;
+import uk.co.aosd.onto.money.Currency;
+import uk.co.aosd.onto.money.MonetaryValue;
 import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.ownership.Owning;
@@ -54,4 +57,8 @@ public interface OntologyServices {
     Owning createOwnership(String identifier, String actionsDescription, Individual owner, Individual owned, Event from, Event to);
 
     TransferringOfOwnership transferOwnership(String string, String actionsDescription, Owning current, Individual newOwner, Event from, Event to);
+
+    Currency createCurrency(String identifier, String code, String name, char symbol);
+
+    <U extends Currency> MonetaryValue<U> createMonetaryValue(Decimal3f value, U unit);
 }
