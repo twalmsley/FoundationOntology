@@ -6,6 +6,7 @@ import java.util.Set;
 import org.decimal4j.immutable.Decimal3f;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
+import uk.co.aosd.onto.foundation.Agglomerate;
 import uk.co.aosd.onto.foundation.Class;
 import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
@@ -64,4 +65,6 @@ public interface OntologyServices {
     <U extends Currency> MonetaryValue<U> createMonetaryValue(Decimal3f value, U unit);
 
     Model createModel();
+
+    Agglomerate createAgglomerate(String identifier, Set<Individual> items, Event from, Event to);
 }

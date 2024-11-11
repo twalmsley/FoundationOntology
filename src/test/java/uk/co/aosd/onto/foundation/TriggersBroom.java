@@ -3,6 +3,7 @@ package uk.co.aosd.onto.foundation;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Instant;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
@@ -48,8 +49,12 @@ public class TriggersBroom {
         final var bristles = new Bristles(randStr(), LIFE_START, UNKNOWN_END);
         final var broomBracket = new BroomBracket(randStr(), LIFE_START, UNKNOWN_END);
 
-        // Assemble the broom
-        final var broom = assembleBroom(broomHead, bristles, broomBracket, broomHandle);
+        // Gather the parts into an Agglomerate (not really necessary, this just shows
+        // what an Agglomerate is)
+        final var parts = svc.createAgglomerate(randStr(), Set.of(broomBracket, bristles, broomHead, broomHandle), LIFE_START, UNKNOWN_END);
+
+        // Assemble the broom composite from the set of parts
+        final var broom = assembleBroom(parts);
 
         //
         // Check the composition is correct.
@@ -58,12 +63,87 @@ public class TriggersBroom {
         assertSame(broom.headWithBracketAssembly().bracket(), broomBracket);
         assertSame(broom.headWithBracketAssembly().headAssembly().bristles(), bristles);
         assertSame(broom.headWithBracketAssembly().headAssembly().head(), broomHead);
-    
-        JsonUtils.dumpJson(broom);
+
+        // The bristles are worn out after much use, so replace them
+        final var activityFrom = svc.createEvent(randStr(), Instant.parse("2024-11-11T12:00:00.00Z"), Instant.parse("2024-11-11T12:00:00.00Z"));
+        final var activityTo = svc.createEvent(randStr(), Instant.parse("2024-11-11T12:30:00.00Z"), Instant.parse("2024-11-11T12:30:00.00Z"));
+        final var activityRecord = replaceBristles(broom, new Bristles(randStr(), LIFE_START, UNKNOWN_END), activityFrom, activityTo);
+
+        JsonUtils.dumpJson(activityRecord);
+
+        assertSame(activityFrom, activityRecord.beginning());
+        assertSame(activityTo, activityRecord.ending());
+
+        assertSame(activityFrom, activityRecord.oldBroom().ending());
+        assertSame(activityFrom, activityRecord.oldBroom().headWithBracketAssembly().headAssembly().bristles().ending());
+        assertSame(activityFrom, activityRecord.oldBristles().ending());
+        assertSame(activityFrom, activityRecord.oldHeadAssembly().ending());
+        assertSame(activityFrom, activityRecord.oldHeadWithBracketAssembly().ending());
+
+        assertSame(activityFrom, activityRecord.newBroom().beginning());
+        assertSame(UNKNOWN_END, activityRecord.newBroom().ending());
+
+        assertSame(broomBracket, activityRecord.newBroom().headWithBracketAssembly().bracket());
+        assertSame(broomHead, activityRecord.newBroom().headWithBracketAssembly().headAssembly().head());
+        assertSame(broomHandle, activityRecord.newBroom().handle());
     }
 
-    private Broom assembleBroom(final BroomHead broomHead, final Bristles bristles, final BroomBracket broomBracket,
-        final BroomHandle broomHandle) {
+    /**
+     * Replace the worn out bristles, close off the lifetimes of the old assemblies
+     * and old bristles, * create new assemblies and a new broom.
+     *
+     * @param broom
+     *            The Broom
+     * @param bristles
+     *            The new Bristles
+     * @param activityStart
+     *            Event
+     * @param activityEnd
+     *            Event
+     * @return ReplaceBristlesActivity
+     */
+    private ReplaceBristlesActivity replaceBristles(final Broom broom, final Bristles bristles, final Event activityStart, final Event activityEnd) {
+
+        // Set the ending for the old headAssembly
+        final var headAssembly = broom.headWithBracketAssembly().headAssembly();
+        final Bristles oldBristles = new Bristles(headAssembly.bristles().identifier(), headAssembly.bristles().beginning(), activityStart);
+        final var oldHeadAssembly = new BroomHeadAssembly(headAssembly.identifier(), headAssembly.head(), oldBristles, headAssembly.beginning(),
+            activityStart);
+
+        // Set the ending for the old headAndBracketAssembly
+        final var headAndBracketAssembly = broom.headWithBracketAssembly();
+        final var oldHeadWithBracketAssembly = new BroomHeadWithBracketAssembly(headAndBracketAssembly.identifier(), oldHeadAssembly,
+            headAndBracketAssembly.bracket(), headAndBracketAssembly.beginning(), activityStart);
+
+        // Set the ending for the old Broom.
+        final var oldBroom = new Broom(randStr(), broom.handle(), oldHeadWithBracketAssembly, broom.beginning(), activityStart);
+
+        // Create the updated broom
+        final var updatedHeadAssembly = fitBristles(randStr(), headAssembly.head(), bristles, activityStart, UNKNOWN_END);
+        final var updatedHeadAndBracketAssembly = fitBracket(randStr(), updatedHeadAssembly, headAndBracketAssembly.bracket(), activityStart, UNKNOWN_END);
+        final var updatedBroom = fitHandle(randStr(), oldBroom.handle(), updatedHeadAndBracketAssembly, activityStart, UNKNOWN_END);
+
+        return new ReplaceBristlesActivity(randStr(), "Replace bristles", oldBroom, updatedBroom, oldBristles, oldHeadAssembly,
+            oldHeadWithBracketAssembly,
+            activityStart, activityEnd);
+    }
+
+    /**
+     * Convert an Agglomerate of broom parts into a composition which is a broom.
+     *
+     * @param parts
+     *            An Agglomerate
+     * @return Broom
+     */
+    private Broom assembleBroom(final Agglomerate parts) {
+        //
+        // Get the parts from the agglomerate, then build the composite Broom
+        //
+        final var broomHandle = (BroomHandle) parts.parts().stream().filter(x -> x instanceof BroomHandle).findFirst().orElse(null);
+        final var broomHead = (BroomHead) parts.parts().stream().filter(x -> x instanceof BroomHead).findFirst().orElse(null);
+        final var bristles = (Bristles) parts.parts().stream().filter(x -> x instanceof Bristles).findFirst().orElse(null);
+        final var broomBracket = (BroomBracket) parts.parts().stream().filter(x -> x instanceof BroomBracket).findFirst().orElse(null);
+
         //
         // Fit the bristles in the head.
         //
@@ -164,4 +244,9 @@ record Bristles(String identifier, Event beginning, Event ending) implements Ind
 }
 
 record BroomBracket(String identifier, Event beginning, Event ending) implements Individual {
+}
+
+record ReplaceBristlesActivity(String identifier, String actionsDescription, Broom oldBroom, Broom newBroom, Bristles oldBristles,
+    BroomHeadAssembly oldHeadAssembly,
+    BroomHeadWithBracketAssembly oldHeadWithBracketAssembly, Event beginning, Event ending) implements Activity {
 }

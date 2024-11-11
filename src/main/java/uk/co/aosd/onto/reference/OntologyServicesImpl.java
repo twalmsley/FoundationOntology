@@ -6,6 +6,7 @@ import java.util.Set;
 import org.decimal4j.immutable.Decimal3f;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
+import uk.co.aosd.onto.foundation.Agglomerate;
 import uk.co.aosd.onto.foundation.Class;
 import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
@@ -130,6 +131,11 @@ public class OntologyServicesImpl implements OntologyServices {
     @Override
     public Model createModel() {
         return new ModelImpl();
+    }
+
+    @Override
+    public Agglomerate createAgglomerate(final String identifier, final Set<Individual> items, final Event from, final Event to) {
+        return new AgglomerateImpl(identifier, items, from, to);
     }
 
 }

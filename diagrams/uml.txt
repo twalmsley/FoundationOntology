@@ -168,6 +168,7 @@ interface uk.co.aosd.onto.ownership.TransferringOfOwnership {
 
 
 interface uk.co.aosd.onto.services.OntologyServices {
+	{method}  {abstract} +createAgglomerate ( paramString1 : String , paramSet2 : java.util.Set , paramEvent3 : uk.co.aosd.onto.foundation.Event , paramEvent4 : uk.co.aosd.onto.foundation.Event ) : uk.co.aosd.onto.foundation.Agglomerate
 	{method}  {abstract} +createClass ( paramString1 : String , paramSet2 : java.util.Set ) : uk.co.aosd.onto.foundation.Class
 	{method}  {abstract} +createCurrency ( paramString1 : String , paramString2 : String , paramString3 : String , paramchar4 : char ) : uk.co.aosd.onto.money.Currency
 	{method}  {abstract} +createDna ( paramString1 : String , paramString2 : String ) : uk.co.aosd.onto.biological.DNA
