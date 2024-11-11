@@ -7,6 +7,6 @@ import uk.co.aosd.onto.foundation.Role;
  *
  * @author Tony Walmsley
  */
-public record RoleImpl(String name) implements Role {
+public record RoleImpl(String identifier, String name) implements Role {
 
 }

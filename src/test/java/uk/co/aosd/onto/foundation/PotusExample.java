@@ -33,9 +33,12 @@ public class PotusExample {
     private static final Event USA_TO = svc.createEvent(randStr(), null, null);
     private static final Event TRUMP_DIED = svc.createEvent(randStr(), null, null);
     private static final Event TRUMP_BORN = svc.createEvent(randStr(), Instant.parse("1946-06-14T00:00:00.00Z"), Instant.parse("1946-06-14T23:59:59.99Z"));
-    private static final Event TRUMP_POTUS_START_1 = svc.createEvent(randStr(), Instant.parse("2017-01-20T00:00:00.00Z"), Instant.parse("2017-01-20T23:59:59.99Z"));
-    private static final Event TRUMP_POTUS_END_1 = svc.createEvent(randStr(), Instant.parse("2021-01-20T00:00:00.00Z"), Instant.parse("2017-01-20T23:59:59.99Z"));
-    private static final Event TRUMP_POTUS_START_2 = svc.createEvent(randStr(), Instant.parse("2025-01-20T00:00:00.00Z"), Instant.parse("2017-01-20T23:59:59.99Z"));
+    private static final Event TRUMP_POTUS_START_1 = svc.createEvent(randStr(), Instant.parse("2017-01-20T00:00:00.00Z"),
+        Instant.parse("2017-01-20T23:59:59.99Z"));
+    private static final Event TRUMP_POTUS_END_1 = svc.createEvent(randStr(), Instant.parse("2021-01-20T00:00:00.00Z"),
+        Instant.parse("2017-01-20T23:59:59.99Z"));
+    private static final Event TRUMP_POTUS_START_2 = svc.createEvent(randStr(), Instant.parse("2025-01-20T00:00:00.00Z"),
+        Instant.parse("2017-01-20T23:59:59.99Z"));
     private static final Event TRUMP_POTUS_END_2 = svc.createEvent(randStr(), null, null);
     private static final Event TRUMP_CITIZENSHIP_ENDS = svc.createEvent(randStr(), null, null);
 
@@ -66,8 +69,8 @@ public class PotusExample {
         final var namesOfTheUsaGov = svc.createClass(randStr(), Set.of(usaGovSignifier1));
 
         // Create the POTUS and Citizen roles.
-        final var presidentRole = svc.createRole("President of the United States of America");
-        final var citizenRole = svc.createRole("Citizen of the United States of America");
+        final var presidentRole = svc.createRole(randStr(), "President of the United States of America");
+        final var citizenRole = svc.createRole(randStr(), "Citizen of the United States of America");
 
         // Register Donald Trump's memberships of the US Government in the role of POTUS
         final var potus1 = svc.createMembership(randStr(), donaldTrump, presidentRole, TRUMP_POTUS_START_1, TRUMP_POTUS_END_1);

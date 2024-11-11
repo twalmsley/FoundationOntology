@@ -5,7 +5,7 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface Role {
+public interface Role extends UniquelyIdentifiable {
 
     String name();
 }

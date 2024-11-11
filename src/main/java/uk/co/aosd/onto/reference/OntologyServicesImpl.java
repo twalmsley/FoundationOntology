@@ -63,8 +63,8 @@ public class OntologyServicesImpl implements OntologyServices {
     }
 
     @Override
-    public Role createRole(final String name) {
-        return new RoleImpl(name);
+    public Role createRole(final String identifier, final String name) {
+        return new RoleImpl(identifier, name);
     }
 
     @Override

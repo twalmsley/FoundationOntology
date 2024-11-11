@@ -181,7 +181,7 @@ interface uk.co.aosd.onto.services.OntologyServices {
 	{method}  {abstract} +createOrganisation ( paramString1 : String , paramClass2 : uk.co.aosd.onto.foundation.Class , paramString3 : String , paramClass4 : uk.co.aosd.onto.foundation.Class , paramClass5 : uk.co.aosd.onto.foundation.Class , paramEvent6 : uk.co.aosd.onto.foundation.Event , paramEvent7 : uk.co.aosd.onto.foundation.Event ) : uk.co.aosd.onto.organisation.Organisation
 	{method}  {abstract} +createOwnership ( paramString1 : String , paramString2 : String , paramIndividual3 : uk.co.aosd.onto.foundation.Individual , paramIndividual4 : uk.co.aosd.onto.foundation.Individual , paramEvent5 : uk.co.aosd.onto.foundation.Event , paramEvent6 : uk.co.aosd.onto.foundation.Event ) : uk.co.aosd.onto.ownership.Owning
 	{method}  {abstract} +createPossibleWorld ( paramString1 : String , paramSet2 : java.util.Set , paramEvent3 : uk.co.aosd.onto.foundation.Event , paramEvent4 : uk.co.aosd.onto.foundation.Event ) : uk.co.aosd.onto.foundation.PossibleWorld
-	{method}  {abstract} +createRole ( paramString1 : String ) : uk.co.aosd.onto.foundation.Role
+	{method}  {abstract} +createRole ( paramString1 : String , paramString2 : String ) : uk.co.aosd.onto.foundation.Role
 	{method}  {abstract} +createSignifier ( paramString1 : String , paramObject2 : Object , paramLanguage3 : uk.co.aosd.onto.language.Language , paramEvent4 : uk.co.aosd.onto.foundation.Event , paramEvent5 : uk.co.aosd.onto.foundation.Event ) : uk.co.aosd.onto.signifying.Signifier
 	{method}  {abstract} +createState ( paramString1 : String , paramIndividual2 : uk.co.aosd.onto.foundation.Individual , paramEvent3 : uk.co.aosd.onto.foundation.Event , paramEvent4 : uk.co.aosd.onto.foundation.Event ) : uk.co.aosd.onto.foundation.State
 	{method}  {abstract} +transferOwnership ( paramString1 : String , paramString2 : String , paramOwning3 : uk.co.aosd.onto.ownership.Owning , paramIndividual4 : uk.co.aosd.onto.foundation.Individual , paramEvent5 : uk.co.aosd.onto.foundation.Event , paramEvent6 : uk.co.aosd.onto.foundation.Event ) : uk.co.aosd.onto.ownership.TransferringOfOwnership
@@ -223,6 +223,7 @@ uk.co.aosd.onto.foundation.Individual ..|>  uk.co.aosd.onto.foundation.EventBoun
 uk.co.aosd.onto.foundation.Individual ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.PossibleWorld ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.foundation.Property ..|>  uk.co.aosd.onto.foundation.Class
+uk.co.aosd.onto.foundation.Role ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.ScalarAttribute ..|>  uk.co.aosd.onto.foundation.Attribute
 uk.co.aosd.onto.foundation.ScalarProperty ..|>  uk.co.aosd.onto.foundation.Property
 uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.EventBounded

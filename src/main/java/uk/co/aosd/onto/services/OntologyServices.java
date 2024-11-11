@@ -40,7 +40,7 @@ public interface OntologyServices {
 
     Human createHuman(String identifier, Event born, Event died, Class<Signifier<String>> names, Language nativeLanguage, Class<Language> languages, DNA dna);
 
-    Role createRole(String name);
+    Role createRole(String identifier, String name);
 
     Membership createMembership(String identifier, Human human, Role role, Event from, Event to);
 

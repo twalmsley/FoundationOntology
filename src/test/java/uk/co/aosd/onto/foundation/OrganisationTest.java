@@ -37,7 +37,7 @@ public class OrganisationTest {
         final var dismissed = svc.createEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
         final var epochStart = svc.createEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
         final var epochEnd = svc.createEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        
+
         // Create the languages
         final var english = svc.createLanguage(randString(), "British English");
         final var german = svc.createLanguage(randString(), "Deutsch");
@@ -59,7 +59,7 @@ public class OrganisationTest {
         final var alice = svc.createHuman(randString(), born, died, person1Names, english, languages, UNKNOWN_DNA);
 
         // Create a Class of memberships for the person as a member of something.
-        final var ceoRole = svc.createRole("CEO");
+        final var ceoRole = svc.createRole(randString(), "CEO");
         final var ceoMembership = svc.createMembership(randString(), alice, ceoRole, appointed, dismissed);
         final var acmeTeamMemberships = svc.createClass(randString(), Set.of(ceoMembership));
 
