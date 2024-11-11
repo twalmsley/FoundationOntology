@@ -31,7 +31,7 @@ import uk.co.aosd.onto.services.OntologyServices;
  */
 public class TriggersBroom {
 
-    private static OntologyServices svc = new OntologyServicesImpl();
+    private static final OntologyServices svc = new OntologyServicesImpl();
 
     private static final Event LIFE_START = svc.createEvent(randStr(), Instant.parse("2024-01-01T12:00:00.00Z"), Instant.parse("2024-01-01T12:00:00.00Z"));
     private static final Event UNKNOWN_END = svc.createEvent(randStr(), null, null);

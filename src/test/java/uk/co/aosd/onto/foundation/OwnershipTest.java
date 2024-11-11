@@ -19,7 +19,7 @@ import uk.co.aosd.onto.services.OntologyServices;
  */
 public class OwnershipTest {
 
-    private static OntologyServices svc = new OntologyServicesImpl();
+    private static final OntologyServices svc = new OntologyServicesImpl();
 
     @Test
     public void testTransferOfOwnership() {

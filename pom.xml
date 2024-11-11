@@ -75,10 +75,19 @@
 				uk.co.aosd.onto.language
                                 </scanPackage>
                                 <scanPackage>
+				uk.co.aosd.onto.model
+                                </scanPackage>
+                                <scanPackage>
+				uk.co.aosd.onto.money
+                                </scanPackage>
+                                <scanPackage>
 				uk.co.aosd.onto.organisation
                                 </scanPackage>
                                 <scanPackage>
 				uk.co.aosd.onto.ownership
+                                </scanPackage>
+                                <scanPackage>
+				uk.co.aosd.onto.services
                                 </scanPackage>
                                 <scanPackage>
 				uk.co.aosd.onto.signifying

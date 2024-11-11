@@ -25,7 +25,7 @@ import uk.co.aosd.onto.signifying.Signifier;
  */
 public class PotusExample {
 
-    private static OntologyServices svc = new OntologyServicesImpl();
+    private static final OntologyServices svc = new OntologyServicesImpl();
 
     private static final DNA UNKNOWN_DNA = null;
     private static final String PURPOSE = "To occupy its territory and serve its people.";

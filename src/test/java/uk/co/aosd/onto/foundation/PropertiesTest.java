@@ -20,7 +20,7 @@ import uk.co.aosd.onto.services.OntologyServices;
  */
 public class PropertiesTest {
 
-    private static OntologyServices svc = new OntologyServicesImpl();
+    private static final OntologyServices svc = new OntologyServicesImpl();
 
     private static final Instant LIFE_START_TIME = Instant.parse("2024-01-01T12:00:00.00Z");
     private static final Instant UNKNOWN_END_TIME = null;
