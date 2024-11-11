@@ -1,6 +1,7 @@
 package uk.co.aosd.onto.money;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Instant;
 
@@ -38,11 +39,22 @@ public class MoneyTest {
         final var widget2 = new Widget("widget2", dollars, FROM, TO);
         final var widget3 = new Widget("widget3", euros, FROM, TO);
 
+        final var model = svc.createModel();
+        model.add(gbp);
+        model.add(usd);
+        model.add(eur);
+        model.add(widget1);
+        model.add(widget2);
+        model.add(widget3);
+
         assertSame(widget1.value(), pounds);
         assertSame(widget2.value(), dollars);
         assertSame(widget3.value(), euros);
 
-        JsonUtils.dumpJson(widget1);
+        assertTrue(model.getThing("1").isPresent());
+        assertSame(model.getThing("1").get(), gbp);
+
+        JsonUtils.dumpJson(model);
     }
 }
 

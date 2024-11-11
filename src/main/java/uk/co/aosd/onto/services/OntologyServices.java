@@ -14,6 +14,7 @@ import uk.co.aosd.onto.foundation.Role;
 import uk.co.aosd.onto.foundation.State;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.language.Language;
+import uk.co.aosd.onto.model.Model;
 import uk.co.aosd.onto.money.Currency;
 import uk.co.aosd.onto.money.MonetaryValue;
 import uk.co.aosd.onto.organisation.Membership;
@@ -61,4 +62,6 @@ public interface OntologyServices {
     Currency createCurrency(String identifier, String code, String name, char symbol);
 
     <U extends Currency> MonetaryValue<U> createMonetaryValue(Decimal3f value, U unit);
+
+    Model createModel();
 }

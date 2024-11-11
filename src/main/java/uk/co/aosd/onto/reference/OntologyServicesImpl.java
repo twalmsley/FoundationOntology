@@ -14,6 +14,7 @@ import uk.co.aosd.onto.foundation.Role;
 import uk.co.aosd.onto.foundation.State;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.language.Language;
+import uk.co.aosd.onto.model.Model;
 import uk.co.aosd.onto.money.Currency;
 import uk.co.aosd.onto.money.MonetaryValue;
 import uk.co.aosd.onto.organisation.Membership;
@@ -27,7 +28,8 @@ import uk.co.aosd.onto.signifying.Signifier;
  * A reference implementation of the OntologyServices interface.
  *
  * <p>
- * This allows users of the library to code to the ontology interfaces without knowing about the implementation classes directly.
+ * This allows users of the library to code to the ontology interfaces without
+ * knowing about the implementation classes directly.
  * </p>
  *
  * @author Tony Walmsley
@@ -123,6 +125,11 @@ public class OntologyServicesImpl implements OntologyServices {
     @Override
     public <U extends Currency> MonetaryValue<U> createMonetaryValue(final Decimal3f value, final U unit) {
         return new MonetaryValueImpl<U>(value, unit);
+    }
+
+    @Override
+    public Model createModel() {
+        return new ModelImpl();
     }
 
 }
