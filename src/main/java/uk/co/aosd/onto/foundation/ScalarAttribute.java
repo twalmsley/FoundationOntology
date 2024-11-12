@@ -6,6 +6,6 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface ScalarAttribute<I extends Individual, N extends Number, U extends Unit>
+public interface ScalarAttribute<I extends Individual<? extends Event, ? extends Event>, N extends Number, U extends Unit>
     extends Attribute<I, ScalarValue<N, U>> {
 }

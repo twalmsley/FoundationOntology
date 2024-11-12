@@ -2,6 +2,8 @@ package uk.co.aosd.onto.reference;
 
 import java.util.Set;
 
+import uk.co.aosd.onto.events.Aggregated;
+import uk.co.aosd.onto.events.Disaggregated;
 import uk.co.aosd.onto.foundation.Agglomerate;
 import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
@@ -11,7 +13,7 @@ import uk.co.aosd.onto.foundation.Individual;
  *
  * @author Tony Walmsley
  */
-public record AgglomerateImpl(String identifier, Set<Individual> parts, Event beginning,
-    Event ending) implements Agglomerate {
+public record AgglomerateImpl(String identifier, Set<Individual<? extends Event, ? extends Event>> parts, Aggregated beginning,
+    Disaggregated ending) implements Agglomerate {
 
 }

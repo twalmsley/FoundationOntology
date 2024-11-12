@@ -1,7 +1,8 @@
 package uk.co.aosd.onto.reference;
 
 import uk.co.aosd.onto.biological.Human;
-import uk.co.aosd.onto.foundation.Event;
+import uk.co.aosd.onto.events.Started;
+import uk.co.aosd.onto.events.Stopped;
 import uk.co.aosd.onto.organisation.Employment;
 import uk.co.aosd.onto.organisation.Organisation;
 
@@ -11,6 +12,6 @@ import uk.co.aosd.onto.organisation.Organisation;
  * @author Tony Walmsley
  */
 public record EmploymentImpl<C>(String identifier, Organisation employer, Human employee, String actionsDescription,
-    C contract, Event beginning, Event ending) implements Employment<C> {
+    C contract, Started beginning, Stopped ending) implements Employment<C> {
 
 }

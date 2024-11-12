@@ -9,7 +9,7 @@ import uk.co.aosd.onto.foundation.State;
  *
  * @author Tony Walmsley
  */
-public record StateImpl<V extends Individual>(String identifier, V individual, Event beginning,
-    Event ending) implements State<V> {
+public record StateImpl<B extends Event, E extends Event, V extends Individual<B, E>>(String identifier, V individual, B beginning,
+    E ending) implements State<B, E, V> {
 
 }

@@ -1,7 +1,8 @@
 package uk.co.aosd.onto.reference;
 
 import uk.co.aosd.onto.biological.Human;
-import uk.co.aosd.onto.foundation.Event;
+import uk.co.aosd.onto.events.Appointed;
+import uk.co.aosd.onto.events.Removed;
 import uk.co.aosd.onto.foundation.Role;
 import uk.co.aosd.onto.organisation.Membership;
 
@@ -10,6 +11,6 @@ import uk.co.aosd.onto.organisation.Membership;
  *
  * @author Tony Walmsley
  */
-public record MembershipImpl(String identifier, Human member, Role role, Event beginning,
-    Event ending) implements Membership {
+public record MembershipImpl(String identifier, Human member, Role role, Appointed beginning,
+    Removed ending) implements Membership {
 }

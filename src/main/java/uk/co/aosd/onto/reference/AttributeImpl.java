@@ -3,6 +3,7 @@ package uk.co.aosd.onto.reference;
 import java.time.Instant;
 
 import uk.co.aosd.onto.foundation.Attribute;
+import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
 
 /**
@@ -10,7 +11,7 @@ import uk.co.aosd.onto.foundation.Individual;
  *
  * @author Tony Walmsley
  */
-public record AttributeImpl<I extends Individual, P>(I individual, P property, Instant from,
+public record AttributeImpl<I extends Individual<? extends Event, ? extends Event>, P>(I individual, P property, Instant from,
     Instant to) implements Attribute<I, P> {
 
 }

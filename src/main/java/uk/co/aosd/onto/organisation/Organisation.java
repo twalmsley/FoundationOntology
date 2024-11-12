@@ -1,5 +1,7 @@
 package uk.co.aosd.onto.organisation;
 
+import uk.co.aosd.onto.events.Dissolved;
+import uk.co.aosd.onto.events.Formed;
 import uk.co.aosd.onto.foundation.Class;
 import uk.co.aosd.onto.foundation.Individual;
 import uk.co.aosd.onto.signifying.Named;
@@ -9,9 +11,10 @@ import uk.co.aosd.onto.signifying.Named;
  *
  * @author Tony Walmsley
  */
-public interface Organisation extends Named, Individual {
+public interface Organisation extends Named, Individual<Formed, Dissolved> {
     /**
-     * Organisations have a common purpose that distinguishes them from other groupings of people.
+     * Organisations have a common purpose that distinguishes them from other
+     * groupings of people.
      *
      * @return String A description of the purpose.
      */

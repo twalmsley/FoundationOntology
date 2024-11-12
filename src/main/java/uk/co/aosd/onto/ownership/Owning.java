@@ -1,6 +1,7 @@
 package uk.co.aosd.onto.ownership;
 
 import uk.co.aosd.onto.foundation.Activity;
+import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
 
 /**
@@ -8,9 +9,9 @@ import uk.co.aosd.onto.foundation.Individual;
  *
  * @author Tony Walmsley
  */
-public interface Owning extends Activity {
+public interface Owning<A extends Event, B extends Event, C extends Event, D extends Event> extends Activity {
 
-    Individual owner();
+    Individual<A, B> owner();
 
-    Individual owned();
+    Individual<C, D> owned();
 }

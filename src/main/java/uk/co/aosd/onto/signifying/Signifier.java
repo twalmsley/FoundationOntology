@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.signifying;
 
+import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.foundation.Individual;
 import uk.co.aosd.onto.language.Language;
 
@@ -8,7 +9,7 @@ import uk.co.aosd.onto.language.Language;
  *
  * @author Tony Walmsley
  */
-public interface Signifier<V> extends Individual {
+public interface Signifier<V> extends Individual<Resignified, Resignified> {
     V name();
 
     Language language();

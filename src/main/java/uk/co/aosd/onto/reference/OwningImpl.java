@@ -1,5 +1,7 @@
 package uk.co.aosd.onto.reference;
 
+import uk.co.aosd.onto.events.Started;
+import uk.co.aosd.onto.events.Stopped;
 import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
 import uk.co.aosd.onto.ownership.Owning;
@@ -9,7 +11,7 @@ import uk.co.aosd.onto.ownership.Owning;
  *
  * @author Tony Walmsley
  */
-public record OwningImpl(String identifier, String actionsDescription, Individual owner, Individual owned,
-    Event beginning, Event ending) implements Owning {
+public record OwningImpl<A extends Event, B extends Event, C extends Event, D extends Event>(String identifier, String actionsDescription,
+    Individual<A, B> owner, Individual<C, D> owned, Started beginning, Stopped ending) implements Owning<A, B, C, D> {
 
 }

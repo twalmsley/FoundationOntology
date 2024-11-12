@@ -5,9 +5,9 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface EventBounded {
-    Event beginning();
+public interface EventBounded<B extends Event, E extends Event> {
+    B beginning();
 
-    Event ending();
+    E ending();
 
 }
