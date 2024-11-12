@@ -7,9 +7,18 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
+import uk.co.aosd.onto.events.Appointed;
+import uk.co.aosd.onto.events.Birth;
+import uk.co.aosd.onto.events.Death;
+import uk.co.aosd.onto.events.Dissolved;
+import uk.co.aosd.onto.events.Formed;
+import uk.co.aosd.onto.events.Removed;
+import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
+import uk.co.aosd.onto.reference.EventServicesImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
+import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.signifying.Signifier;
 
@@ -26,21 +35,30 @@ import uk.co.aosd.onto.signifying.Signifier;
 public class PotusExample {
 
     private static final OntologyServices svc = new OntologyServicesImpl();
+    private static final EventServices ev = new EventServicesImpl();
 
     private static final DNA UNKNOWN_DNA = null;
     private static final String PURPOSE = "To occupy its territory and serve its people.";
-    private static final Event USA_FROM = svc.createEvent(randStr(), Instant.parse("1776-06-04T00:00:00.00Z"), Instant.parse("1776-06-04T23:59:59.99Z"));
-    private static final Event USA_TO = svc.createEvent(randStr(), null, null);
-    private static final Event TRUMP_DIED = svc.createEvent(randStr(), null, null);
-    private static final Event TRUMP_BORN = svc.createEvent(randStr(), Instant.parse("1946-06-14T00:00:00.00Z"), Instant.parse("1946-06-14T23:59:59.99Z"));
-    private static final Event TRUMP_POTUS_START_1 = svc.createEvent(randStr(), Instant.parse("2017-01-20T00:00:00.00Z"),
+    private static final Resignified USA_NAMED = ev.createResignifiedEvent(randStr(), Instant.parse("1776-06-04T00:00:00.00Z"),
+        Instant.parse("1776-06-04T23:59:59.99Z"));
+    private static final Resignified USA_RENAMED = ev.createResignifiedEvent(randStr(), null, null);
+    private static final Formed USA_FROM = ev.createFormedEvent(randStr(), Instant.parse("1776-06-04T00:00:00.00Z"), Instant.parse("1776-06-04T23:59:59.99Z"));
+    private static final Dissolved USA_TO = ev.createDissolvedEvent(randStr(), null, null);
+    private static final Birth TRUMP_BORN = ev.createBirthEvent(randStr(), Instant.parse("1946-06-14T00:00:00.00Z"), Instant.parse("1946-06-14T23:59:59.99Z"));
+    private static final Death TRUMP_DIED = ev.createDeathEvent(randStr(), null, null);
+    private static final Resignified TRUMP_NAMED = ev.createResignifiedEvent(randStr(), Instant.parse("1946-06-14T00:00:00.00Z"),
+        Instant.parse("1946-06-14T23:59:59.99Z"));
+    private static final Resignified TRUMP_RENAMED = ev.createResignifiedEvent(randStr(), null, null);
+    private static final Appointed TRUMP_POTUS_START_1 = ev.createAppointedEvent(randStr(), Instant.parse("2017-01-20T00:00:00.00Z"),
         Instant.parse("2017-01-20T23:59:59.99Z"));
-    private static final Event TRUMP_POTUS_END_1 = svc.createEvent(randStr(), Instant.parse("2021-01-20T00:00:00.00Z"),
+    private static final Removed TRUMP_POTUS_END_1 = ev.createRemovedEvent(randStr(), Instant.parse("2021-01-20T00:00:00.00Z"),
         Instant.parse("2017-01-20T23:59:59.99Z"));
-    private static final Event TRUMP_POTUS_START_2 = svc.createEvent(randStr(), Instant.parse("2025-01-20T00:00:00.00Z"),
+    private static final Appointed TRUMP_POTUS_START_2 = ev.createAppointedEvent(randStr(), Instant.parse("2025-01-20T00:00:00.00Z"),
         Instant.parse("2017-01-20T23:59:59.99Z"));
-    private static final Event TRUMP_POTUS_END_2 = svc.createEvent(randStr(), null, null);
-    private static final Event TRUMP_CITIZENSHIP_ENDS = svc.createEvent(randStr(), null, null);
+    private static final Removed TRUMP_POTUS_END_2 = ev.createRemovedEvent(randStr(), null, null);
+    private static final Appointed TRUMP_CITIZENSHIP_BEGINS = ev.createAppointedEvent(randStr(), Instant.parse("1946-06-14T00:00:00.00Z"),
+        Instant.parse("1946-06-14T23:59:59.99Z"));
+    private static final Removed TRUMP_CITIZENSHIP_ENDS = ev.createRemovedEvent(randStr(), null, null);
 
     @Test
     public void test() {
@@ -48,24 +66,22 @@ public class PotusExample {
         // Create Donald Trump
         final var usEnglish = svc.createLanguage(randStr(), "American English");
         final var languages = svc.createClass(randStr(), Set.of(usEnglish));
-        final var personSignifier1 = svc.createSignifier(randStr(), "Donald Trump", usEnglish, TRUMP_BORN, TRUMP_DIED);
+        final var personSignifier1 = svc.createSignifier(randStr(), "Donald Trump", usEnglish, TRUMP_NAMED, TRUMP_RENAMED);
         final var person1Names = svc.createClass(randStr(), Set.of(personSignifier1));
 
         final var donaldTrump = svc.createHuman(randStr(), TRUMP_BORN, TRUMP_DIED, person1Names, usEnglish, languages, UNKNOWN_DNA);
 
         // Create the names of the USA
-        final var usaSignifier1 = svc.createSignifier(randStr(), "USA", usEnglish, USA_FROM, USA_TO);
-        final var usaSignifier2 = svc.createSignifier(randStr(), "United States of America", usEnglish, USA_FROM,
-            USA_TO);
-        final var usaSignifier3 = svc.createSignifier(randStr(), "US", usEnglish, USA_FROM, USA_TO);
-        final var usaSignifier4 = svc.createSignifier(randStr(), "United States", usEnglish, USA_FROM, USA_TO);
-        final var usaSignifier5 = svc.createSignifier(randStr(), "America", usEnglish, USA_FROM, USA_TO);
+        final var usaSignifier1 = svc.createSignifier(randStr(), "USA", usEnglish, USA_NAMED, USA_RENAMED);
+        final var usaSignifier2 = svc.createSignifier(randStr(), "United States of America", usEnglish, USA_NAMED, USA_RENAMED);
+        final var usaSignifier3 = svc.createSignifier(randStr(), "US", usEnglish, USA_NAMED, USA_RENAMED);
+        final var usaSignifier4 = svc.createSignifier(randStr(), "United States", usEnglish, USA_NAMED, USA_RENAMED);
+        final var usaSignifier5 = svc.createSignifier(randStr(), "America", usEnglish, USA_NAMED, USA_RENAMED);
         final var setOfSignifiers = Set.of(usaSignifier1, usaSignifier2, usaSignifier3, usaSignifier4, usaSignifier5);
         final var namesOfTheUsa = svc.createClass(randStr(), setOfSignifiers);
 
         // Create the name of the USA Government
-        final var usaGovSignifier1 = svc.createSignifier(randStr(), "The Government of the United States of America", usEnglish, USA_FROM,
-            USA_TO);
+        final var usaGovSignifier1 = svc.createSignifier(randStr(), "The Government of the United States of America", usEnglish, USA_NAMED, USA_RENAMED);
         final var namesOfTheUsaGov = svc.createClass(randStr(), Set.of(usaGovSignifier1));
 
         // Create the POTUS and Citizen roles.
@@ -78,7 +94,7 @@ public class PotusExample {
         final var memberships = svc.createClass(randStr(), Set.of(potus1, potus2));
 
         // Register Donald Trump as a member of the USA in the role of citizen.
-        final var citizen1 = svc.createMembership(randStr(), donaldTrump, citizenRole, TRUMP_BORN, TRUMP_CITIZENSHIP_ENDS);
+        final var citizen1 = svc.createMembership(randStr(), donaldTrump, citizenRole, TRUMP_CITIZENSHIP_BEGINS, TRUMP_CITIZENSHIP_ENDS);
         final var citizenships = svc.createClass(randStr(), Set.of(citizen1));
 
         // Create the US Government
@@ -107,10 +123,10 @@ public class PotusExample {
 }
 
 record Nation(String identifier, Territory territory, Class<Membership> members, String purpose,
-    Class<Signifier<String>> names, Class<Organisation> units, Event beginning, Event ending)
+    Class<Signifier<String>> names, Class<Organisation> units, Formed beginning, Dissolved ending)
     implements Organisation {
 }
 
-record Territory(String identifier, Event beginning, Event ending) implements Individual {
+record Territory(String identifier, Formed beginning, Dissolved ending) implements Individual<Formed, Dissolved> {
 
 }

@@ -7,10 +7,13 @@ import java.time.Instant;
 
 import org.decimal4j.immutable.Decimal3f;
 import org.junit.jupiter.api.Test;
-import uk.co.aosd.onto.foundation.Event;
+import uk.co.aosd.onto.events.Built;
+import uk.co.aosd.onto.events.Scrapped;
 import uk.co.aosd.onto.foundation.Individual;
 import uk.co.aosd.onto.foundation.JsonUtils;
+import uk.co.aosd.onto.reference.EventServicesImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
+import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 
 /**
@@ -21,9 +24,10 @@ import uk.co.aosd.onto.services.OntologyServices;
 public class MoneyTest {
 
     private static final OntologyServices svc = new OntologyServicesImpl();
+    private static final EventServices ev = new EventServicesImpl();
 
-    private static final Event FROM = svc.createEvent("x", Instant.parse("2024-01-01T12:00:00.00Z"), Instant.parse("2024-01-01T12:01:00.00Z"));
-    private static final Event TO = svc.createEvent("y", Instant.parse("2024-01-11T12:00:00.00Z"), Instant.parse("2024-01-11T12:01:00.00Z"));
+    private static final Built FROM = ev.createBuiltEvent("x", Instant.parse("2024-01-01T12:00:00.00Z"), Instant.parse("2024-01-01T12:01:00.00Z"));
+    private static final Scrapped TO = ev.createScrappedEvent("y", Instant.parse("2024-01-11T12:00:00.00Z"), Instant.parse("2024-01-11T12:01:00.00Z"));
 
     @Test
     public void test() {
@@ -58,5 +62,6 @@ public class MoneyTest {
     }
 }
 
-record Widget(String identifier, MonetaryValue<Currency> value, Event beginning, Event ending) implements ValuedAsset<Currency>, Individual {
+record Widget(String identifier, MonetaryValue<Currency> value, Built beginning, Scrapped ending)
+    implements ValuedAsset<Currency>, Individual<Built, Scrapped> {
 }

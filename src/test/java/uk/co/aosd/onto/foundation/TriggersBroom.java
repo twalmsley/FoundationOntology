@@ -6,7 +6,15 @@ import java.time.Instant;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+import uk.co.aosd.onto.events.Aggregated;
+import uk.co.aosd.onto.events.Built;
+import uk.co.aosd.onto.events.Disaggregated;
+import uk.co.aosd.onto.events.Scrapped;
+import uk.co.aosd.onto.events.Started;
+import uk.co.aosd.onto.events.Stopped;
+import uk.co.aosd.onto.reference.EventServicesImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
+import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 
 /**
@@ -33,11 +41,15 @@ import uk.co.aosd.onto.services.OntologyServices;
 public class TriggersBroom {
 
     private static final OntologyServices svc = new OntologyServicesImpl();
+    private static final EventServices ev = new EventServicesImpl();
 
-    private static final Event LIFE_START = svc.createEvent(randStr(), Instant.parse("2024-01-01T12:00:00.00Z"), Instant.parse("2024-01-01T12:00:00.00Z"));
-    private static final Event UNKNOWN_END = svc.createEvent(randStr(), null, null);
-    private static final Event ASSEMBLY_START = svc.createEvent(randStr(), Instant.parse("2024-11-01T12:00:00.00Z"), Instant.parse("2024-11-01T12:00:00.00Z"));
-    private static final Event ASSEMBLY_END = svc.createEvent(randStr(), null, null);
+    private static final Built LIFE_START = ev.createBuiltEvent(randStr(), Instant.parse("2024-01-01T12:00:00.00Z"), Instant.parse("2024-01-01T12:00:00.00Z"));
+    private static final Scrapped UNKNOWN_END = ev.createScrappedEvent(randStr(), null, null);
+    private static final Built ASSEMBLY_START = ev.createBuiltEvent(randStr(), Instant.parse("2024-11-01T12:00:00.00Z"),
+        Instant.parse("2024-11-01T12:00:00.00Z"));
+    private static final Scrapped ASSEMBLY_END = ev.createScrappedEvent(randStr(), null, null);
+    private static final Aggregated AGGREGATED_EVENT = null;
+    private static final Disaggregated DISAGGREGATED_EVENT = null;
 
     @Test
     public void test() {
@@ -51,7 +63,7 @@ public class TriggersBroom {
 
         // Gather the parts into an Agglomerate (not really necessary, this just shows
         // what an Agglomerate is)
-        final var parts = svc.createAgglomerate(randStr(), Set.of(broomBracket, bristles, broomHead, broomHandle), LIFE_START, UNKNOWN_END);
+        final var parts = svc.createAgglomerate(randStr(), Set.of(broomBracket, bristles, broomHead, broomHandle), AGGREGATED_EVENT, DISAGGREGATED_EVENT);
 
         // Assemble the broom composite from the set of parts
         final var broom = assembleBroom(parts);
@@ -65,8 +77,8 @@ public class TriggersBroom {
         assertSame(broom.headWithBracketAssembly().headAssembly().head(), broomHead);
 
         // The bristles are worn out after much use, so replace them
-        final var activityFrom = svc.createEvent(randStr(), Instant.parse("2024-11-11T12:00:00.00Z"), Instant.parse("2024-11-11T12:00:00.00Z"));
-        final var activityTo = svc.createEvent(randStr(), Instant.parse("2024-11-11T12:30:00.00Z"), Instant.parse("2024-11-11T12:30:00.00Z"));
+        final var activityFrom = ev.createStartedEvent(randStr(), Instant.parse("2024-11-11T12:00:00.00Z"), Instant.parse("2024-11-11T12:00:00.00Z"));
+        final var activityTo = ev.createStoppedEvent(randStr(), Instant.parse("2024-11-11T12:30:00.00Z"), Instant.parse("2024-11-11T12:30:00.00Z"));
         final var activityRecord = replaceBristles(broom, new Bristles(randStr(), LIFE_START, UNKNOWN_END), activityFrom, activityTo);
 
         JsonUtils.dumpJson(activityRecord);
@@ -102,29 +114,28 @@ public class TriggersBroom {
      *            Event
      * @return ReplaceBristlesActivity
      */
-    private ReplaceBristlesActivity replaceBristles(final Broom broom, final Bristles bristles, final Event activityStart, final Event activityEnd) {
+    private ReplaceBristlesActivity replaceBristles(final Broom broom, final Bristles bristles, final Started activityStart, final Stopped activityEnd) {
 
         // Set the ending for the old headAssembly
         final var headAssembly = broom.headWithBracketAssembly().headAssembly();
-        final Bristles oldBristles = new Bristles(headAssembly.bristles().identifier(), headAssembly.bristles().beginning(), activityStart);
+        final Bristles oldBristles = new Bristles(headAssembly.bristles().identifier(), headAssembly.bristles().beginning(), UNKNOWN_END);
         final var oldHeadAssembly = new BroomHeadAssembly(headAssembly.identifier(), headAssembly.head(), oldBristles, headAssembly.beginning(),
-            activityStart);
+            UNKNOWN_END);
 
         // Set the ending for the old headAndBracketAssembly
         final var headAndBracketAssembly = broom.headWithBracketAssembly();
         final var oldHeadWithBracketAssembly = new BroomHeadWithBracketAssembly(headAndBracketAssembly.identifier(), oldHeadAssembly,
-            headAndBracketAssembly.bracket(), headAndBracketAssembly.beginning(), activityStart);
+            headAndBracketAssembly.bracket(), headAndBracketAssembly.beginning(), UNKNOWN_END);
 
         // Set the ending for the old Broom.
-        final var oldBroom = new Broom(randStr(), broom.handle(), oldHeadWithBracketAssembly, broom.beginning(), activityStart);
+        final var oldBroom = new Broom(randStr(), broom.handle(), oldHeadWithBracketAssembly, broom.beginning(), UNKNOWN_END);
 
         // Create the updated broom
-        final var updatedHeadAssembly = fitBristles(randStr(), headAssembly.head(), bristles, activityStart, UNKNOWN_END);
-        final var updatedHeadAndBracketAssembly = fitBracket(randStr(), updatedHeadAssembly, headAndBracketAssembly.bracket(), activityStart, UNKNOWN_END);
-        final var updatedBroom = fitHandle(randStr(), oldBroom.handle(), updatedHeadAndBracketAssembly, activityStart, UNKNOWN_END);
+        final var updatedHeadAssembly = fitBristles(randStr(), headAssembly.head(), bristles, ASSEMBLY_START, UNKNOWN_END);
+        final var updatedHeadAndBracketAssembly = fitBracket(randStr(), updatedHeadAssembly, headAndBracketAssembly.bracket(), ASSEMBLY_START, UNKNOWN_END);
+        final var updatedBroom = fitHandle(randStr(), oldBroom.handle(), updatedHeadAndBracketAssembly, ASSEMBLY_START, UNKNOWN_END);
 
-        return new ReplaceBristlesActivity(randStr(), "Replace bristles", oldBroom, updatedBroom, oldBristles, oldHeadAssembly,
-            oldHeadWithBracketAssembly,
+        return new ReplaceBristlesActivity(randStr(), "Replace bristles", oldBroom, updatedBroom, oldBristles, oldHeadAssembly, oldHeadWithBracketAssembly,
             activityStart, activityEnd);
     }
 
@@ -176,8 +187,8 @@ public class TriggersBroom {
      * @return Broom
      */
     private Broom fitHandle(final String id, final BroomHandle broomHandle,
-        final BroomHeadWithBracketAssembly broomHeadWithBracketAssembly, final Event beginning,
-        final Event ending) {
+        final BroomHeadWithBracketAssembly broomHeadWithBracketAssembly, final Built beginning,
+        final Scrapped ending) {
         return new Broom(id, broomHandle, broomHeadWithBracketAssembly, beginning, ending);
     }
 
@@ -193,7 +204,7 @@ public class TriggersBroom {
      * @return BroomHeadWithBracketAssembly
      */
     private static BroomHeadWithBracketAssembly fitBracket(final String id, final BroomHeadAssembly broomHeadAssembly,
-        final BroomBracket broomBracket, final Event beginning, final Event ending) {
+        final BroomBracket broomBracket, final Built beginning, final Scrapped ending) {
         return new BroomHeadWithBracketAssembly(id, broomHeadAssembly, broomBracket, beginning, ending);
     }
 
@@ -210,7 +221,7 @@ public class TriggersBroom {
      * @return BroomHeadAssembly
      */
     private static BroomHeadAssembly fitBristles(final String id, final BroomHead head, final Bristles bristles,
-        final Event beginning, final Event ending) {
+        final Built beginning, final Scrapped ending) {
         return new BroomHeadAssembly(id, head, bristles, beginning, ending);
     }
 
@@ -222,31 +233,30 @@ public class TriggersBroom {
 
 }
 
-record Broom(String identifier, BroomHandle handle, BroomHeadWithBracketAssembly headWithBracketAssembly,
-    Event beginning, Event ending) implements Individual {
+record Broom(String identifier, BroomHandle handle, BroomHeadWithBracketAssembly headWithBracketAssembly, Built beginning, Scrapped ending)
+    implements Individual<Built, Scrapped> {
 }
 
-record BroomHeadAssembly(String identifier, BroomHead head, Bristles bristles, Event beginning,
-    Event ending) implements Individual {
+record BroomHeadAssembly(String identifier, BroomHead head, Bristles bristles, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
 }
 
 record BroomHeadWithBracketAssembly(String identifier, BroomHeadAssembly headAssembly, BroomBracket bracket,
-    Event beginning, Event ending) implements Individual {
+    Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
 }
 
-record BroomHandle(String identifier, Event beginning, Event ending) implements Individual {
+record BroomHandle(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
 }
 
-record BroomHead(String identifier, Event beginning, Event ending) implements Individual {
+record BroomHead(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
 }
 
-record Bristles(String identifier, Event beginning, Event ending) implements Individual {
+record Bristles(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
 }
 
-record BroomBracket(String identifier, Event beginning, Event ending) implements Individual {
+record BroomBracket(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
 }
 
 record ReplaceBristlesActivity(String identifier, String actionsDescription, Broom oldBroom, Broom newBroom, Bristles oldBristles,
-    BroomHeadAssembly oldHeadAssembly,
-    BroomHeadWithBracketAssembly oldHeadWithBracketAssembly, Event beginning, Event ending) implements Activity {
+    BroomHeadAssembly oldHeadAssembly, BroomHeadWithBracketAssembly oldHeadWithBracketAssembly, Started beginning, Stopped ending)
+    implements Individual<Started, Stopped> {
 }
