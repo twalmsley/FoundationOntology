@@ -1,5 +1,7 @@
 package uk.co.aosd.onto.biological;
 
+import uk.co.aosd.onto.events.Birth;
+import uk.co.aosd.onto.events.Death;
 import uk.co.aosd.onto.foundation.Individual;
 
 /**
@@ -7,7 +9,7 @@ import uk.co.aosd.onto.foundation.Individual;
  *
  * @author Tony Walmsley
  */
-public interface GenomicBiologicalEntity extends Individual {
+public interface GenomicBiologicalEntity extends Individual<Birth, Death> {
 
     /**
      * DNA is a distinguishing feature of living things, whether it is known or not.
