@@ -1,14 +1,11 @@
 package uk.co.aosd.onto.foundation;
 
-import uk.co.aosd.onto.events.Started;
-import uk.co.aosd.onto.events.Stopped;
-
 /**
  * An activity is a partially ordered set of actions.
  *
  * @author Tony Walmsley
  */
-public interface Activity extends Individual<Started, Stopped> {
+public interface Activity<B extends Event, E extends Event> extends Individual<B, E> {
 
     /**
      * A description of the actions that comprise the activity.

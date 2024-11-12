@@ -13,8 +13,11 @@ import uk.co.aosd.onto.events.Formed;
 import uk.co.aosd.onto.events.Removed;
 import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.events.Scrapped;
+import uk.co.aosd.onto.events.Sold;
 import uk.co.aosd.onto.events.Started;
 import uk.co.aosd.onto.events.Stopped;
+import uk.co.aosd.onto.events.TransferredFrom;
+import uk.co.aosd.onto.events.TransferredTo;
 
 /**
  * A set of services for manipulating Events.
@@ -48,5 +51,11 @@ public interface EventServices {
     Built createBuiltEvent(String identifier, Instant from, Instant to);
 
     Scrapped createScrappedEvent(String identifier, Instant from, Instant to);
+
+    Sold createSoldEvent(String identifier, Instant from, Instant to);
+
+    TransferredTo createTransferredToEvent(String identifier, Instant from, Instant to);
+
+    TransferredFrom createTransferredFromEvent(String identifier, Instant from, Instant to);
 
 }

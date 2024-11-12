@@ -7,6 +7,6 @@ import uk.co.aosd.onto.foundation.Event;
  *
  * @author Tony Walmsley
  */
-public interface Decommisioned extends Event {
+public interface Decommissioned extends Event {
 
 }

@@ -104,6 +104,3 @@ record ColouredCars(String identifier, Color property, Set<State<Built, Scrapped
 record ColouredCar(Car individual, Color property, Instant from, Instant to)
     implements Attribute<Car, Color> {
 }
-
-record Car(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
-}

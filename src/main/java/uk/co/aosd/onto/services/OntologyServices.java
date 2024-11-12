@@ -18,6 +18,8 @@ import uk.co.aosd.onto.events.Removed;
 import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.events.Started;
 import uk.co.aosd.onto.events.Stopped;
+import uk.co.aosd.onto.events.TransferredFrom;
+import uk.co.aosd.onto.events.TransferredTo;
 import uk.co.aosd.onto.foundation.Agglomerate;
 import uk.co.aosd.onto.foundation.Class;
 import uk.co.aosd.onto.foundation.Event;
@@ -65,7 +67,7 @@ public interface OntologyServices {
     DNA createDna(String identifier, String dna);
 
     <A extends Event, B extends Event, C extends Event, D extends Event> Owning<A, B, C, D> createOwnership(String identifier, String actionsDescription,
-        Individual<A, B> owner, Individual<C, D> owned, Started from, Stopped to);
+        Individual<A, B> owner, Individual<C, D> owned, TransferredFrom from, TransferredTo to);
 
     <A extends Event, B extends Event, C extends Event, D extends Event> TransferringOfOwnership<A, B, C, D> transferOwnership(String string,
         String actionsDescription, Owning<A, B, C, D> current, Individual<A, B> newOwner, Started from, Stopped to);

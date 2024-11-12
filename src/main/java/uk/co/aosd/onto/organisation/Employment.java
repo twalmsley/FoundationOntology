@@ -1,6 +1,8 @@
 package uk.co.aosd.onto.organisation;
 
 import uk.co.aosd.onto.biological.Human;
+import uk.co.aosd.onto.events.Appointed;
+import uk.co.aosd.onto.events.Removed;
 import uk.co.aosd.onto.foundation.Activity;
 
 /**
@@ -8,7 +10,7 @@ import uk.co.aosd.onto.foundation.Activity;
  *
  * @author Tony Walmsley
  */
-public interface Employment<C> extends Activity {
+public interface Employment<C> extends Activity<Appointed, Removed> {
     Human employee();
 
     Organisation employer();

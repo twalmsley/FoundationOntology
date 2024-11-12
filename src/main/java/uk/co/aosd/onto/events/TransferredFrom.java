@@ -7,6 +7,6 @@ import uk.co.aosd.onto.foundation.Event;
  *
  * @author Tony Walmsley
  */
-public interface Transferred extends Event {
+public interface TransferredFrom extends Event {
 
 }

@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.foundation;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Instant;
@@ -42,17 +43,24 @@ public class OwnershipTest {
         final var car = getCar();
 
         // Record that Alice owns the car for a time period.
-        final var aliceBuysCar = ev.createStartedEvent("bought1", Instant.parse("2024-01-01T00:00:00.00Z"), Instant.parse("2024-01-01T23:59:59.00Z"));
-        final var aliceSellsCar = ev.createStoppedEvent("sold1", null, null);
+        final var aliceBuysCar = ev.createTransferredFromEvent("bought1", Instant.parse("2024-01-01T00:00:00.00Z"), Instant.parse("2024-01-01T23:59:59.00Z"));
+        final var aliceSellsCar = ev.createTransferredToEvent("sold1", null, null);
         final var aliceOwnsCar = svc.createOwnership("aliceOwnsCar", "Car Purchase", alice, car, aliceBuysCar, aliceSellsCar);
 
         // Transfer ownership when Alice sells the car to Bob
-        final var saleEvent = ev.createStartedEvent("sale1", Instant.parse("2024-02-01T00:00:00.00Z"), Instant.parse("2024-02-01T23:59:59.99Z"));
-        final var bobSellsCar = ev.createStoppedEvent("sold2", null, null);
-        final var transfer = svc.transferOwnership("carSoldToBob", "Car Sold", aliceOwnsCar, bob, saleEvent, bobSellsCar);
+        final var aliceSellsCar2 = ev.createSoldEvent("aliceSellsCar", Instant.parse("2024-02-01T00:00:00.00Z"), Instant.parse("2024-02-01T23:59:59.99Z"));
+        final var bobBuysCar = ev.createSoldEvent("aliceSellsCar", Instant.parse("2024-02-01T00:00:00.00Z"), Instant.parse("2024-02-01T23:59:59.99Z"));
+        final var bobSellsCar = ev.createSoldEvent("bobSellsCar", null, null);
+        final var transferActivityBegins = ev.createStartedEvent("transferBegins", Instant.parse("2024-11-11T00:00:00.00Z"),
+            Instant.parse("2024-11-11T00:00:00.00Z"));
+        final var transferActivityEnds = ev.createStoppedEvent("transferEnds", Instant.parse("2024-11-11T12:00:00.00Z"),
+            Instant.parse("2024-11-11T12:00:00.00Z"));
 
-        assertSame(saleEvent, transfer.from().ending());
-        assertSame(saleEvent, transfer.to().beginning());
+        final var transfer = svc.transferOwnership("carSoldToBob", "Car Sold", aliceOwnsCar, bob, transferActivityBegins, transferActivityEnds);
+
+        assertSame(aliceBuysCar, transfer.from().beginning());
+        assertNotNull(transfer.to().beginning().from());
+        assertNotNull(transfer.to().beginning().to());
         assertSame(bob, transfer.to().owner());
         assertSame(car, transfer.to().owned());
 
@@ -89,7 +97,4 @@ public class OwnershipTest {
         final var alice = svc.createHuman("alice", aliceBorn, aliceDied, aliceNamesClass, english, languages, dna);
         return alice;
     }
-}
-
-record Car(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
 }

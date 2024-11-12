@@ -1,6 +1,7 @@
 package uk.co.aosd.onto.reference;
 
 import java.util.Set;
+import java.util.UUID;
 
 import org.decimal4j.immutable.Decimal3f;
 import uk.co.aosd.onto.biological.DNA;
@@ -18,6 +19,8 @@ import uk.co.aosd.onto.events.Removed;
 import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.events.Started;
 import uk.co.aosd.onto.events.Stopped;
+import uk.co.aosd.onto.events.TransferredFrom;
+import uk.co.aosd.onto.events.TransferredTo;
 import uk.co.aosd.onto.foundation.Agglomerate;
 import uk.co.aosd.onto.foundation.Class;
 import uk.co.aosd.onto.foundation.Event;
@@ -34,6 +37,7 @@ import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.ownership.Owning;
 import uk.co.aosd.onto.ownership.TransferringOfOwnership;
+import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.signifying.Signifier;
 
@@ -48,6 +52,8 @@ import uk.co.aosd.onto.signifying.Signifier;
  * @author Tony Walmsley
  */
 public class OntologyServicesImpl implements OntologyServices {
+
+    private static final EventServices ev = new EventServicesImpl();
 
     @Override
     public Language createLanguage(final String identifier, final String name) {
@@ -105,7 +111,7 @@ public class OntologyServicesImpl implements OntologyServices {
 
     @Override
     public <A extends Event, B extends Event, C extends Event, D extends Event> Owning<A, B, C, D> createOwnership(final String identifier,
-        final String actionsDescription, final Individual<A, B> owner, final Individual<C, D> owned, final Started from, final Stopped to) {
+        final String actionsDescription, final Individual<A, B> owner, final Individual<C, D> owned, final TransferredFrom from, final TransferredTo to) {
         return new OwningImpl<>(identifier, actionsDescription, owner, owned, from, to);
     }
 
@@ -113,13 +119,16 @@ public class OntologyServicesImpl implements OntologyServices {
     public <A extends Event, B extends Event, C extends Event, D extends Event> TransferringOfOwnership<A, B, C, D> transferOwnership(final String identifier,
         final String actionsDescription, final Owning<A, B, C, D> current, final Individual<A, B> newOwner, final Started from, final Stopped to) {
         // The previous owneship ends at the from event.
-        final var endOwnership = createOwnership(current.identifier(), current.actionsDescription(), current.owner(), current.owned(), current.beginning(), to);
+        final var transferredFromEvent = ev.createTransferredFromEvent(randId(), from.from(), from.to());
+        final var transferredToEvent = ev.createTransferredToEvent(randId(), null, null);
+        final var endOwnership = createOwnership(current.identifier(), current.actionsDescription(), current.owner(), current.owned(), current.beginning(),
+            transferredToEvent);
 
         // The new ownership starts at the from event.
-        final var newOwnership = createOwnership(identifier, actionsDescription, newOwner, current.owned(), from, to);
+        final var newOwnership = createOwnership(identifier, actionsDescription, newOwner, current.owned(), transferredFromEvent, transferredToEvent);
 
         // The transfer happens at the from event and finishes at the from event.
-        return new TransferringOfOwnershipImpl<>(identifier, actionsDescription, endOwnership, newOwnership, from, to);
+        return new TransferringOfOwnershipImpl<>(identifier, actionsDescription, endOwnership, newOwnership, transferredFromEvent, transferredToEvent);
     }
 
     @Override
@@ -143,4 +152,7 @@ public class OntologyServicesImpl implements OntologyServices {
         return new AgglomerateImpl(identifier, items, from, to);
     }
 
+    private static String randId() {
+        return UUID.randomUUID().toString();
+    }
 }
