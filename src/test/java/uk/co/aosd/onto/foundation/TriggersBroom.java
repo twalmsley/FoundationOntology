@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Instant;
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.events.Aggregated;
@@ -262,10 +263,8 @@ public class TriggersBroom {
         return new BroomHeadAssembly(id, head, bristles, beginning, ending);
     }
 
-    private static int id;
-
     private static String randStr() {
-        return Integer.toString(id++);
+        return UUID.randomUUID().toString();
     }
 
 }

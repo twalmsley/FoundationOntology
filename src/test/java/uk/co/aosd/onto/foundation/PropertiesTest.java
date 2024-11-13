@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import java.awt.Color;
 import java.time.Instant;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -90,10 +91,8 @@ public class PropertiesTest {
         return new Car(identifier, beginning, ending);
     }
 
-    private static int id;
-
     private static String randString() {
-        return Integer.toString(id++);
+        return UUID.randomUUID().toString();
     }
 }
 

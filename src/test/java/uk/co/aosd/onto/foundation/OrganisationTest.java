@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
@@ -92,9 +93,7 @@ public class OrganisationTest {
         JsonUtils.dumpJson(world);
     }
 
-    private static int id;
-
     private static String randString() {
-        return Integer.toString(id++);
+        return UUID.randomUUID().toString();
     }
 }
