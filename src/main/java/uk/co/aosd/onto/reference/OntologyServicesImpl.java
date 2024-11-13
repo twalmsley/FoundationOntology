@@ -120,12 +120,13 @@ public class OntologyServicesImpl implements OntologyServices {
         final String actionsDescription, final Owning<A, B, C, D> current, final Individual<A, B> newOwner, final Started from, final Stopped to) {
         // The previous owneship ends at the from event.
         final var transferredFromEvent = ev.createTransferredFromEvent(randId(), from.from(), from.to());
-        final var transferredToEvent = ev.createTransferredToEvent(randId(), null, null);
+        final var transferredToEvent = ev.createTransferredToEvent(randId(), to.from(), to.to());
         final var endOwnership = createOwnership(current.identifier(), current.actionsDescription(), current.owner(), current.owned(), current.beginning(),
             transferredToEvent);
 
         // The new ownership starts at the from event.
-        final var newOwnership = createOwnership(identifier, actionsDescription, newOwner, current.owned(), transferredFromEvent, transferredToEvent);
+        final var ownershipEnds = ev.createTransferredToEvent(randId(), null, null);
+        final var newOwnership = createOwnership(identifier, actionsDescription, newOwner, current.owned(), transferredFromEvent, ownershipEnds);
 
         // The transfer happens at the from event and finishes at the from event.
         return new TransferringOfOwnershipImpl<>(identifier, actionsDescription, endOwnership, newOwnership, transferredFromEvent, transferredToEvent);

@@ -28,7 +28,7 @@ public class PropertiesTest {
 
     private static final Instant LIFE_START_TIME = Instant.parse("2024-01-01T12:00:00.00Z");
     private static final Instant UNKNOWN_END_TIME = null;
-    private static final Built LIFE_START = ev.createBuiltEvent(randString(), Instant.parse("2024-01-01T12:00:00.00Z"), UNKNOWN_END_TIME);
+    private static final Built LIFE_START = ev.createBuiltEvent(randString(), LIFE_START_TIME, UNKNOWN_END_TIME);
     private static final Scrapped UNKNOWN_END = ev.createScrappedEvent(randString(), UNKNOWN_END_TIME, UNKNOWN_END_TIME);
 
     /**

@@ -23,10 +23,10 @@ import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.signifying.Signifier;
 
 /**
- * Model Donal Trump as POTUS.
+ * Model Donald Trump as POTUS.
  *
  * <P>
- * Model the USA as a Nation with a sub-organisation that is the US Government *
+ * Model the USA as a Nation with a sub-organisation that is the US Government
  * with Donald Trump's two terms as POTUS.
  * </P>
  *
@@ -37,28 +37,33 @@ public class PotusExample {
     private static final OntologyServices svc = new OntologyServicesImpl();
     private static final EventServices ev = new EventServicesImpl();
 
+    private static final Instant JAN_20TH_2025_END = Instant.parse("2025-01-20T23:59:59.99Z");
+    private static final Instant JAN_20TH_2025_START = Instant.parse("2025-01-20T00:00:00.00Z");
+    private static final Instant JAN_20TH_2021_END = Instant.parse("2021-01-20T23:59:59.99Z");
+    private static final Instant JAN_20TH_2021_START = Instant.parse("2021-01-20T00:00:00.00Z");
+    private static final Instant JAN_20TH_2017_END = Instant.parse("2017-01-20T23:59:59.99Z");
+    private static final Instant JAN_20TH_2017_START = Instant.parse("2017-01-20T00:00:00.00Z");
+    private static final Instant JUNE_14TH_1946_END = Instant.parse("1946-06-14T23:59:59.99Z");
+    private static final Instant JUNE_14TH_1946_START = Instant.parse("1946-06-14T00:00:00.00Z");
+    private static final Instant JUNE_4TH_1776_END = Instant.parse("1776-06-04T23:59:59.99Z");
+    private static final Instant JUNE_4TH_1776_START = Instant.parse("1776-06-04T00:00:00.00Z");
+
     private static final DNA UNKNOWN_DNA = null;
-    private static final String PURPOSE = "To occupy its territory and serve its people.";
-    private static final Resignified USA_NAMED = ev.createResignifiedEvent(randStr(), Instant.parse("1776-06-04T00:00:00.00Z"),
-        Instant.parse("1776-06-04T23:59:59.99Z"));
-    private static final Resignified USA_RENAMED = ev.createResignifiedEvent(randStr(), null, null);
-    private static final Formed USA_FROM = ev.createFormedEvent(randStr(), Instant.parse("1776-06-04T00:00:00.00Z"), Instant.parse("1776-06-04T23:59:59.99Z"));
-    private static final Dissolved USA_TO = ev.createDissolvedEvent(randStr(), null, null);
-    private static final Birth TRUMP_BORN = ev.createBirthEvent(randStr(), Instant.parse("1946-06-14T00:00:00.00Z"), Instant.parse("1946-06-14T23:59:59.99Z"));
+    private static final Appointed TRUMP_CITIZENSHIP_BEGINS = ev.createAppointedEvent(randStr(), JUNE_14TH_1946_START, JUNE_14TH_1946_END);
+    private static final Appointed TRUMP_POTUS_START_1 = ev.createAppointedEvent(randStr(), JAN_20TH_2017_START, JAN_20TH_2017_END);
+    private static final Appointed TRUMP_POTUS_START_2 = ev.createAppointedEvent(randStr(), JAN_20TH_2025_START, JAN_20TH_2025_END);
+    private static final Birth TRUMP_BORN = ev.createBirthEvent(randStr(), JUNE_14TH_1946_START, JUNE_14TH_1946_END);
     private static final Death TRUMP_DIED = ev.createDeathEvent(randStr(), null, null);
-    private static final Resignified TRUMP_NAMED = ev.createResignifiedEvent(randStr(), Instant.parse("1946-06-14T00:00:00.00Z"),
-        Instant.parse("1946-06-14T23:59:59.99Z"));
-    private static final Resignified TRUMP_RENAMED = ev.createResignifiedEvent(randStr(), null, null);
-    private static final Appointed TRUMP_POTUS_START_1 = ev.createAppointedEvent(randStr(), Instant.parse("2017-01-20T00:00:00.00Z"),
-        Instant.parse("2017-01-20T23:59:59.99Z"));
-    private static final Removed TRUMP_POTUS_END_1 = ev.createRemovedEvent(randStr(), Instant.parse("2021-01-20T00:00:00.00Z"),
-        Instant.parse("2017-01-20T23:59:59.99Z"));
-    private static final Appointed TRUMP_POTUS_START_2 = ev.createAppointedEvent(randStr(), Instant.parse("2025-01-20T00:00:00.00Z"),
-        Instant.parse("2017-01-20T23:59:59.99Z"));
-    private static final Removed TRUMP_POTUS_END_2 = ev.createRemovedEvent(randStr(), null, null);
-    private static final Appointed TRUMP_CITIZENSHIP_BEGINS = ev.createAppointedEvent(randStr(), Instant.parse("1946-06-14T00:00:00.00Z"),
-        Instant.parse("1946-06-14T23:59:59.99Z"));
+    private static final Dissolved USA_TO = ev.createDissolvedEvent(randStr(), null, null);
+    private static final Formed USA_FROM = ev.createFormedEvent(randStr(), JUNE_4TH_1776_START, JUNE_4TH_1776_END);
     private static final Removed TRUMP_CITIZENSHIP_ENDS = ev.createRemovedEvent(randStr(), null, null);
+    private static final Removed TRUMP_POTUS_END_1 = ev.createRemovedEvent(randStr(), JAN_20TH_2021_START, JAN_20TH_2021_END);
+    private static final Removed TRUMP_POTUS_END_2 = ev.createRemovedEvent(randStr(), null, null);
+    private static final Resignified TRUMP_NAMED = ev.createResignifiedEvent(randStr(), JUNE_14TH_1946_START, JUNE_14TH_1946_END);
+    private static final Resignified TRUMP_RENAMED = ev.createResignifiedEvent(randStr(), null, null);
+    private static final Resignified USA_NAMED = ev.createResignifiedEvent(randStr(), JUNE_4TH_1776_START, JUNE_4TH_1776_END);
+    private static final Resignified USA_RENAMED = ev.createResignifiedEvent(randStr(), null, null);
+    private static final String PURPOSE = "To occupy its territory and serve its people.";
 
     @Test
     public void test() {

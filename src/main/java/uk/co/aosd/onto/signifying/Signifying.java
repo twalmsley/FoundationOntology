@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.signifying;
 
+import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.foundation.Activity;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.language.Language;
@@ -9,7 +10,7 @@ import uk.co.aosd.onto.language.Language;
  *
  * @author Tony Walmsley
  */
-public interface Signifying<V> extends Activity {
+public interface Signifying<V> extends Activity<Resignified, Resignified> {
     V name();
 
     UniquelyIdentifiable named();

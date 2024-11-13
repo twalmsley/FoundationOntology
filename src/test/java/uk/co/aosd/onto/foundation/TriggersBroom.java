@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.foundation;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Instant;
@@ -40,13 +41,16 @@ import uk.co.aosd.onto.services.OntologyServices;
  */
 public class TriggersBroom {
 
+    private static final Instant NOV_11TH_2024_1230 = Instant.parse("2024-11-11T12:30:00.00Z");
+    private static final Instant NOV_11TH_2024_MIDDAY = Instant.parse("2024-11-11T12:00:00.00Z");
+    private static final Instant NOV_1ST_2024_MIDDAY = Instant.parse("2024-11-01T12:00:00.00Z");
+    private static final Instant JAN_1ST_2024_START = Instant.parse("2024-01-01T12:00:00.00Z");
     private static final OntologyServices svc = new OntologyServicesImpl();
     private static final EventServices ev = new EventServicesImpl();
 
-    private static final Built LIFE_START = ev.createBuiltEvent(randStr(), Instant.parse("2024-01-01T12:00:00.00Z"), Instant.parse("2024-01-01T12:00:00.00Z"));
+    private static final Built LIFE_START = ev.createBuiltEvent(randStr(), JAN_1ST_2024_START, JAN_1ST_2024_START);
     private static final Scrapped UNKNOWN_END = ev.createScrappedEvent(randStr(), null, null);
-    private static final Built ASSEMBLY_START = ev.createBuiltEvent(randStr(), Instant.parse("2024-11-01T12:00:00.00Z"),
-        Instant.parse("2024-11-01T12:00:00.00Z"));
+    private static final Built ASSEMBLY_START = ev.createBuiltEvent(randStr(), NOV_1ST_2024_MIDDAY, NOV_1ST_2024_MIDDAY);
     private static final Scrapped ASSEMBLY_END = ev.createScrappedEvent(randStr(), null, null);
     private static final Aggregated AGGREGATED_EVENT = null;
     private static final Disaggregated DISAGGREGATED_EVENT = null;
@@ -71,33 +75,65 @@ public class TriggersBroom {
         //
         // Check the composition is correct.
         //
+        assertSame(ASSEMBLY_START, broom.beginning());
+        assertSame(ASSEMBLY_END, broom.ending());
         assertSame(broom.handle(), broomHandle);
         assertSame(broom.headWithBracketAssembly().bracket(), broomBracket);
         assertSame(broom.headWithBracketAssembly().headAssembly().bristles(), bristles);
         assertSame(broom.headWithBracketAssembly().headAssembly().head(), broomHead);
 
         // The bristles are worn out after much use, so replace them
-        final var activityFrom = ev.createStartedEvent(randStr(), Instant.parse("2024-11-11T12:00:00.00Z"), Instant.parse("2024-11-11T12:00:00.00Z"));
-        final var activityTo = ev.createStoppedEvent(randStr(), Instant.parse("2024-11-11T12:30:00.00Z"), Instant.parse("2024-11-11T12:30:00.00Z"));
+        final var activityFrom = ev.createStartedEvent(randStr(), NOV_11TH_2024_MIDDAY, NOV_11TH_2024_MIDDAY);
+        final var activityTo = ev.createStoppedEvent(randStr(), NOV_11TH_2024_1230, NOV_11TH_2024_1230);
         final var activityRecord = replaceBristles(broom, new Bristles(randStr(), LIFE_START, UNKNOWN_END), activityFrom, activityTo);
 
         JsonUtils.dumpJson(activityRecord);
 
-        assertSame(activityFrom, activityRecord.beginning());
-        assertSame(activityTo, activityRecord.ending());
+        assertSame(broom.beginning(), activityRecord.oldBroom().beginning());
+        assertSame(activityFrom.from(), activityRecord.oldBroom().ending().from());
+        assertSame(activityFrom.to(), activityRecord.oldBroom().ending().to());
 
-        assertSame(activityFrom, activityRecord.oldBroom().ending());
-        assertSame(activityFrom, activityRecord.oldBroom().headWithBracketAssembly().headAssembly().bristles().ending());
-        assertSame(activityFrom, activityRecord.oldBristles().ending());
-        assertSame(activityFrom, activityRecord.oldHeadAssembly().ending());
-        assertSame(activityFrom, activityRecord.oldHeadWithBracketAssembly().ending());
+        assertSame(broom.handle(), activityRecord.oldBroom().handle());
+        assertSame(ASSEMBLY_START, activityRecord.oldBroom().headWithBracketAssembly().beginning());
+        assertSame(activityFrom.from(), activityRecord.oldBroom().headWithBracketAssembly().ending().from());
+        assertSame(activityFrom.to(), activityRecord.oldBroom().headWithBracketAssembly().ending().to());
 
-        assertSame(activityFrom, activityRecord.newBroom().beginning());
-        assertSame(UNKNOWN_END, activityRecord.newBroom().ending());
+        assertSame(ASSEMBLY_START, activityRecord.oldBroom().headWithBracketAssembly().headAssembly().beginning());
+        assertSame(activityFrom.from(), activityRecord.oldBroom().headWithBracketAssembly().headAssembly().ending().from());
+        assertSame(activityFrom.to(), activityRecord.oldBroom().headWithBracketAssembly().headAssembly().ending().to());
 
-        assertSame(broomBracket, activityRecord.newBroom().headWithBracketAssembly().bracket());
-        assertSame(broomHead, activityRecord.newBroom().headWithBracketAssembly().headAssembly().head());
-        assertSame(broomHandle, activityRecord.newBroom().handle());
+        assertSame(LIFE_START, activityRecord.oldBroom().headWithBracketAssembly().headAssembly().head().beginning());
+        assertNull(activityRecord.oldBroom().headWithBracketAssembly().headAssembly().head().ending().from());
+        assertNull(activityRecord.oldBroom().headWithBracketAssembly().headAssembly().head().ending().to());
+
+        assertSame(LIFE_START, activityRecord.oldBroom().headWithBracketAssembly().headAssembly().bristles().beginning());
+        assertSame(activityFrom.from(), activityRecord.oldBroom().headWithBracketAssembly().headAssembly().bristles().ending().from());
+        assertSame(activityFrom.to(), activityRecord.oldBroom().headWithBracketAssembly().headAssembly().bristles().ending().to());
+
+        assertSame(LIFE_START, activityRecord.oldBroom().headWithBracketAssembly().bracket().beginning());
+        assertNull(activityRecord.oldBroom().headWithBracketAssembly().bracket().ending().from());
+        assertNull(activityRecord.oldBroom().headWithBracketAssembly().bracket().ending().to());
+
+        assertSame(broom.handle(), activityRecord.newBroom().handle());
+        assertSame(ASSEMBLY_START, activityRecord.newBroom().headWithBracketAssembly().beginning());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().ending().from());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().ending().to());
+
+        assertSame(ASSEMBLY_START, activityRecord.newBroom().headWithBracketAssembly().headAssembly().beginning());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().headAssembly().ending().from());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().headAssembly().ending().to());
+
+        assertSame(LIFE_START, activityRecord.newBroom().headWithBracketAssembly().headAssembly().head().beginning());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().headAssembly().head().ending().from());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().headAssembly().head().ending().to());
+
+        assertSame(LIFE_START, activityRecord.newBroom().headWithBracketAssembly().headAssembly().bristles().beginning());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().headAssembly().bristles().ending().from());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().headAssembly().bristles().ending().to());
+
+        assertSame(LIFE_START, activityRecord.newBroom().headWithBracketAssembly().bracket().beginning());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().bracket().ending().from());
+        assertNull(activityRecord.newBroom().headWithBracketAssembly().bracket().ending().to());
     }
 
     /**
@@ -115,28 +151,29 @@ public class TriggersBroom {
      * @return ReplaceBristlesActivity
      */
     private ReplaceBristlesActivity replaceBristles(final Broom broom, final Bristles bristles, final Started activityStart, final Stopped activityEnd) {
+        // The old assemblies are scrapped (disassembled actually)
+        final var assemblyEnds = ev.createScrappedEvent(randStr(), activityStart.from(), activityStart.to());
 
         // Set the ending for the old headAssembly
         final var headAssembly = broom.headWithBracketAssembly().headAssembly();
-        final Bristles oldBristles = new Bristles(headAssembly.bristles().identifier(), headAssembly.bristles().beginning(), UNKNOWN_END);
+        final Bristles oldBristles = new Bristles(headAssembly.bristles().identifier(), headAssembly.bristles().beginning(), assemblyEnds);
         final var oldHeadAssembly = new BroomHeadAssembly(headAssembly.identifier(), headAssembly.head(), oldBristles, headAssembly.beginning(),
-            UNKNOWN_END);
+            assemblyEnds);
 
         // Set the ending for the old headAndBracketAssembly
         final var headAndBracketAssembly = broom.headWithBracketAssembly();
         final var oldHeadWithBracketAssembly = new BroomHeadWithBracketAssembly(headAndBracketAssembly.identifier(), oldHeadAssembly,
-            headAndBracketAssembly.bracket(), headAndBracketAssembly.beginning(), UNKNOWN_END);
+            headAndBracketAssembly.bracket(), headAndBracketAssembly.beginning(), assemblyEnds);
 
         // Set the ending for the old Broom.
-        final var oldBroom = new Broom(randStr(), broom.handle(), oldHeadWithBracketAssembly, broom.beginning(), UNKNOWN_END);
+        final var oldBroom = new Broom(randStr(), broom.handle(), oldHeadWithBracketAssembly, broom.beginning(), assemblyEnds);
 
         // Create the updated broom
         final var updatedHeadAssembly = fitBristles(randStr(), headAssembly.head(), bristles, ASSEMBLY_START, UNKNOWN_END);
         final var updatedHeadAndBracketAssembly = fitBracket(randStr(), updatedHeadAssembly, headAndBracketAssembly.bracket(), ASSEMBLY_START, UNKNOWN_END);
         final var updatedBroom = fitHandle(randStr(), oldBroom.handle(), updatedHeadAndBracketAssembly, ASSEMBLY_START, UNKNOWN_END);
 
-        return new ReplaceBristlesActivity(randStr(), "Replace bristles", oldBroom, updatedBroom, oldBristles, oldHeadAssembly, oldHeadWithBracketAssembly,
-            activityStart, activityEnd);
+        return new ReplaceBristlesActivity(randStr(), "Replace bristles", oldBroom, updatedBroom, activityStart, activityEnd);
     }
 
     /**
@@ -256,7 +293,6 @@ record Bristles(String identifier, Built beginning, Scrapped ending) implements 
 record BroomBracket(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
 }
 
-record ReplaceBristlesActivity(String identifier, String actionsDescription, Broom oldBroom, Broom newBroom, Bristles oldBristles,
-    BroomHeadAssembly oldHeadAssembly, BroomHeadWithBracketAssembly oldHeadWithBracketAssembly, Started beginning, Stopped ending)
+record ReplaceBristlesActivity(String identifier, String actionsDescription, Broom oldBroom, Broom newBroom, Started beginning, Stopped ending)
     implements Individual<Started, Stopped> {
 }
