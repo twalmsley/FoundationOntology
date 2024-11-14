@@ -1,5 +1,7 @@
 package uk.co.aosd.onto.foundation;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -25,9 +27,20 @@ public class AggregationTest {
         final var aggregatedFrom = ev.createAggregated(randString(), Instant.ofEpochSecond(0), Instant.ofEpochSecond(1));
         final var aggregatedTo = ev.createDisaggregated(randString(), Instant.ofEpochSecond(1000), Instant.ofEpochSecond(1001));
         final var quantity = svc.createScalarValue(1000.0, SIUnits.KILOGRAMS);
-        final var agg1 = svc.createAggregate(randString(), Sand.class, quantity, aggregatedFrom, aggregatedTo);
+        final var someSand = svc.createAggregate(randString(), Sand.class, quantity, aggregatedFrom, aggregatedTo);
+        final var someWater = svc.createAggregate(randString(), Water.class, quantity, aggregatedFrom, aggregatedTo);
 
-        JsonUtils.dumpJson(agg1);
+        final var agg = someSand;
+        // The following line is not allowed because agg is an aggregate of Sand while
+        // someWater is an aggregate of water.
+        //
+        // agg3 = agg2; // ERROR - incompatible types.
+
+        JsonUtils.dumpJson(someSand);
+
+        assertNotNull(someSand);
+        assertNotNull(someWater);
+        assertNotNull(agg);
     }
 
     private static String randString() {
@@ -36,4 +49,7 @@ public class AggregationTest {
 }
 
 class Sand {
+}
+
+class Water {
 }

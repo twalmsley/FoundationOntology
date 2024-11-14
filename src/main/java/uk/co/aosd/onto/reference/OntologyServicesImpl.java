@@ -157,7 +157,7 @@ public class OntologyServicesImpl implements OntologyServices {
     }
 
     @Override
-    public <N extends Number, U extends Unit> Aggregate<N, U> createAggregate(final String identifier, final java.lang.Class<?> kind,
+    public <N extends Number, U extends Unit, T> Aggregate<N, U, T> createAggregate(final String identifier, final java.lang.Class<T> kind,
         final ScalarValue<N, U> quantity, final Aggregated from, final Disaggregated to) {
         return new AggregateImpl<>(identifier, kind, quantity, from, to);
     }

@@ -11,6 +11,6 @@ import uk.co.aosd.onto.foundation.Unit;
  *
  * @author Tony Walmsley
  */
-public record AggregateImpl<N extends Number, U extends Unit>(String identifier, Class<?> kind, ScalarValue<N, U> quantity,
-    Aggregated beginning, Disaggregated ending) implements Aggregate<N, U> {
+public record AggregateImpl<N extends Number, U extends Unit, T>(String identifier, Class<T> kind, ScalarValue<N, U> quantity,
+    Aggregated beginning, Disaggregated ending) implements Aggregate<N, U, T> {
 }

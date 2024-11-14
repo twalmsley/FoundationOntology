@@ -83,7 +83,8 @@ public interface OntologyServices {
 
     Agglomerate createAgglomerate(String identifier, Set<Individual<? extends Event, ? extends Event>> items, Aggregated from, Disaggregated to);
 
-    <N extends Number, U extends Unit> Aggregate<N, U> createAggregate(String identifier, java.lang.Class<?> kind, ScalarValue<N, U> quantity, Aggregated from,
+    <N extends Number, U extends Unit, T> Aggregate<N, U, T> createAggregate(String identifier, java.lang.Class<T> kind, ScalarValue<N, U> quantity,
+        Aggregated from,
         Disaggregated to);
 
     <N extends Number, U extends Unit> ScalarValue<N, U> createScalarValue(N value, U unit);
