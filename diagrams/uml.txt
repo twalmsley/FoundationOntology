@@ -27,6 +27,7 @@ interface uk.co.aosd.onto.foundation.Agglomerate {
 
 
 interface uk.co.aosd.onto.foundation.Aggregate {
+	{method}  {abstract} +kind () : Class
 	{method}  {abstract} +quantity () : uk.co.aosd.onto.foundation.ScalarValue
 }
 
@@ -103,6 +104,7 @@ interface uk.co.aosd.onto.foundation.UniquelyIdentifiable {
 
 
 interface uk.co.aosd.onto.foundation.Unit {
+	{method}  {abstract} +abbreviation () : String
 	{method}  {abstract} +name () : String
 }
 
@@ -120,7 +122,7 @@ interface uk.co.aosd.onto.model.Model {
 
 
 interface uk.co.aosd.onto.money.Currency {
-	{method}  {abstract} +code () : String
+	{method}  {abstract} +abbreviation () : String
 	{method}  {abstract} +name () : String
 	{method}  {abstract} +symbol () : char
 }
@@ -168,12 +170,14 @@ interface uk.co.aosd.onto.ownership.TransferringOfOwnership {
 
 
 interface uk.co.aosd.onto.services.EventServices {
+	{method}  {abstract} +createAggregated ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Aggregated
 	{method}  {abstract} +createAppointedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Appointed
 	{method}  {abstract} +createBirthEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Birth
 	{method}  {abstract} +createBuiltEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Built
 	{method}  {abstract} +createCreatedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Created
 	{method}  {abstract} +createDeathEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Death
 	{method}  {abstract} +createDeletedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Deleted
+	{method}  {abstract} +createDisaggregated ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Disaggregated
 	{method}  {abstract} +createDissolvedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Dissolved
 	{method}  {abstract} +createFormedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Formed
 	{method}  {abstract} +createRemovedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Removed
@@ -189,6 +193,7 @@ interface uk.co.aosd.onto.services.EventServices {
 
 interface uk.co.aosd.onto.services.OntologyServices {
 	{method}  {abstract} +createAgglomerate ( paramString1 : String , paramSet2 : java.util.Set , paramAggregated3 : uk.co.aosd.onto.events.Aggregated , paramDisaggregated4 : uk.co.aosd.onto.events.Disaggregated ) : uk.co.aosd.onto.foundation.Agglomerate
+	{method}  {abstract} +createAggregate ( paramString1 : String , paramClass2 : Class , paramScalarValue3 : uk.co.aosd.onto.foundation.ScalarValue , paramAggregated4 : uk.co.aosd.onto.events.Aggregated , paramDisaggregated5 : uk.co.aosd.onto.events.Disaggregated ) : uk.co.aosd.onto.foundation.Aggregate
 	{method}  {abstract} +createClass ( paramString1 : String , paramSet2 : java.util.Set ) : uk.co.aosd.onto.foundation.Class
 	{method}  {abstract} +createCurrency ( paramString1 : String , paramString2 : String , paramString3 : String , paramchar4 : char ) : uk.co.aosd.onto.money.Currency
 	{method}  {abstract} +createDna ( paramString1 : String , paramString2 : String ) : uk.co.aosd.onto.biological.DNA
@@ -201,6 +206,7 @@ interface uk.co.aosd.onto.services.OntologyServices {
 	{method}  {abstract} +createOwnership ( paramString1 : String , paramString2 : String , paramIndividual3 : uk.co.aosd.onto.foundation.Individual , paramIndividual4 : uk.co.aosd.onto.foundation.Individual , paramTransferredFrom5 : uk.co.aosd.onto.events.TransferredFrom , paramTransferredTo6 : uk.co.aosd.onto.events.TransferredTo ) : uk.co.aosd.onto.ownership.Owning
 	{method}  {abstract} +createPossibleWorld ( paramString1 : String , paramSet2 : java.util.Set , paramCreated3 : uk.co.aosd.onto.events.Created , paramDeleted4 : uk.co.aosd.onto.events.Deleted ) : uk.co.aosd.onto.foundation.PossibleWorld
 	{method}  {abstract} +createRole ( paramString1 : String , paramString2 : String ) : uk.co.aosd.onto.foundation.Role
+	{method}  {abstract} +createScalarValue ( paramNumber1 : Number , paramUnit2 : uk.co.aosd.onto.foundation.Unit ) : uk.co.aosd.onto.foundation.ScalarValue
 	{method}  {abstract} +createSignifier ( paramString1 : String , paramObject2 : Object , paramLanguage3 : uk.co.aosd.onto.language.Language , paramResignified4 : uk.co.aosd.onto.events.Resignified , paramResignified5 : uk.co.aosd.onto.events.Resignified ) : uk.co.aosd.onto.signifying.Signifier
 	{method}  {abstract} +createState ( paramString1 : String , paramIndividual2 : uk.co.aosd.onto.foundation.Individual , paramEvent3 : uk.co.aosd.onto.foundation.Event , paramEvent4 : uk.co.aosd.onto.foundation.Event ) : uk.co.aosd.onto.foundation.State
 	{method}  {abstract} +transferOwnership ( paramString1 : String , paramString2 : String , paramOwning3 : uk.co.aosd.onto.ownership.Owning , paramIndividual4 : uk.co.aosd.onto.foundation.Individual , paramStarted5 : uk.co.aosd.onto.events.Started , paramStopped6 : uk.co.aosd.onto.events.Stopped ) : uk.co.aosd.onto.ownership.TransferringOfOwnership

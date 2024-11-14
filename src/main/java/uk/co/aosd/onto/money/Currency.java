@@ -9,7 +9,7 @@ import uk.co.aosd.onto.foundation.Unit;
  */
 public interface Currency extends Unit {
 
-    String code();
+    String abbreviation();
 
     String name();
 

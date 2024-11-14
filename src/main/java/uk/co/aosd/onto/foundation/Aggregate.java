@@ -9,6 +9,13 @@ import uk.co.aosd.onto.events.Disaggregated;
  *
  * @author Tony Walmsley
  */
-public interface Aggregate<T extends Number, U extends Unit> extends Individual<Aggregated, Disaggregated> {
-    ScalarValue<T, U> quantity();
+public interface Aggregate<N extends Number, U extends Unit> extends Individual<Aggregated, Disaggregated> {
+    ScalarValue<N, U> quantity();
+
+    /**
+     * The kind of material in the aggregate.
+     *
+     * @return Class representing the kind of material.
+     */
+    java.lang.Class<?> kind();
 }

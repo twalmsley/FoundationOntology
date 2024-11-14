@@ -22,13 +22,16 @@ import uk.co.aosd.onto.events.Stopped;
 import uk.co.aosd.onto.events.TransferredFrom;
 import uk.co.aosd.onto.events.TransferredTo;
 import uk.co.aosd.onto.foundation.Agglomerate;
+import uk.co.aosd.onto.foundation.Aggregate;
 import uk.co.aosd.onto.foundation.Class;
 import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
 import uk.co.aosd.onto.foundation.PossibleWorld;
 import uk.co.aosd.onto.foundation.Role;
+import uk.co.aosd.onto.foundation.ScalarValue;
 import uk.co.aosd.onto.foundation.State;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
+import uk.co.aosd.onto.foundation.Unit;
 import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.model.Model;
 import uk.co.aosd.onto.money.Currency;
@@ -151,6 +154,17 @@ public class OntologyServicesImpl implements OntologyServices {
     public Agglomerate createAgglomerate(final String identifier, final Set<Individual<? extends Event, ? extends Event>> items, final Aggregated from,
         final Disaggregated to) {
         return new AgglomerateImpl(identifier, items, from, to);
+    }
+
+    @Override
+    public <N extends Number, U extends Unit> Aggregate<N, U> createAggregate(final String identifier, final java.lang.Class<?> kind,
+        final ScalarValue<N, U> quantity, final Aggregated from, final Disaggregated to) {
+        return new AggregateImpl<>(identifier, kind, quantity, from, to);
+    }
+
+    @Override
+    public <N extends Number, U extends Unit> ScalarValue<N, U> createScalarValue(final N value, final U unit) {
+        return new ScalarValueImpl<N, U>(value, unit);
     }
 
     private static String randId() {

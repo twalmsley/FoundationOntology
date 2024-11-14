@@ -5,7 +5,8 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface Unit extends UniquelyIdentifiable  {
+public interface Unit extends UniquelyIdentifiable {
     String name();
-}
 
+    String abbreviation();
+}

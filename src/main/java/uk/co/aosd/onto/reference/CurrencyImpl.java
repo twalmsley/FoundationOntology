@@ -7,6 +7,6 @@ import uk.co.aosd.onto.money.Currency;
  *
  * @author Tony Walmsley
  */
-public record CurrencyImpl(String identifier, String code, String name, char symbol) implements Currency {
+public record CurrencyImpl(String identifier, String abbreviation, String name, char symbol) implements Currency {
 
 }

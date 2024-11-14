@@ -2,12 +2,14 @@ package uk.co.aosd.onto.reference;
 
 import java.time.Instant;
 
+import uk.co.aosd.onto.events.Aggregated;
 import uk.co.aosd.onto.events.Appointed;
 import uk.co.aosd.onto.events.Birth;
 import uk.co.aosd.onto.events.Built;
 import uk.co.aosd.onto.events.Created;
 import uk.co.aosd.onto.events.Death;
 import uk.co.aosd.onto.events.Deleted;
+import uk.co.aosd.onto.events.Disaggregated;
 import uk.co.aosd.onto.events.Dissolved;
 import uk.co.aosd.onto.events.Formed;
 import uk.co.aosd.onto.events.Removed;
@@ -18,12 +20,14 @@ import uk.co.aosd.onto.events.Started;
 import uk.co.aosd.onto.events.Stopped;
 import uk.co.aosd.onto.events.TransferredFrom;
 import uk.co.aosd.onto.events.TransferredTo;
+import uk.co.aosd.onto.reference.events.AggregatedImpl;
 import uk.co.aosd.onto.reference.events.AppointedImpl;
 import uk.co.aosd.onto.reference.events.BirthImpl;
 import uk.co.aosd.onto.reference.events.BuiltImpl;
 import uk.co.aosd.onto.reference.events.CreatedImpl;
 import uk.co.aosd.onto.reference.events.DeathImpl;
 import uk.co.aosd.onto.reference.events.DeletedImpl;
+import uk.co.aosd.onto.reference.events.DisaggregatedImpl;
 import uk.co.aosd.onto.reference.events.DissolvedImpl;
 import uk.co.aosd.onto.reference.events.FormedImpl;
 import uk.co.aosd.onto.reference.events.RemovedImpl;
@@ -121,6 +125,16 @@ public class EventServicesImpl implements EventServices {
     @Override
     public TransferredFrom createTransferredFromEvent(final String identifier, final Instant from, final Instant to) {
         return new TransferredFromImpl(identifier, from, to);
+    }
+
+    @Override
+    public Aggregated createAggregated(final String identifier, final Instant from, final Instant to) {
+        return new AggregatedImpl(identifier, from, to);
+    }
+
+    @Override
+    public Disaggregated createDisaggregated(final String identifier, final Instant from, final Instant to) {
+        return new DisaggregatedImpl(identifier, from, to);
     }
 
 }

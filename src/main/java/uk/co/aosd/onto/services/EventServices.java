@@ -2,12 +2,14 @@ package uk.co.aosd.onto.services;
 
 import java.time.Instant;
 
+import uk.co.aosd.onto.events.Aggregated;
 import uk.co.aosd.onto.events.Appointed;
 import uk.co.aosd.onto.events.Birth;
 import uk.co.aosd.onto.events.Built;
 import uk.co.aosd.onto.events.Created;
 import uk.co.aosd.onto.events.Death;
 import uk.co.aosd.onto.events.Deleted;
+import uk.co.aosd.onto.events.Disaggregated;
 import uk.co.aosd.onto.events.Dissolved;
 import uk.co.aosd.onto.events.Formed;
 import uk.co.aosd.onto.events.Removed;
@@ -57,5 +59,9 @@ public interface EventServices {
     TransferredTo createTransferredToEvent(String identifier, Instant from, Instant to);
 
     TransferredFrom createTransferredFromEvent(String identifier, Instant from, Instant to);
+
+    Aggregated createAggregated(String identifier, Instant from, Instant to);
+
+    Disaggregated createDisaggregated(String identifier, Instant from, Instant to);
 
 }
