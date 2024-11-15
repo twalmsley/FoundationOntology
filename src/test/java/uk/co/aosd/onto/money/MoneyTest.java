@@ -15,6 +15,7 @@ import uk.co.aosd.onto.reference.EventServicesImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
 import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
+import uk.co.aosd.onto.units.Units;
 
 /**
  * Unit tests and examples for how to use Money.
@@ -31,22 +32,18 @@ public class MoneyTest {
 
     @Test
     public void test() {
-        final var gbp = svc.createCurrency("1", "GBP", "Pounds Sterling", '£');
-        final var usd = svc.createCurrency("2", "USD", "US Dollars", '$');
-        final var eur = svc.createCurrency("3", "EUR", "Euros", '€');
+        final var pounds = svc.createMonetaryValue(Decimal3f.valueOf("231.27"), Units.POUNDS_STERLING);
+        final var dollars = svc.createMonetaryValue(Decimal3f.valueOf("27.35"), Units.DOLLARS);
+        final var euros = svc.createMonetaryValue(Decimal3f.valueOf("999.99"), Units.EUROS);
 
-        final var pounds = svc.createMonetaryValue(Decimal3f.valueOf("231.27"), gbp);
-        final var dollars = svc.createMonetaryValue(Decimal3f.valueOf("27.35"), usd);
-        final var euros = svc.createMonetaryValue(Decimal3f.valueOf("999.99"), eur);
-
-        final var widget1 = new Widget("widget1", pounds, FROM, TO);
-        final var widget2 = new Widget("widget2", dollars, FROM, TO);
-        final var widget3 = new Widget("widget3", euros, FROM, TO);
+        final var widget1 = new Widget<>("widget1", pounds, FROM, TO);
+        final var widget2 = new Widget<>("widget2", dollars, FROM, TO);
+        final var widget3 = new Widget<>("widget3", euros, FROM, TO);
 
         final var model = svc.createModel();
-        model.add(gbp);
-        model.add(usd);
-        model.add(eur);
+        model.add(Units.POUNDS_STERLING);
+        model.add(Units.DOLLARS);
+        model.add(Units.EUROS);
         model.add(widget1);
         model.add(widget2);
         model.add(widget3);
@@ -55,13 +52,16 @@ public class MoneyTest {
         assertSame(widget2.value(), dollars);
         assertSame(widget3.value(), euros);
 
-        assertTrue(model.getThing("1").isPresent());
-        assertSame(model.getThing("1").get(), gbp);
+        assertTrue(model.getThing("PoundsSterling").isPresent());
+        assertSame(model.getThing("PoundsSterling").get(), Units.POUNDS_STERLING);
 
         JsonUtils.dumpJson(model);
+
+        // This won't work due to the types being different...
+        // MonetaryValue<Dollars> value = euros;
     }
 }
 
-record Widget(String identifier, MonetaryValue<Currency> value, Built beginning, Scrapped ending)
-    implements ValuedAsset<Currency>, Individual<Built, Scrapped> {
+record Widget<C extends Currency>(String identifier, MonetaryValue<C> value, Built beginning, Scrapped ending)
+    implements ValuedAsset<C>, Individual<Built, Scrapped> {
 }
