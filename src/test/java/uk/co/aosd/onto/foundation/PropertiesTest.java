@@ -49,7 +49,7 @@ public class PropertiesTest {
     @Test
     public void testWithoutStates() {
         final var car1 = createCar(randString(), LIFE_START, UNKNOWN_END);
-        final var car1IsRed = new ColouredCar(car1, Color.RED, LIFE_START_TIME, UNKNOWN_END_TIME);
+        final var car1IsRed = new CarColour(car1, Color.RED, LIFE_START_TIME, UNKNOWN_END_TIME);
 
         assertSame(car1, car1IsRed.individual());
     }
@@ -63,15 +63,15 @@ public class PropertiesTest {
         final var carState1 = svc.createState(randString(), car1, LIFE_START, UNKNOWN_END);
         final var redCars = new ColouredCars(randString(), Color.RED, Set.of(carState1));
 
-        // Convert the ColouredCars property into a list of ColouredCar Attributes
+        // Convert the ColouredCars property into a list of CarColour Attributes
         final var attributes = redCars
             .members()
             .stream()
             .map(state -> {
-                return new ColouredCar(state.individual(), redCars.property(), state.beginning().from(), state.ending().from());
+                return new CarColour(state.individual(), redCars.property(), state.beginning().from(), state.ending().from());
             }).toList();
 
-        // Convert the list of ColouredCar Attributes into a ColouredCars Property
+        // Convert the list of CarColour Attributes into a ColouredCars Property
         final var redCars2 = new ColouredCars(
             randString(),
             Color.RED,
@@ -107,6 +107,6 @@ record ColouredCars(String identifier, Color property, Set<State<Built, Scrapped
     implements Property<State<Built, Scrapped, Car>, Color> {
 }
 
-record ColouredCar(Car individual, Color property, Instant from, Instant to)
+record CarColour(Car individual, Color property, Instant from, Instant to)
     implements Attribute<Car, Color> {
 }
