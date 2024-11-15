@@ -7,9 +7,12 @@ import uk.co.aosd.onto.foundation.Unit;
  *
  * @author Tony Walmsley
  */
-public interface SIUnits {
+public interface Units {
     static final Unit KILOGRAMS = new Kilograms("KilogramUnits", "Kilograms", "kg");
-}
 
-record Kilograms(String identifier, String name, String abbreviation) implements Unit {
+    /**
+     * Kilograms.
+     */
+    public static record Kilograms(String identifier, String name, String abbreviation) implements Unit {
+    }
 }

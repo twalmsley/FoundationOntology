@@ -15,6 +15,7 @@ import uk.co.aosd.onto.reference.EventServicesImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
 import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
+import uk.co.aosd.onto.units.Units;
 
 /**
  * Test that the representation of properties is usable.
@@ -36,7 +37,7 @@ public class PropertiesTest {
      */
     @Test
     public void testUsingStates() {
-        final var car1 = createCar(randString(), LIFE_START, UNKNOWN_END);
+        final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
         final var carState1 = svc.createState(randString(), car1, LIFE_START, UNKNOWN_END);
         final var redCars = new ColouredCars(randString(), Color.RED, Set.of(carState1));
 
@@ -48,7 +49,7 @@ public class PropertiesTest {
      */
     @Test
     public void testWithoutStates() {
-        final var car1 = createCar(randString(), LIFE_START, UNKNOWN_END);
+        final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
         final var car1IsRed = new CarColour(car1, Color.RED, LIFE_START_TIME, UNKNOWN_END_TIME);
 
         assertSame(car1, car1IsRed.individual());
@@ -59,7 +60,7 @@ public class PropertiesTest {
      */
     @Test
     public void isomorphism() {
-        final var car1 = createCar(randString(), LIFE_START, UNKNOWN_END);
+        final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
         final var carState1 = svc.createState(randString(), car1, LIFE_START, UNKNOWN_END);
         final var redCars = new ColouredCars(randString(), Color.RED, Set.of(carState1));
 
@@ -90,8 +91,31 @@ public class PropertiesTest {
         // JsonUtils.dumpJson(redCars2);
     }
 
-    private Car createCar(final String identifier, final Built beginning, final Scrapped ending) {
-        return new Car(identifier, beginning, ending);
+    /**
+     * Test the ScalarAttributes can be created.
+     */
+    @Test
+    public void testScalarAttributes() {
+        final var car = new Car(randString(), LIFE_START, UNKNOWN_END);
+
+        final var kg1000 = svc.createScalarValue(1000.0D, Units.KILOGRAMS);
+        final var kg1100 = svc.createScalarValue(1100.0D, Units.KILOGRAMS);
+        final var kg1200 = svc.createScalarValue(1200.0D, Units.KILOGRAMS);
+
+        final var from1 = Instant.ofEpochSecond(0);
+        final var from2 = Instant.ofEpochSecond(1000);
+        final var from3 = Instant.ofEpochSecond(2000);
+        final var to1 = Instant.ofEpochSecond(1000);
+        final var to2 = Instant.ofEpochSecond(2000);
+        final var to3 = Instant.ofEpochSecond(3000);
+
+        final var weight1 = new CarWeight(car, kg1000, from1, to1);
+        final var weight2 = new CarWeight(car, kg1100, from2, to2);
+        final var weight3 = new CarWeight(car, kg1200, from3, to3);
+
+        assertEquals(1000.0D, weight1.property().value());
+        assertEquals(1100.0D, weight2.property().value());
+        assertEquals(1200.0D, weight3.property().value());
     }
 
     private static String randString() {
@@ -109,4 +133,8 @@ record ColouredCars(String identifier, Color property, Set<State<Built, Scrapped
 
 record CarColour(Car individual, Color property, Instant from, Instant to)
     implements Attribute<Car, Color> {
+}
+
+record CarWeight(Car individual, ScalarValue<Double, Unit> property, Instant from, Instant to)
+    implements ScalarAttribute<Car, Double, Unit> {
 }
