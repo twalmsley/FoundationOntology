@@ -3,7 +3,6 @@ package uk.co.aosd.onto.foundation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import java.awt.Color;
 import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
@@ -83,8 +82,12 @@ public class PropertiesTest {
                         ev.createScrappedEvent(randString(), attr.to(), UNKNOWN_END_TIME));
                 }).collect(Collectors.toSet()));
 
-        // Apart from the IDs, redCars and redCars2 will be identical
+        // Apart from the IDs, redCars and redCars2 will be identical (checked manually
+        // using https://jsondiff.com/)
         assertEquals(redCars.members().size(), redCars2.members().size());
+
+        // JsonUtils.dumpJson(redCars);
+        // JsonUtils.dumpJson(redCars2);
     }
 
     private Car createCar(final String identifier, final Built beginning, final Scrapped ending) {
@@ -94,6 +97,10 @@ public class PropertiesTest {
     private static String randString() {
         return UUID.randomUUID().toString();
     }
+}
+
+enum Color {
+    RED, BLUE, GREEN
 }
 
 record ColouredCars(String identifier, Color property, Set<State<Built, Scrapped, Car>> members)
