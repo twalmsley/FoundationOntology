@@ -16,6 +16,7 @@ import uk.co.aosd.onto.reference.OntologyServicesImpl;
 import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.units.Units;
+import uk.co.aosd.onto.units.Units.Kilograms;
 
 /**
  * Test that the representation of properties is usable.
@@ -135,6 +136,6 @@ record CarColour(Car individual, Color property, Instant from, Instant to)
     implements Attribute<Car, Color> {
 }
 
-record CarWeight(Car individual, ScalarValue<Double, Unit> property, Instant from, Instant to)
-    implements ScalarAttribute<Car, Double, Unit> {
+record CarWeight(Car individual, ScalarValue<Double, Kilograms> property, Instant from, Instant to)
+    implements ScalarAttribute<Car, Double, Kilograms> {
 }

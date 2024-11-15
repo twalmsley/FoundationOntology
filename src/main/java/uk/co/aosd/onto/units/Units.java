@@ -8,11 +8,11 @@ import uk.co.aosd.onto.foundation.Unit;
  * @author Tony Walmsley
  */
 public interface Units {
-    static final Unit KILOGRAMS = new Kilograms("KilogramUnits", "Kilograms", "kg");
+    static final Kilograms KILOGRAMS = new Kilograms("KilogramUnits", "Kilograms", "kg");
 
     /**
      * Kilograms.
      */
-    public static record Kilograms(String identifier, String name, String abbreviation) implements Unit {
+    static record Kilograms(String identifier, String name, String abbreviation) implements Unit {
     }
 }
