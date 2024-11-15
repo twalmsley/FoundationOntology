@@ -11,9 +11,9 @@ import uk.co.aosd.onto.foundation.Role;
  *
  * @author Tony Walmsley
  */
-public interface Membership extends Individual<Appointed, Removed> {
+public interface Membership<R extends Role> extends Individual<Appointed, Removed> {
 
     Human member();
 
-    Role role();
+    R role();
 }

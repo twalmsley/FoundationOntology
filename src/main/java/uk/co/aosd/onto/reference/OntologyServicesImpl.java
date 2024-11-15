@@ -80,19 +80,14 @@ public class OntologyServicesImpl implements OntologyServices {
     }
 
     @Override
-    public Role createRole(final String identifier, final String name) {
-        return new RoleImpl(identifier, name);
+    public <R extends Role> Membership<R> createMembership(final String identifier, final Human human, final R role, final Appointed from, final Removed to) {
+        return new MembershipImpl<>(identifier, human, role, from, to);
     }
 
     @Override
-    public Membership createMembership(final String identifier, final Human human, final Role role, final Appointed from, final Removed to) {
-        return new MembershipImpl(identifier, human, role, from, to);
-    }
-
-    @Override
-    public Organisation createOrganisation(final String identifier, final Class<Membership> memberships, final String purpose, final Class<Organisation> units,
-        final Class<Signifier<String>> names, final Formed from, final Dissolved to) {
-        return new OrganisationImpl(identifier, memberships, purpose, units, names, from, to);
+    public <R extends Role> Organisation createOrganisation(final String identifier, final Class<Membership<R>> memberships, final String purpose,
+        final Class<Organisation> units, final Class<Signifier<String>> names, final Formed from, final Dissolved to) {
+        return new OrganisationImpl<>(identifier, memberships, purpose, units, names, from, to);
     }
 
     @Override

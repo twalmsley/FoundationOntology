@@ -11,6 +11,6 @@ import uk.co.aosd.onto.organisation.Membership;
  *
  * @author Tony Walmsley
  */
-public record MembershipImpl(String identifier, Human member, Role role, Appointed beginning,
-    Removed ending) implements Membership {
+public record MembershipImpl<R extends Role>(String identifier, Human member, R role, Appointed beginning,
+    Removed ending) implements Membership<R> {
 }

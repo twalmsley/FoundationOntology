@@ -56,12 +56,10 @@ public interface OntologyServices {
 
     Human createHuman(String identifier, Birth born, Death died, Class<Signifier<String>> names, Language nativeLanguage, Class<Language> languages, DNA dna);
 
-    Role createRole(String identifier, String name);
+    <R extends Role> Membership<R> createMembership(String identifier, Human human, R role, Appointed from, Removed to);
 
-    Membership createMembership(String identifier, Human human, Role role, Appointed from, Removed to);
-
-    Organisation createOrganisation(String identifier, Class<Membership> memberships, String purpose, Class<Organisation> units, Class<Signifier<String>> names,
-        Formed from, Dissolved to);
+    <R extends Role> Organisation createOrganisation(String identifier, Class<Membership<R>> memberships, String purpose, Class<Organisation> units,
+        Class<Signifier<String>> names, Formed from, Dissolved to);
 
     PossibleWorld createPossibleWorld(String identifier, Set<Individual<? extends Event, ? extends Event>> parts, Created from, Deleted to);
 

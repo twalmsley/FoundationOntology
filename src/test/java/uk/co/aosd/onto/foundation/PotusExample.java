@@ -66,6 +66,9 @@ public class PotusExample {
     private static final Resignified USA_RENAMED = ev.createResignifiedEvent(randStr(), null, null);
     private static final String PURPOSE = "To occupy its territory and serve its people.";
 
+    private static final PresidentOfTheUsa PRESIDENT_USA = new PresidentOfTheUsa(randStr(), "President of the United States of America");
+    private static final CitizenOfTheUsa CITIZEN_USA = new CitizenOfTheUsa(randStr(), "Citizen of the United States of America");
+
     @Test
     public void test() {
 
@@ -90,17 +93,13 @@ public class PotusExample {
         final var usaGovSignifier1 = svc.createSignifier(randStr(), "The Government of the United States of America", usEnglish, USA_NAMED, USA_RENAMED);
         final var namesOfTheUsaGov = svc.createClass(randStr(), Set.of(usaGovSignifier1));
 
-        // Create the POTUS and Citizen roles.
-        final var presidentRole = svc.createRole(randStr(), "President of the United States of America");
-        final var citizenRole = svc.createRole(randStr(), "Citizen of the United States of America");
-
         // Register Donald Trump's memberships of the US Government in the role of POTUS
-        final var potus1 = svc.createMembership(randStr(), donaldTrump, presidentRole, TRUMP_POTUS_START_1, TRUMP_POTUS_END_1);
-        final var potus2 = svc.createMembership(randStr(), donaldTrump, presidentRole, TRUMP_POTUS_START_2, TRUMP_POTUS_END_2);
+        final var potus1 = svc.createMembership(randStr(), donaldTrump, PRESIDENT_USA, TRUMP_POTUS_START_1, TRUMP_POTUS_END_1);
+        final var potus2 = svc.createMembership(randStr(), donaldTrump, PRESIDENT_USA, TRUMP_POTUS_START_2, TRUMP_POTUS_END_2);
         final var memberships = svc.createClass(randStr(), Set.of(potus1, potus2));
 
         // Register Donald Trump as a member of the USA in the role of citizen.
-        final var citizen1 = svc.createMembership(randStr(), donaldTrump, citizenRole, TRUMP_CITIZENSHIP_BEGINS, TRUMP_CITIZENSHIP_ENDS);
+        final var citizen1 = svc.createMembership(randStr(), donaldTrump, CITIZEN_USA, TRUMP_CITIZENSHIP_BEGINS, TRUMP_CITIZENSHIP_ENDS);
         final var citizenships = svc.createClass(randStr(), Set.of(citizen1));
 
         // Create the US Government
@@ -113,7 +112,7 @@ public class PotusExample {
 
         // Create the USA
         final var usaTerritory = new Territory(randStr(), USA_FROM, USA_TO);
-        final var usa = new Nation(randStr(), usaTerritory, citizenships, PURPOSE, namesOfTheUsa, usaUnits, USA_FROM, USA_TO);
+        final var usa = new Nation<>(randStr(), usaTerritory, citizenships, PURPOSE, namesOfTheUsa, usaUnits, USA_FROM, USA_TO);
 
         assertNotNull(usa);
 
@@ -126,11 +125,17 @@ public class PotusExample {
 
 }
 
-record Nation(String identifier, Territory territory, Class<Membership> members, String purpose,
+record Nation<R extends Role>(String identifier, Territory territory, Class<Membership<R>> members, String purpose,
     Class<Signifier<String>> names, Class<Organisation> units, Formed beginning, Dissolved ending)
     implements Organisation {
 }
 
 record Territory(String identifier, Formed beginning, Dissolved ending) implements Individual<Formed, Dissolved> {
 
+}
+
+record PresidentOfTheUsa(String identifier, String name) implements Role {
+}
+
+record CitizenOfTheUsa(String identifier, String name) implements Role {
 }

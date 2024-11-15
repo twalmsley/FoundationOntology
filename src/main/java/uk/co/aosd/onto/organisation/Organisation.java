@@ -25,7 +25,7 @@ public interface Organisation extends Named, Individual<Formed, Dissolved> {
      *
      * @return Class of Memberships
      */
-    Class<? extends Membership> members();
+    Class<? extends Membership<?>> members();
 
     /**
      * Organisations can have units and sub-units.

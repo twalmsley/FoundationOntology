@@ -67,7 +67,7 @@ public class OrganisationTest {
         final var alice = svc.createHuman(randString(), born, died, person1Names, english, languages, UNKNOWN_DNA);
 
         // Create a Class of memberships for the person as a member of something.
-        final var ceoRole = svc.createRole(randString(), "CEO");
+        final var ceoRole = new CeoRole(randString(), "CEO");
         final var ceoMembership = svc.createMembership(randString(), alice, ceoRole, appointed, dismissed);
         final var acmeTeamMemberships = svc.createClass(randString(), Set.of(ceoMembership));
 
@@ -96,4 +96,7 @@ public class OrganisationTest {
     private static String randString() {
         return UUID.randomUUID().toString();
     }
+}
+
+record CeoRole(String identifier, String name) implements Role {
 }
