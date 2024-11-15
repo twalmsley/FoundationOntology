@@ -34,7 +34,7 @@ public class AggregationTest {
         // The following line is not allowed because agg is an aggregate of Sand while
         // someWater is an aggregate of water.
         //
-        // agg3 = agg2; // ERROR - incompatible types.
+        // agg = someWater; // ERROR - incompatible types.
 
         JsonUtils.dumpJson(someSand);
 
