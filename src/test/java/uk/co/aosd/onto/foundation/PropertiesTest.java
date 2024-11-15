@@ -28,9 +28,9 @@ public class PropertiesTest {
     private static final EventServices ev = new EventServicesImpl();
 
     private static final Instant LIFE_START_TIME = Instant.parse("2024-01-01T12:00:00.00Z");
-    private static final Instant UNKNOWN_END_TIME = null;
-    private static final Built LIFE_START = ev.createBuiltEvent(randString(), LIFE_START_TIME, UNKNOWN_END_TIME);
-    private static final Scrapped UNKNOWN_END = ev.createScrappedEvent(randString(), UNKNOWN_END_TIME, UNKNOWN_END_TIME);
+    private static final Instant LIFE_END_TIME = Instant.parse("2025-01-01T12:00:00.00Z");
+    private static final Built LIFE_START = ev.createBuiltEvent(randString(), LIFE_START_TIME, LIFE_END_TIME);
+    private static final Scrapped UNKNOWN_END = ev.createScrappedEvent(randString(), LIFE_END_TIME, LIFE_END_TIME);
 
     /**
      * Show how to represent properties using explicit States.
@@ -50,7 +50,7 @@ public class PropertiesTest {
     @Test
     public void testWithoutStates() {
         final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
-        final var car1IsRed = new CarColour(car1, Color.RED, LIFE_START_TIME, UNKNOWN_END_TIME);
+        final var car1IsRed = new CarColour(car1, Color.RED, LIFE_START_TIME, LIFE_END_TIME);
 
         assertSame(car1, car1IsRed.individual());
     }
@@ -79,8 +79,8 @@ public class PropertiesTest {
             attributes
                 .stream()
                 .map(attr -> {
-                    return svc.createState(randString(), attr.individual(), ev.createBuiltEvent(randString(), attr.from(), UNKNOWN_END_TIME),
-                        ev.createScrappedEvent(randString(), attr.to(), UNKNOWN_END_TIME));
+                    return svc.createState(randString(), attr.individual(), ev.createBuiltEvent(randString(), attr.from(), LIFE_END_TIME),
+                        ev.createScrappedEvent(randString(), attr.to(), LIFE_END_TIME));
                 }).collect(Collectors.toSet()));
 
         // Apart from the IDs, redCars and redCars2 will be identical (checked manually
