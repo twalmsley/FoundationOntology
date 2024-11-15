@@ -1,6 +1,7 @@
 package uk.co.aosd.onto.foundation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Instant;
@@ -17,6 +18,7 @@ import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.units.Units;
 import uk.co.aosd.onto.units.Units.Kilograms;
+import uk.co.aosd.onto.units.Units.Meters;
 
 /**
  * Test that the representation of properties is usable.
@@ -114,6 +116,13 @@ public class PropertiesTest {
         final var weight2 = new CarWeight(car, kg1100, from2, to2);
         final var weight3 = new CarWeight(car, kg1200, from3, to3);
 
+        final var m3 = svc.createScalarValue(3.0D, Units.METERS);
+
+        // Same at run-time, but not at compile time due to type erasure.
+        assertEquals(m3.getClass(), kg1000.getClass());
+
+        assertNotEquals(m3.unit().getClass(), kg1000.unit().getClass());
+
         assertEquals(1000.0D, weight1.property().value());
         assertEquals(1100.0D, weight2.property().value());
         assertEquals(1200.0D, weight3.property().value());
@@ -138,4 +147,8 @@ record CarColour(Car individual, Color property, Instant from, Instant to)
 
 record CarWeight(Car individual, ScalarValue<Double, Kilograms> property, Instant from, Instant to)
     implements ScalarAttribute<Car, Double, Kilograms> {
+}
+
+record CarLength(Car individual, ScalarValue<Double, Meters> property, Instant from, Instant to)
+    implements ScalarAttribute<Car, Double, Meters> {
 }
