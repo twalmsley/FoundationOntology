@@ -4,14 +4,17 @@ import java.time.Instant;
 
 import uk.co.aosd.onto.events.Aggregated;
 import uk.co.aosd.onto.events.Appointed;
+import uk.co.aosd.onto.events.Assembled;
 import uk.co.aosd.onto.events.Birth;
 import uk.co.aosd.onto.events.Built;
 import uk.co.aosd.onto.events.Created;
 import uk.co.aosd.onto.events.Death;
 import uk.co.aosd.onto.events.Deleted;
 import uk.co.aosd.onto.events.Disaggregated;
+import uk.co.aosd.onto.events.Disassembled;
 import uk.co.aosd.onto.events.Dissolved;
 import uk.co.aosd.onto.events.Formed;
+import uk.co.aosd.onto.events.Installed;
 import uk.co.aosd.onto.events.Removed;
 import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.events.Scrapped;
@@ -63,5 +66,11 @@ public interface EventServices {
     Aggregated createAggregated(String identifier, Instant from, Instant to);
 
     Disaggregated createDisaggregated(String identifier, Instant from, Instant to);
+
+    Assembled createAssembled(String identifier, Instant from, Instant to);
+
+    Installed createInstalled(String identifier, Instant from, Instant to);
+
+    Disassembled createDisassembled(String identifier, Instant from, Instant to);
 
 }

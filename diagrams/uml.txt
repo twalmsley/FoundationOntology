@@ -172,14 +172,17 @@ interface uk.co.aosd.onto.ownership.TransferringOfOwnership {
 interface uk.co.aosd.onto.services.EventServices {
 	{method}  {abstract} +createAggregated ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Aggregated
 	{method}  {abstract} +createAppointedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Appointed
+	{method}  {abstract} +createAssembled ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Assembled
 	{method}  {abstract} +createBirthEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Birth
 	{method}  {abstract} +createBuiltEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Built
 	{method}  {abstract} +createCreatedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Created
 	{method}  {abstract} +createDeathEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Death
 	{method}  {abstract} +createDeletedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Deleted
 	{method}  {abstract} +createDisaggregated ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Disaggregated
+	{method}  {abstract} +createDisassembled ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Disassembled
 	{method}  {abstract} +createDissolvedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Dissolved
 	{method}  {abstract} +createFormedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Formed
+	{method}  {abstract} +createInstalled ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Installed
 	{method}  {abstract} +createRemovedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Removed
 	{method}  {abstract} +createResignifiedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Resignified
 	{method}  {abstract} +createScrappedEvent ( paramString1 : String , paramInstant2 : java.time.Instant , paramInstant3 : java.time.Instant ) : uk.co.aosd.onto.events.Scrapped

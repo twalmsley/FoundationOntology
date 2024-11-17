@@ -9,8 +9,10 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.events.Aggregated;
+import uk.co.aosd.onto.events.Assembled;
 import uk.co.aosd.onto.events.Built;
 import uk.co.aosd.onto.events.Disaggregated;
+import uk.co.aosd.onto.events.Disassembled;
 import uk.co.aosd.onto.events.Scrapped;
 import uk.co.aosd.onto.events.Started;
 import uk.co.aosd.onto.events.Stopped;
@@ -50,9 +52,10 @@ public class TriggersBroom {
     private static final EventServices ev = new EventServicesImpl();
 
     private static final Built LIFE_START = ev.createBuiltEvent(randStr(), JAN_1ST_2024_START, JAN_1ST_2024_START);
-    private static final Scrapped UNKNOWN_END = ev.createScrappedEvent(randStr(), null, null);
-    private static final Built ASSEMBLY_START = ev.createBuiltEvent(randStr(), NOV_1ST_2024_MIDDAY, NOV_1ST_2024_MIDDAY);
-    private static final Scrapped ASSEMBLY_END = ev.createScrappedEvent(randStr(), null, null);
+    private static final Disassembled UNKNOWN_DISASSEMBLY = ev.createDisassembled(randStr(), null, null);
+    private static final Scrapped UNKNOWN_SCRAPPING = ev.createScrappedEvent(randStr(), null, null);
+    private static final Assembled ASSEMBLY_START = ev.createAssembled(randStr(), NOV_1ST_2024_MIDDAY, NOV_1ST_2024_MIDDAY);
+    private static final Disassembled ASSEMBLY_END = ev.createDisassembled(randStr(), null, null);
     private static final Aggregated AGGREGATED_EVENT = null;
     private static final Disaggregated DISAGGREGATED_EVENT = null;
 
@@ -61,10 +64,10 @@ public class TriggersBroom {
         //
         // Create the parts
         //
-        final var broomHandle = new BroomHandle(randStr(), LIFE_START, UNKNOWN_END);
-        final var broomHead = new BroomHead(randStr(), LIFE_START, UNKNOWN_END);
-        final var bristles = new Bristles(randStr(), LIFE_START, UNKNOWN_END);
-        final var broomBracket = new BroomBracket(randStr(), LIFE_START, UNKNOWN_END);
+        final var broomHandle = new BroomHandle(randStr(), LIFE_START, UNKNOWN_SCRAPPING);
+        final var broomHead = new BroomHead(randStr(), LIFE_START, UNKNOWN_SCRAPPING);
+        final var bristles = new Bristles(randStr(), LIFE_START, UNKNOWN_SCRAPPING);
+        final var broomBracket = new BroomBracket(randStr(), LIFE_START, UNKNOWN_SCRAPPING);
 
         // Gather the parts into an Agglomerate (not really necessary, this just shows
         // what an Agglomerate is)
@@ -86,7 +89,7 @@ public class TriggersBroom {
         // The bristles are worn out after much use, so replace them
         final var activityFrom = ev.createStartedEvent(randStr(), NOV_11TH_2024_MIDDAY, NOV_11TH_2024_MIDDAY);
         final var activityTo = ev.createStoppedEvent(randStr(), NOV_11TH_2024_1230, NOV_11TH_2024_1230);
-        final var activityRecord = replaceBristles(broom, new Bristles(randStr(), LIFE_START, UNKNOWN_END), activityFrom, activityTo);
+        final var activityRecord = replaceBristles(broom, new Bristles(randStr(), LIFE_START, UNKNOWN_SCRAPPING), activityFrom, activityTo);
 
         JsonUtils.dumpJson(activityRecord);
 
@@ -153,11 +156,12 @@ public class TriggersBroom {
      */
     private ReplaceBristlesActivity replaceBristles(final Broom broom, final Bristles bristles, final Started activityStart, final Stopped activityEnd) {
         // The old assemblies are scrapped (disassembled actually)
-        final var assemblyEnds = ev.createScrappedEvent(randStr(), activityStart.from(), activityStart.to());
+        final var assemblyEnds = ev.createDisassembled(randStr(), activityStart.from(), activityStart.to());
+        final var bristlesScrapped = ev.createScrappedEvent(randStr(), activityStart.from(), activityStart.to());
 
         // Set the ending for the old headAssembly
         final var headAssembly = broom.headWithBracketAssembly().headAssembly();
-        final Bristles oldBristles = new Bristles(headAssembly.bristles().identifier(), headAssembly.bristles().beginning(), assemblyEnds);
+        final Bristles oldBristles = new Bristles(headAssembly.bristles().identifier(), headAssembly.bristles().beginning(), bristlesScrapped);
         final var oldHeadAssembly = new BroomHeadAssembly(headAssembly.identifier(), headAssembly.head(), oldBristles, headAssembly.beginning(),
             assemblyEnds);
 
@@ -170,9 +174,10 @@ public class TriggersBroom {
         final var oldBroom = new Broom(randStr(), broom.handle(), oldHeadWithBracketAssembly, broom.beginning(), assemblyEnds);
 
         // Create the updated broom
-        final var updatedHeadAssembly = fitBristles(randStr(), headAssembly.head(), bristles, ASSEMBLY_START, UNKNOWN_END);
-        final var updatedHeadAndBracketAssembly = fitBracket(randStr(), updatedHeadAssembly, headAndBracketAssembly.bracket(), ASSEMBLY_START, UNKNOWN_END);
-        final var updatedBroom = fitHandle(randStr(), oldBroom.handle(), updatedHeadAndBracketAssembly, ASSEMBLY_START, UNKNOWN_END);
+        final var updatedHeadAssembly = fitBristles(randStr(), headAssembly.head(), bristles, ASSEMBLY_START, UNKNOWN_DISASSEMBLY);
+        final var updatedHeadAndBracketAssembly = fitBracket(randStr(), updatedHeadAssembly, headAndBracketAssembly.bracket(), ASSEMBLY_START,
+            UNKNOWN_DISASSEMBLY);
+        final var updatedBroom = fitHandle(randStr(), oldBroom.handle(), updatedHeadAndBracketAssembly, ASSEMBLY_START, UNKNOWN_DISASSEMBLY);
 
         return new ReplaceBristlesActivity(randStr(), "Replace bristles", oldBroom, updatedBroom, activityStart, activityEnd);
     }
@@ -224,9 +229,8 @@ public class TriggersBroom {
      *            BroomHeadWithBracketAssembly
      * @return Broom
      */
-    private Broom fitHandle(final String id, final BroomHandle broomHandle,
-        final BroomHeadWithBracketAssembly broomHeadWithBracketAssembly, final Built beginning,
-        final Scrapped ending) {
+    private Broom fitHandle(final String id, final BroomHandle broomHandle, final BroomHeadWithBracketAssembly broomHeadWithBracketAssembly,
+        final Assembled beginning, final Disassembled ending) {
         return new Broom(id, broomHandle, broomHeadWithBracketAssembly, beginning, ending);
     }
 
@@ -242,7 +246,7 @@ public class TriggersBroom {
      * @return BroomHeadWithBracketAssembly
      */
     private static BroomHeadWithBracketAssembly fitBracket(final String id, final BroomHeadAssembly broomHeadAssembly,
-        final BroomBracket broomBracket, final Built beginning, final Scrapped ending) {
+        final BroomBracket broomBracket, final Assembled beginning, final Disassembled ending) {
         return new BroomHeadWithBracketAssembly(id, broomHeadAssembly, broomBracket, beginning, ending);
     }
 
@@ -259,7 +263,7 @@ public class TriggersBroom {
      * @return BroomHeadAssembly
      */
     private static BroomHeadAssembly fitBristles(final String id, final BroomHead head, final Bristles bristles,
-        final Built beginning, final Scrapped ending) {
+        final Assembled beginning, final Disassembled ending) {
         return new BroomHeadAssembly(id, head, bristles, beginning, ending);
     }
 
@@ -269,15 +273,16 @@ public class TriggersBroom {
 
 }
 
-record Broom(String identifier, BroomHandle handle, BroomHeadWithBracketAssembly headWithBracketAssembly, Built beginning, Scrapped ending)
-    implements Individual<Built, Scrapped> {
+record Broom(String identifier, BroomHandle handle, BroomHeadWithBracketAssembly headWithBracketAssembly, Assembled beginning, Disassembled ending)
+    implements Individual<Assembled, Disassembled> {
 }
 
-record BroomHeadAssembly(String identifier, BroomHead head, Bristles bristles, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
+record BroomHeadAssembly(String identifier, BroomHead head, Bristles bristles, Assembled beginning, Disassembled ending)
+    implements Individual<Assembled, Disassembled> {
 }
 
 record BroomHeadWithBracketAssembly(String identifier, BroomHeadAssembly headAssembly, BroomBracket bracket,
-    Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
+    Assembled beginning, Disassembled ending) implements Individual<Assembled, Disassembled> {
 }
 
 record BroomHandle(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
