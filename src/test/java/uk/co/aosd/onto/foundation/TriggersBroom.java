@@ -40,6 +40,10 @@ import uk.co.aosd.onto.services.OntologyServices;
  * would not capture the 4D aspects of the object relationships correctly.
  * </p>
  *
+ * <p>
+ * See the HQDM book, section 13.2 Functional Object, ¶4.
+ * </p>
+ *
  * @author Tony Walmsley
  */
 public class TriggersBroom {
