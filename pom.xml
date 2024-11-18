@@ -122,4 +122,10 @@
             <url>https://maven.pkg.github.com/twalmsley/FoundationOntology</url>
         </repository>
     </distributionManagement>
+    <scm>
+        <connection>scm:git:git@github.com:twalmsley/FoundationOntology.git</connection>
+        <developerConnection>scm:git:git@github.com:twalmsley/FoundationOntology.git</developerConnection>
+        <url>https://github.com/twalmsley/FoundationOntology</url>
+        <tag>HEAD</tag>
+    </scm>
 </project>
