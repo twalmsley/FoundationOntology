@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.foundation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,6 +9,7 @@ import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.events.Aggregated;
 import uk.co.aosd.onto.events.Assembled;
@@ -147,6 +149,29 @@ public class TriggersBroom {
         assertSame(LIFE_START, activityRecord.newBroom().headWithBracketAssembly().bracket().beginning());
         assertNull(activityRecord.newBroom().headWithBracketAssembly().bracket().ending().from());
         assertNull(activityRecord.newBroom().headWithBracketAssembly().bracket().ending().to());
+    }
+
+    @Test
+    public void serialisationTest() throws JsonProcessingException {
+        //
+        // Create the parts
+        //
+        final var broomHandle = new BroomHandle(randStr(), LIFE_START, UNKNOWN_SCRAPPING);
+        final var broomHead = new BroomHead(randStr(), LIFE_START, UNKNOWN_SCRAPPING);
+        final var bristles = new Bristles(randStr(), LIFE_START, UNKNOWN_SCRAPPING);
+        final var broomBracket = new BroomBracket(randStr(), LIFE_START, UNKNOWN_SCRAPPING);
+
+        // Gather the parts into an Agglomerate (not really necessary, this just shows
+        // what an Agglomerate is)
+        final var parts = svc.createAgglomerate(randStr(), Set.of(broomBracket, bristles, broomHead, broomHandle), AGGREGATED_EVENT, DISAGGREGATED_EVENT);
+
+        // Assemble the broom composite from the set of parts
+        final var broom = assembleBroom(parts);
+
+        final var json = JsonUtils.dumpJsonString(broom);
+        final var broom2 = JsonUtils.readJsonString(json, Broom.class);
+
+        assertEquals(broom, broom2);
     }
 
     /**
