@@ -6,9 +6,9 @@ import java.time.Instant;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
-import uk.co.aosd.onto.reference.EventServicesImpl;
+import uk.co.aosd.onto.events.Aggregated;
+import uk.co.aosd.onto.events.Disaggregated;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
-import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.units.Units;
 
@@ -19,13 +19,12 @@ import uk.co.aosd.onto.units.Units;
  */
 public class AggregationTest {
 
-    private static final EventServices ev = new EventServicesImpl();
     private static final OntologyServices svc = new OntologyServicesImpl();
 
     @Test
     public void test() {
-        final var aggregatedFrom = ev.createAggregated(randString(), Instant.ofEpochSecond(0), Instant.ofEpochSecond(1));
-        final var aggregatedTo = ev.createDisaggregated(randString(), Instant.ofEpochSecond(1000), Instant.ofEpochSecond(1001));
+        final var aggregatedFrom = new Aggregated(randString(), Instant.ofEpochSecond(0), Instant.ofEpochSecond(1));
+        final var aggregatedTo = new Disaggregated(randString(), Instant.ofEpochSecond(1000), Instant.ofEpochSecond(1001));
         final var quantity = svc.createScalarValue(1000.0, Units.KILOGRAMS);
         final var someSand = svc.createAggregate(randString(), Sand.class, quantity, aggregatedFrom, aggregatedTo);
         final var someWater = svc.createAggregate(randString(), Water.class, quantity, aggregatedFrom, aggregatedTo);

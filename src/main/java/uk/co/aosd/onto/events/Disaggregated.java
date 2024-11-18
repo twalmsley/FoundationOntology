@@ -1,12 +1,14 @@
 package uk.co.aosd.onto.events;
 
+import java.time.Instant;
+
 import uk.co.aosd.onto.foundation.Event;
 
 /**
- * An extension to the Event interface.
+ * An implementation of an extension to the Event interface.
  *
  * @author Tony Walmsley
  */
-public interface Disaggregated extends Event {
+public record Disaggregated(String identifier, Instant from, Instant to) implements Event {
 
 }

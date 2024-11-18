@@ -40,7 +40,6 @@ import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.ownership.Owning;
 import uk.co.aosd.onto.ownership.TransferringOfOwnership;
-import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.signifying.Signifier;
 
@@ -55,8 +54,6 @@ import uk.co.aosd.onto.signifying.Signifier;
  * @author Tony Walmsley
  */
 public class OntologyServicesImpl implements OntologyServices {
-
-    private static final EventServices ev = new EventServicesImpl();
 
     @Override
     public Language createLanguage(final String identifier, final String name) {
@@ -117,13 +114,13 @@ public class OntologyServicesImpl implements OntologyServices {
     public <A extends Event, B extends Event, C extends Event, D extends Event> TransferringOfOwnership<A, B, C, D> transferOwnership(final String identifier,
         final String actionsDescription, final Owning<A, B, C, D> current, final Individual<A, B> newOwner, final Started from, final Stopped to) {
         // The previous owneship ends at the from event.
-        final var transferredFromEvent = ev.createTransferredFromEvent(randId(), from.from(), from.to());
-        final var transferredToEvent = ev.createTransferredToEvent(randId(), to.from(), to.to());
+        final var transferredFromEvent = new TransferredFrom(randId(), from.from(), from.to());
+        final var transferredToEvent = new TransferredTo(randId(), to.from(), to.to());
         final var endOwnership = createOwnership(current.identifier(), current.actionsDescription(), current.owner(), current.owned(), current.beginning(),
             transferredToEvent);
 
         // The new ownership starts at the from event.
-        final var ownershipEnds = ev.createTransferredToEvent(randId(), null, null);
+        final var ownershipEnds = new TransferredTo(randId(), null, null);
         final var newOwnership = createOwnership(identifier, actionsDescription, newOwner, current.owned(), transferredFromEvent, ownershipEnds);
 
         // The transfer happens at the from event and finishes at the from event.

@@ -17,9 +17,7 @@ import uk.co.aosd.onto.events.Removed;
 import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.organisation.Membership;
 import uk.co.aosd.onto.organisation.Organisation;
-import uk.co.aosd.onto.reference.EventServicesImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
-import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.signifying.Signifier;
 
@@ -36,7 +34,6 @@ import uk.co.aosd.onto.signifying.Signifier;
 public class PotusExample {
 
     private static final OntologyServices svc = new OntologyServicesImpl();
-    private static final EventServices ev = new EventServicesImpl();
 
     private static final Instant JAN_20TH_2025_END = Instant.parse("2025-01-20T23:59:59.99Z");
     private static final Instant JAN_20TH_2025_START = Instant.parse("2025-01-20T00:00:00.00Z");
@@ -50,20 +47,20 @@ public class PotusExample {
     private static final Instant JUNE_4TH_1776_START = Instant.parse("1776-06-04T00:00:00.00Z");
 
     private static final DNA UNKNOWN_DNA = null;
-    private static final Appointed TRUMP_CITIZENSHIP_BEGINS = ev.createAppointedEvent(randStr(), JUNE_14TH_1946_START, JUNE_14TH_1946_END);
-    private static final Appointed TRUMP_POTUS_START_1 = ev.createAppointedEvent(randStr(), JAN_20TH_2017_START, JAN_20TH_2017_END);
-    private static final Appointed TRUMP_POTUS_START_2 = ev.createAppointedEvent(randStr(), JAN_20TH_2025_START, JAN_20TH_2025_END);
-    private static final Birth TRUMP_BORN = ev.createBirthEvent(randStr(), JUNE_14TH_1946_START, JUNE_14TH_1946_END);
-    private static final Death TRUMP_DIED = ev.createDeathEvent(randStr(), null, null);
-    private static final Dissolved USA_TO = ev.createDissolvedEvent(randStr(), null, null);
-    private static final Formed USA_FROM = ev.createFormedEvent(randStr(), JUNE_4TH_1776_START, JUNE_4TH_1776_END);
-    private static final Removed TRUMP_CITIZENSHIP_ENDS = ev.createRemovedEvent(randStr(), null, null);
-    private static final Removed TRUMP_POTUS_END_1 = ev.createRemovedEvent(randStr(), JAN_20TH_2021_START, JAN_20TH_2021_END);
-    private static final Removed TRUMP_POTUS_END_2 = ev.createRemovedEvent(randStr(), null, null);
-    private static final Resignified TRUMP_NAMED = ev.createResignifiedEvent(randStr(), JUNE_14TH_1946_START, JUNE_14TH_1946_END);
-    private static final Resignified TRUMP_RENAMED = ev.createResignifiedEvent(randStr(), null, null);
-    private static final Resignified USA_NAMED = ev.createResignifiedEvent(randStr(), JUNE_4TH_1776_START, JUNE_4TH_1776_END);
-    private static final Resignified USA_RENAMED = ev.createResignifiedEvent(randStr(), null, null);
+    private static final Appointed TRUMP_CITIZENSHIP_BEGINS = new Appointed(randStr(), JUNE_14TH_1946_START, JUNE_14TH_1946_END);
+    private static final Appointed TRUMP_POTUS_START_1 = new Appointed(randStr(), JAN_20TH_2017_START, JAN_20TH_2017_END);
+    private static final Appointed TRUMP_POTUS_START_2 = new Appointed(randStr(), JAN_20TH_2025_START, JAN_20TH_2025_END);
+    private static final Birth TRUMP_BORN = new Birth(randStr(), JUNE_14TH_1946_START, JUNE_14TH_1946_END);
+    private static final Death TRUMP_DIED = new Death(randStr(), null, null);
+    private static final Dissolved USA_TO = new Dissolved(randStr(), null, null);
+    private static final Formed USA_FROM = new Formed(randStr(), JUNE_4TH_1776_START, JUNE_4TH_1776_END);
+    private static final Removed TRUMP_CITIZENSHIP_ENDS = new Removed(randStr(), null, null);
+    private static final Removed TRUMP_POTUS_END_1 = new Removed(randStr(), JAN_20TH_2021_START, JAN_20TH_2021_END);
+    private static final Removed TRUMP_POTUS_END_2 = new Removed(randStr(), null, null);
+    private static final Resignified TRUMP_NAMED = new Resignified(randStr(), JUNE_14TH_1946_START, JUNE_14TH_1946_END);
+    private static final Resignified TRUMP_RENAMED = new Resignified(randStr(), null, null);
+    private static final Resignified USA_NAMED = new Resignified(randStr(), JUNE_4TH_1776_START, JUNE_4TH_1776_END);
+    private static final Resignified USA_RENAMED = new Resignified(randStr(), null, null);
     private static final String PURPOSE = "To occupy its territory and serve its people.";
 
     private static final PresidentOfTheUsa PRESIDENT_USA = new PresidentOfTheUsa(randStr(), "President of the United States of America");

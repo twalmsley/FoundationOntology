@@ -8,10 +8,17 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
+import uk.co.aosd.onto.events.Appointed;
+import uk.co.aosd.onto.events.Birth;
+import uk.co.aosd.onto.events.Created;
+import uk.co.aosd.onto.events.Death;
+import uk.co.aosd.onto.events.Deleted;
+import uk.co.aosd.onto.events.Dissolved;
+import uk.co.aosd.onto.events.Formed;
+import uk.co.aosd.onto.events.Removed;
+import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.organisation.Organisation;
-import uk.co.aosd.onto.reference.EventServicesImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
-import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 
 /**
@@ -22,7 +29,6 @@ import uk.co.aosd.onto.services.OntologyServices;
 public class OrganisationTest {
 
     private static final OntologyServices svc = new OntologyServicesImpl();
-    private static final EventServices ev = new EventServicesImpl();
 
     private static final Instant FROM = Instant.parse("2024-01-01T00:00:00.00Z");
     private static final Instant TO = null;
@@ -33,18 +39,18 @@ public class OrganisationTest {
     public void testCreateOrganisations() {
 
         // Create the required Events
-        final var personNamed = ev.createResignifiedEvent(randString(), FROM, UNKNOWN_TIME);
-        final var notRenamed = ev.createResignifiedEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var acmeNamed = ev.createResignifiedEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var acmeRenamed = ev.createResignifiedEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var born = ev.createBirthEvent(randString(), FROM, TO);
-        final var died = ev.createDeathEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var incorporated = ev.createFormedEvent(randString(), FROM, TO);
-        final var dissolved = ev.createDissolvedEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var appointed = ev.createAppointedEvent(randString(), FROM, TO);
-        final var dismissed = ev.createRemovedEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var epochStart = ev.createCreatedEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var epochEnd = ev.createDeletedEvent(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var personNamed = new Resignified(randString(), FROM, UNKNOWN_TIME);
+        final var notRenamed = new Resignified(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var acmeNamed = new Resignified(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var acmeRenamed = new Resignified(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var born = new Birth(randString(), FROM, TO);
+        final var died = new Death(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var incorporated = new Formed(randString(), FROM, TO);
+        final var dissolved = new Dissolved(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var appointed = new Appointed(randString(), FROM, TO);
+        final var dismissed = new Removed(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var epochStart = new Created(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var epochEnd = new Deleted(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
 
         // Create the languages
         final var english = svc.createLanguage(randString(), "British English");
@@ -78,7 +84,8 @@ public class OrganisationTest {
         assertNotNull(acme);
 
         // Add the objects to a Possible World
-        final var parts = Set.of(
+        // (The correct type cannot be inferred correctly for this Set for some reason.)
+        final Set<Individual<? extends Event, ? extends Event>> parts = Set.of(
             personSignifier1,
             personSignifier2,
             acmeSignifier1,

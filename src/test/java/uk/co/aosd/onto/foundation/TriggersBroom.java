@@ -17,9 +17,7 @@ import uk.co.aosd.onto.events.Disassembled;
 import uk.co.aosd.onto.events.Scrapped;
 import uk.co.aosd.onto.events.Started;
 import uk.co.aosd.onto.events.Stopped;
-import uk.co.aosd.onto.reference.EventServicesImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
-import uk.co.aosd.onto.services.EventServices;
 import uk.co.aosd.onto.services.OntologyServices;
 
 /**
@@ -54,13 +52,12 @@ public class TriggersBroom {
     private static final Instant NOV_1ST_2024_MIDDAY = Instant.parse("2024-11-01T12:00:00.00Z");
     private static final Instant JAN_1ST_2024_START = Instant.parse("2024-01-01T12:00:00.00Z");
     private static final OntologyServices svc = new OntologyServicesImpl();
-    private static final EventServices ev = new EventServicesImpl();
 
-    private static final Built LIFE_START = ev.createBuiltEvent(randStr(), JAN_1ST_2024_START, JAN_1ST_2024_START);
-    private static final Disassembled UNKNOWN_DISASSEMBLY = ev.createDisassembled(randStr(), null, null);
-    private static final Scrapped UNKNOWN_SCRAPPING = ev.createScrappedEvent(randStr(), null, null);
-    private static final Assembled ASSEMBLY_START = ev.createAssembled(randStr(), NOV_1ST_2024_MIDDAY, NOV_1ST_2024_MIDDAY);
-    private static final Disassembled ASSEMBLY_END = ev.createDisassembled(randStr(), null, null);
+    private static final Built LIFE_START = new Built(randStr(), JAN_1ST_2024_START, JAN_1ST_2024_START);
+    private static final Disassembled UNKNOWN_DISASSEMBLY = new Disassembled(randStr(), null, null);
+    private static final Scrapped UNKNOWN_SCRAPPING = new Scrapped(randStr(), null, null);
+    private static final Assembled ASSEMBLY_START = new Assembled(randStr(), NOV_1ST_2024_MIDDAY, NOV_1ST_2024_MIDDAY);
+    private static final Disassembled ASSEMBLY_END = new Disassembled(randStr(), null, null);
     private static final Aggregated AGGREGATED_EVENT = null;
     private static final Disaggregated DISAGGREGATED_EVENT = null;
 
@@ -92,8 +89,8 @@ public class TriggersBroom {
         assertSame(broom.headWithBracketAssembly().headAssembly().head(), broomHead);
 
         // The bristles are worn out after much use, so replace them
-        final var activityFrom = ev.createStartedEvent(randStr(), NOV_11TH_2024_MIDDAY, NOV_11TH_2024_MIDDAY);
-        final var activityTo = ev.createStoppedEvent(randStr(), NOV_11TH_2024_1230, NOV_11TH_2024_1230);
+        final var activityFrom = new Started(randStr(), NOV_11TH_2024_MIDDAY, NOV_11TH_2024_MIDDAY);
+        final var activityTo = new Stopped(randStr(), NOV_11TH_2024_1230, NOV_11TH_2024_1230);
         final var activityRecord = replaceBristles(broom, new Bristles(randStr(), LIFE_START, UNKNOWN_SCRAPPING), activityFrom, activityTo);
 
         // Use the broom to sweep the road - note that we can't use the 'parts'
@@ -180,8 +177,8 @@ public class TriggersBroom {
      */
     private ReplaceBristlesActivity replaceBristles(final Broom broom, final Bristles bristles, final Started activityStart, final Stopped activityEnd) {
         // The old assemblies are scrapped (disassembled actually)
-        final var assemblyEnds = ev.createDisassembled(randStr(), activityStart.from(), activityStart.to());
-        final var bristlesScrapped = ev.createScrappedEvent(randStr(), activityStart.from(), activityStart.to());
+        final var assemblyEnds = new Disassembled(randStr(), activityStart.from(), activityStart.to());
+        final var bristlesScrapped = new Scrapped(randStr(), activityStart.from(), activityStart.to());
 
         // Set the ending for the old headAssembly
         final var headAssembly = broom.headWithBracketAssembly().headAssembly();
