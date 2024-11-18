@@ -2,6 +2,7 @@ package uk.co.aosd.onto.foundation;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Instant;
 import java.util.Set;
@@ -95,6 +96,13 @@ public class TriggersBroom {
         final var activityTo = ev.createStoppedEvent(randStr(), NOV_11TH_2024_1230, NOV_11TH_2024_1230);
         final var activityRecord = replaceBristles(broom, new Bristles(randStr(), LIFE_START, UNKNOWN_SCRAPPING), activityFrom, activityTo);
 
+        // Use the broom to sweep the road - note that we can't use the 'parts'
+        // agglomerate since it is not an assembled broom, which illustrates the
+        // difference between aggregations and compositions since the composition has
+        // additional structure which makes it useable in its intended role.
+        final var sweepResult = sweepRoad(activityRecord.newBroom());
+        assertTrue(sweepResult);
+
         JsonUtils.dumpJson(activityRecord);
 
         assertSame(broom.beginning(), activityRecord.oldBroom().beginning());
@@ -142,6 +150,18 @@ public class TriggersBroom {
         assertSame(LIFE_START, activityRecord.newBroom().headWithBracketAssembly().bracket().beginning());
         assertNull(activityRecord.newBroom().headWithBracketAssembly().bracket().ending().from());
         assertNull(activityRecord.newBroom().headWithBracketAssembly().bracket().ending().to());
+    }
+
+    /**
+     * Use a broom to sweep the road.
+     *
+     * @param broom
+     *            a Broom
+     * @return true if the road was successfully swept.
+     */
+    private boolean sweepRoad(final Broom broom) {
+        // Dummy method just to illustrate a point in the main test.
+        return broom != null;
     }
 
     /**
