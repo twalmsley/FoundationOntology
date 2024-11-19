@@ -35,8 +35,6 @@ public class AggregationTest {
         //
         // agg = someWater; // ERROR - incompatible types.
 
-        JsonUtils.dumpJson(someSand);
-
         assertNotNull(someSand);
         assertNotNull(someWater);
         assertNotNull(agg);

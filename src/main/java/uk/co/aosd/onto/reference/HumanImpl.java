@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.reference;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
 import uk.co.aosd.onto.events.Birth;
@@ -13,6 +14,7 @@ import uk.co.aosd.onto.signifying.Signifier;
  *
  * @author Tony Walmsley
  */
+@JsonTypeName("uk.co.aosd.onto.reference.human")
 public record HumanImpl(
     String identifier,
     Birth beginning,

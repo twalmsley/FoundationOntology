@@ -1,11 +1,13 @@
 package uk.co.aosd.onto.foundation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.events.Appointed;
@@ -67,7 +69,7 @@ public class PotusExample {
     private static final CitizenOfTheUsa CITIZEN_USA = new CitizenOfTheUsa(randStr(), "Citizen of the United States of America");
 
     @Test
-    public void test() {
+    public void test() throws JsonProcessingException {
 
         // Create Donald Trump
         final var usEnglish = svc.createLanguage(randStr(), "American English");
@@ -113,7 +115,10 @@ public class PotusExample {
 
         assertNotNull(usa);
 
-        JsonUtils.dumpJson(usa);
+        final var json = JsonUtils.writeJsonString(usa);
+        final var usa2 = JsonUtils.readJsonString(json, Nation.class);
+
+        assertEquals(usa, usa2);
     }
 
     private static String randStr() {

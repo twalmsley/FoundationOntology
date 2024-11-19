@@ -1,10 +1,9 @@
 package uk.co.aosd.onto.reference;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.model.Model;
 
@@ -13,23 +12,18 @@ import uk.co.aosd.onto.model.Model;
  *
  * @author Tony Walmsley
  */
-public class ModelImpl implements Model {
+@JsonTypeName("uk.co.aosd.onto.reference.model")
+public record ModelImpl(String identifier, Set<UniquelyIdentifiable> things) implements Model {
 
-    private final Map<String, UniquelyIdentifiable> things;
-
-    public ModelImpl() {
-        things = new HashMap<>();
+    public String identifier() {
+        return identifier;
     }
 
     public Optional<UniquelyIdentifiable> getThing(final String identifier) {
-        return Optional.ofNullable(things.get(identifier));
-    }
-
-    public Collection<UniquelyIdentifiable> getThings() {
-        return things.values();
+        return things.stream().filter(t -> t.identifier().equals(identifier)).findAny();
     }
 
     public void add(final UniquelyIdentifiable thing) {
-        things.put(thing.identifier(), thing);
+        things.add(thing);
     }
 }

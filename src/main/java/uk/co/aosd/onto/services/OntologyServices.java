@@ -77,7 +77,7 @@ public interface OntologyServices {
 
     <U extends Currency> MonetaryValue<U> createMonetaryValue(Decimal3f value, U unit);
 
-    Model createModel();
+    Model createModel(final String identifier);
 
     Agglomerate createAgglomerate(String identifier, Set<Individual<? extends Event, ? extends Event>> items, Aggregated from, Disaggregated to);
 

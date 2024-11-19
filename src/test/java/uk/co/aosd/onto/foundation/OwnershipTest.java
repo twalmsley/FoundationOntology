@@ -1,11 +1,13 @@
 package uk.co.aosd.onto.foundation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Instant;
 import java.util.Set;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
@@ -20,6 +22,7 @@ import uk.co.aosd.onto.events.TransferredFrom;
 import uk.co.aosd.onto.events.TransferredTo;
 import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
+import uk.co.aosd.onto.reference.TransferringOfOwnershipImpl;
 import uk.co.aosd.onto.services.OntologyServices;
 
 /**
@@ -46,7 +49,7 @@ public class OwnershipTest {
     private static final Instant NOV_11TH_2024_START = Instant.parse("2024-11-11T00:00:00.00Z");
 
     @Test
-    public void testTransferOfOwnership() {
+    public void testTransferOfOwnership() throws JsonProcessingException {
 
         // Create a language and class
         final var english = svc.createLanguage("en-GB", "British English");
@@ -68,7 +71,10 @@ public class OwnershipTest {
 
         final var transfer = svc.transferOwnership("carSoldToBob", "Car Sold", aliceOwnsCar, bob, transferActivityBegins, transferActivityEnds);
 
-        JsonUtils.dumpJson(transfer);
+        final var json = JsonUtils.writeJsonString(transfer);
+        final var transfer2 = JsonUtils.readJsonString(json, TransferringOfOwnershipImpl.class);
+
+        assertEquals(transfer, transfer2);
 
         assertSame(NOV_11TH_2024_START, transfer.beginning().from());
         assertSame(NOV_11TH_2024_START, transfer.beginning().to());

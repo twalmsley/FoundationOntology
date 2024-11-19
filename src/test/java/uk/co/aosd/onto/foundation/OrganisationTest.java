@@ -1,11 +1,13 @@
 package uk.co.aosd.onto.foundation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.events.Appointed;
@@ -19,6 +21,7 @@ import uk.co.aosd.onto.events.Removed;
 import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
+import uk.co.aosd.onto.reference.PossibleWorldImpl;
 import uk.co.aosd.onto.services.OntologyServices;
 
 /**
@@ -36,7 +39,7 @@ public class OrganisationTest {
     private static final DNA UNKNOWN_DNA = null;
 
     @Test
-    public void testCreateOrganisations() {
+    public void testCreateOrganisations() throws JsonProcessingException {
 
         // Create the required Events
         final var personNamed = new Resignified(randString(), FROM, UNKNOWN_TIME);
@@ -97,7 +100,11 @@ public class OrganisationTest {
         final var world = svc.createPossibleWorld(randString(), parts, epochStart, epochEnd);
         assertNotNull(world);
 
-        JsonUtils.dumpJson(world);
+        final var json = JsonUtils.writeJsonString(world);
+        System.out.println(json);
+        final var world2 = JsonUtils.readJsonString(json, PossibleWorldImpl.class);
+
+        assertEquals(world, world2);
     }
 
     private static String randString() {

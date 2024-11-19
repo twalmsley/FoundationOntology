@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.reference;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -138,8 +139,8 @@ public class OntologyServicesImpl implements OntologyServices {
     }
 
     @Override
-    public Model createModel() {
-        return new ModelImpl();
+    public Model createModel(final String identifier) {
+        return new ModelImpl(identifier, new HashSet<>());
     }
 
     @Override
