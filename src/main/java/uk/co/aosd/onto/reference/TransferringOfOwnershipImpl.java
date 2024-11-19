@@ -1,6 +1,5 @@
 package uk.co.aosd.onto.reference;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import uk.co.aosd.onto.events.TransferredFrom;
 import uk.co.aosd.onto.events.TransferredTo;
 import uk.co.aosd.onto.foundation.Event;
@@ -12,7 +11,6 @@ import uk.co.aosd.onto.ownership.TransferringOfOwnership;
  *
  * @author Tony Walmsley
  */
-@JsonTypeName("uk.co.aosd.onto.reference.transferringofownership")
 public record TransferringOfOwnershipImpl<A extends Event, B extends Event, C extends Event, D extends Event>(String identifier, String actionsDescription,
     Owning<A, B, C, D> from, Owning<A, B, C, D> to, TransferredFrom beginning, TransferredTo ending) implements TransferringOfOwnership<A, B, C, D> {
 

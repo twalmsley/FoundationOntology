@@ -3,7 +3,6 @@ package uk.co.aosd.onto.reference;
 import java.util.Optional;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 import uk.co.aosd.onto.model.Model;
 
@@ -12,7 +11,6 @@ import uk.co.aosd.onto.model.Model;
  *
  * @author Tony Walmsley
  */
-@JsonTypeName("uk.co.aosd.onto.reference.model")
 public record ModelImpl(String identifier, Set<UniquelyIdentifiable> things) implements Model {
 
     public String identifier() {

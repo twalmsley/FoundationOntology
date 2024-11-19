@@ -117,7 +117,6 @@ interface uk.co.aosd.onto.language.Language {
 interface uk.co.aosd.onto.model.Model {
 	{method}  {abstract} +add ( paramUniquelyIdentifiable1 : uk.co.aosd.onto.foundation.UniquelyIdentifiable ) : void
 	{method}  {abstract} +getThing ( paramString1 : String ) : java.util.Optional
-	{method}  {abstract} +getThings () : java.util.Collection
 }
 
 
@@ -178,7 +177,7 @@ interface uk.co.aosd.onto.services.OntologyServices {
 	{method}  {abstract} +createHuman ( paramString1 : String , paramBirth2 : uk.co.aosd.onto.events.Birth , paramDeath3 : uk.co.aosd.onto.events.Death , paramClass4 : uk.co.aosd.onto.foundation.Class , paramLanguage5 : uk.co.aosd.onto.language.Language , paramClass6 : uk.co.aosd.onto.foundation.Class , paramDNA7 : uk.co.aosd.onto.biological.DNA ) : uk.co.aosd.onto.biological.Human
 	{method}  {abstract} +createLanguage ( paramString1 : String , paramString2 : String ) : uk.co.aosd.onto.language.Language
 	{method}  {abstract} +createMembership ( paramString1 : String , paramHuman2 : uk.co.aosd.onto.biological.Human , paramRole3 : uk.co.aosd.onto.foundation.Role , paramAppointed4 : uk.co.aosd.onto.events.Appointed , paramRemoved5 : uk.co.aosd.onto.events.Removed ) : uk.co.aosd.onto.organisation.Membership
-	{method}  {abstract} +createModel () : uk.co.aosd.onto.model.Model
+	{method}  {abstract} +createModel ( paramString1 : String ) : uk.co.aosd.onto.model.Model
 	{method}  {abstract} +createMonetaryValue ( paramDecimal3f1 : org.decimal4j.immutable.Decimal3f , paramCurrency2 : uk.co.aosd.onto.money.Currency ) : uk.co.aosd.onto.money.MonetaryValue
 	{method}  {abstract} +createOrganisation ( paramString1 : String , paramClass2 : uk.co.aosd.onto.foundation.Class , paramString3 : String , paramClass4 : uk.co.aosd.onto.foundation.Class , paramClass5 : uk.co.aosd.onto.foundation.Class , paramFormed6 : uk.co.aosd.onto.events.Formed , paramDissolved7 : uk.co.aosd.onto.events.Dissolved ) : uk.co.aosd.onto.organisation.Organisation
 	{method}  {abstract} +createOwnership ( paramString1 : String , paramString2 : String , paramIndividual3 : uk.co.aosd.onto.foundation.Individual , paramIndividual4 : uk.co.aosd.onto.foundation.Individual , paramTransferredFrom5 : uk.co.aosd.onto.events.TransferredFrom , paramTransferredTo6 : uk.co.aosd.onto.events.TransferredTo ) : uk.co.aosd.onto.ownership.Owning
@@ -307,6 +306,7 @@ uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.EventBounded
 uk.co.aosd.onto.foundation.State ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.Unit ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.language.Language ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
+uk.co.aosd.onto.model.Model ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.money.Currency ..|>  uk.co.aosd.onto.foundation.Unit
 uk.co.aosd.onto.money.MonetaryValue ..|>  uk.co.aosd.onto.foundation.ScalarValue
 uk.co.aosd.onto.organisation.Employment ..|>  uk.co.aosd.onto.foundation.Activity
