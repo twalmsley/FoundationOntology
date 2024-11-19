@@ -101,7 +101,6 @@ public class OrganisationTest {
         assertNotNull(world);
 
         final var json = JsonUtils.writeJsonString(world);
-        System.out.println(json);
         final var world2 = JsonUtils.readJsonString(json, PossibleWorldImpl.class);
 
         assertEquals(world, world2);
