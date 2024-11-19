@@ -97,6 +97,9 @@
                                 <scanPackage>
 				uk.co.aosd.onto.signifying
                                 </scanPackage>
+                                <scanPackage>
+				uk.co.aosd.onto.units
+                                </scanPackage>
                             </scanPackages>
                             <hideFields>true</hideFields>
                             <hideMethods>true</hideMethods>

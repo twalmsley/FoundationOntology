@@ -41,3 +41,7 @@ Models the representation of things by signs.
 ## Reference
 
 A set of Java Records implementing most of the interfaces. These implementations can be used in applications or other implementations can be developed and used instead.
+
+## Units
+
+Defines some standard units for ScalarValues and MonetaryValues.

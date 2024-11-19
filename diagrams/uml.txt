@@ -208,6 +208,81 @@ interface uk.co.aosd.onto.signifying.Signifying {
 }
 
 
+interface uk.co.aosd.onto.units.Units {
+}
+
+
+class uk.co.aosd.onto.units.Units$Dollars {
+	{field} -abbreviation : String
+	{field} -identifier : String
+	{field} -name : String
+	{field} -symbol : char
+	{method} +abbreviation () : String
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +identifier () : String
+	{method} +name () : String
+	{method} +symbol () : char
+	{method} +toString () : String
+}
+
+
+class uk.co.aosd.onto.units.Units$Euros {
+	{field} -abbreviation : String
+	{field} -identifier : String
+	{field} -name : String
+	{field} -symbol : char
+	{method} +abbreviation () : String
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +identifier () : String
+	{method} +name () : String
+	{method} +symbol () : char
+	{method} +toString () : String
+}
+
+
+class uk.co.aosd.onto.units.Units$Kilograms {
+	{field} -abbreviation : String
+	{field} -identifier : String
+	{field} -name : String
+	{method} +abbreviation () : String
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +identifier () : String
+	{method} +name () : String
+	{method} +toString () : String
+}
+
+
+class uk.co.aosd.onto.units.Units$Meters {
+	{field} -abbreviation : String
+	{field} -identifier : String
+	{field} -name : String
+	{method} +abbreviation () : String
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +identifier () : String
+	{method} +name () : String
+	{method} +toString () : String
+}
+
+
+class uk.co.aosd.onto.units.Units$PoundsSterling {
+	{field} -abbreviation : String
+	{field} -identifier : String
+	{field} -name : String
+	{field} -symbol : char
+	{method} +abbreviation () : String
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +identifier () : String
+	{method} +name () : String
+	{method} +symbol () : char
+	{method} +toString () : String
+}
+
+
 
 
 uk.co.aosd.onto.biological.DNA ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
@@ -242,6 +317,16 @@ uk.co.aosd.onto.ownership.Owning ..|>  uk.co.aosd.onto.foundation.Activity
 uk.co.aosd.onto.ownership.TransferringOfOwnership ..|>  uk.co.aosd.onto.foundation.Activity
 uk.co.aosd.onto.signifying.Signifier ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.signifying.Signifying ..|>  uk.co.aosd.onto.foundation.Activity
+uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Dollars : DOLLARS
+uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Euros : EUROS
+uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Kilograms : KILOGRAMS
+uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Meters : METERS
+uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$PoundsSterling : POUNDS_STERLING
+uk.co.aosd.onto.units.Units$Dollars ..|>  uk.co.aosd.onto.money.Currency
+uk.co.aosd.onto.units.Units$Euros ..|>  uk.co.aosd.onto.money.Currency
+uk.co.aosd.onto.units.Units$Kilograms ..|>  uk.co.aosd.onto.foundation.Unit
+uk.co.aosd.onto.units.Units$Meters ..|>  uk.co.aosd.onto.foundation.Unit
+uk.co.aosd.onto.units.Units$PoundsSterling ..|>  uk.co.aosd.onto.money.Currency
 
 hide fields
 hide methods
