@@ -50,7 +50,7 @@ public class PropertiesTest {
     @Test
     public void testWithoutStates() {
         final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
-        final var car1IsRed = new CarColour(car1, Color.RED, LIFE_START_TIME, LIFE_END_TIME);
+        final var car1IsRed = new CarColour(randString(), car1, Color.RED, LIFE_START_TIME, LIFE_END_TIME);
 
         assertSame(car1, car1IsRed.individual());
     }
@@ -69,7 +69,7 @@ public class PropertiesTest {
             .members()
             .stream()
             .map(state -> {
-                return new CarColour(state.individual(), redCars.property(), state.beginning().from(), state.ending().from());
+                return new CarColour(randString(), state.individual(), redCars.property(), state.beginning().from(), state.ending().from());
             }).toList();
 
         // Convert the list of CarColour Attributes into a ColouredCars Property
@@ -109,9 +109,9 @@ public class PropertiesTest {
         final var to2 = Instant.ofEpochSecond(2000);
         final var to3 = Instant.ofEpochSecond(3000);
 
-        final var weight1 = new CarWeight(car, kg1000, from1, to1);
-        final var weight2 = new CarWeight(car, kg1100, from2, to2);
-        final var weight3 = new CarWeight(car, kg1200, from3, to3);
+        final var weight1 = new CarWeight(randString(), car, kg1000, from1, to1);
+        final var weight2 = new CarWeight(randString(), car, kg1100, from2, to2);
+        final var weight3 = new CarWeight(randString(), car, kg1200, from3, to3);
 
         final var m3 = svc.createScalarValue(3.0D, Units.METERS);
 
@@ -138,14 +138,14 @@ record ColouredCars(String identifier, Color property, Set<State<Built, Scrapped
     implements Property<State<Built, Scrapped, Car>, Color> {
 }
 
-record CarColour(Car individual, Color property, Instant from, Instant to)
+record CarColour(String identifier, Car individual, Color property, Instant from, Instant to)
     implements Attribute<Car, Color> {
 }
 
-record CarWeight(Car individual, ScalarValue<Double, Kilograms> property, Instant from, Instant to)
+record CarWeight(String identifier, Car individual, ScalarValue<Double, Kilograms> property, Instant from, Instant to)
     implements ScalarAttribute<Car, Double, Kilograms> {
 }
 
-record CarLength(Car individual, ScalarValue<Double, Meters> property, Instant from, Instant to)
+record CarLength(String identifier, Car individual, ScalarValue<Double, Meters> property, Instant from, Instant to)
     implements ScalarAttribute<Car, Double, Meters> {
 }

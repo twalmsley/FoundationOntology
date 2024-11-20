@@ -13,7 +13,7 @@ import uk.co.aosd.onto.foundation.Unit;
  *
  * @author Tony Walmsley
  */
-public record ScalarAttributeImpl<I extends Individual<? extends Event, ? extends Event>, N extends Number, U extends Unit>(I individual,
+public record ScalarAttributeImpl<I extends Individual<? extends Event, ? extends Event>, N extends Number, U extends Unit>(String identifier, I individual,
     ScalarValue<N, U> property, Instant from, Instant to) implements ScalarAttribute<I, N, U> {
 
 }

@@ -5,7 +5,7 @@ package uk.co.aosd.onto.foundation;
  *
  * @author Tony Walmsley
  */
-public interface Attribute<I extends Individual<? extends Event, ? extends Event>, P> extends TimePeriod {
+public interface Attribute<I extends Individual<? extends Event, ? extends Event>, P> extends TimePeriod, UniquelyIdentifiable {
 
     I individual();
 

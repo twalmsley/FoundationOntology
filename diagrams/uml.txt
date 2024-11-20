@@ -292,6 +292,7 @@ uk.co.aosd.onto.foundation.Activity ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.foundation.Agglomerate ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.foundation.Aggregate ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.foundation.Attribute ..|>  uk.co.aosd.onto.foundation.TimePeriod
+uk.co.aosd.onto.foundation.Attribute ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.Class ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.TimePeriod
 uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
