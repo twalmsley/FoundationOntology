@@ -117,6 +117,7 @@ interface uk.co.aosd.onto.language.Language {
 interface uk.co.aosd.onto.model.Model {
 	{method}  {abstract} +add ( paramUniquelyIdentifiable1 : uk.co.aosd.onto.foundation.UniquelyIdentifiable ) : void
 	{method}  {abstract} +getThing ( paramString1 : String ) : java.util.Optional
+	{method}  {abstract} +things () : java.util.Set
 }
 
 

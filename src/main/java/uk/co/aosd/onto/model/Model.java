@@ -1,6 +1,7 @@
 package uk.co.aosd.onto.model;
 
 import java.util.Optional;
+import java.util.Set;
 
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
 
@@ -13,4 +14,6 @@ public interface Model extends UniquelyIdentifiable {
     void add(UniquelyIdentifiable thing);
 
     Optional<UniquelyIdentifiable> getThing(String identifier);
+
+    Set<UniquelyIdentifiable> things();
 }
