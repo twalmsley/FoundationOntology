@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.topics;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -8,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
@@ -46,7 +48,7 @@ import uk.co.aosd.onto.signifying.Signifier;
 public class TopicsTest {
 
     @Test
-    public void test() {
+    public void test() throws JsonProcessingException {
         //
         // Create a Topic. A topic is an activity for researching some subject area that
         // can have sub-topics, can be named and renamed, has an expert, an owner, and a
@@ -126,14 +128,10 @@ public class TopicsTest {
         assertTrue(updatedWithContributor.owners().members().contains(ownerMembership));
         assertTrue(updatedWithContributor.experts().members().contains(expertMembership));
         assertTrue(updatedWithContributor.contributors().members().contains(contributorMembership));
-        //
-        // Create a set of users.
-        //
-        final Class<Human> users = new ClassImpl<>(randString(), Set.of());
 
-        assertNotNull(users);
-
-        JsonUtils.dumpJsonToConsole(updatedWithContributor);
+        final var json = JsonUtils.writeJsonString(updatedWithContributor);
+        final var deserialised = JsonUtils.readJsonString(json, Topic.class);
+        assertEquals(deserialised, updatedWithContributor);
     }
 
     /**
