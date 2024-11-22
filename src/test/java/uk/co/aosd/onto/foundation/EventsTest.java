@@ -39,10 +39,10 @@ public class EventsTest {
     public void testNonOverlappingEvents() {
         // The Started event occurred between 12:00 and 13:00
         final var started = new Started(randString(), T_1200, T_1300);
-        // The Stopped event occurred between 13:00 and 14:00
+        // The Stopped event occurred between 13:05 and 14:00
         final var stopped = new Stopped(randString(), T_1305, T_1400);
 
-        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
+        // Lunch could be up to 2 hours long, but could also be as short as 5 minutes;
         // in this case we don't know the information accurately.
         final var lunch = new Lunch(randString(), "Eating lunch", started, stopped);
 
@@ -58,7 +58,7 @@ public class EventsTest {
         // The Stopped event occurred between 13:00 and 14:00
         final var stopped = new Stopped(randString(), T_1300, T_1400);
 
-        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
+        // Lunch could be up to 2 hours long, but could also be less than 0.01 seconds;
         // in this case we don't know the information accurately.
         final var lunch = new Lunch(randString(), "Eating lunch", started, stopped);
 
@@ -69,12 +69,12 @@ public class EventsTest {
 
     @Test
     public void testOverlappingEvents() {
-        // The Started event occurred between 12:00 and 13:00
+        // The Started event occurred between 12:00 and 13:05
         final var started = new Started(randString(), T_1200, T_1305);
         // The Stopped event occurred between 13:00 and 14:00
         final var stopped = new Stopped(randString(), T_1300, T_1400);
 
-        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
+        // Lunch could be up to 2 hours long, but could also be less than -5 minutes;
         // in this case we don't know the information accurately.
         final var lunch = new Lunch(randString(), "Eating lunch", started, stopped);
 
@@ -85,13 +85,11 @@ public class EventsTest {
 
     @Test
     public void testSecondStartsBeforeFirst() {
-        // The Started event occurred between 12:00 and 13:00
+        // The Started event occurred between 13:00 and 14:00
         final var started = new Started(randString(), T_1300, T_1400);
-        // The Stopped event occurred between 13:00 and 14:00
+        // The Stopped event occurred between 12:00 and 14:00
         final var stopped = new Stopped(randString(), T_1200, T_1400);
 
-        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
-        // in this case we don't know the information accurately.
         try {
             new Lunch(randString(), "Eating lunch", started, stopped);
             fail("Expected a RuntimeException");
@@ -102,13 +100,11 @@ public class EventsTest {
 
     @Test
     public void testSecondStartSameAsFirst() {
-        // The Started event occurred between 12:00 and 13:00
+        // The Started event occurred between 13:00 and 14:00
         final var started = new Started(randString(), T_1300, T_1400);
         // The Stopped event occurred between 13:00 and 14:00
         final var stopped = new Stopped(randString(), T_1300, T_1400);
 
-        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
-        // in this case we don't know the information accurately.
         try {
             new Lunch(randString(), "Eating lunch", started, stopped);
         } catch (final Exception e) {
