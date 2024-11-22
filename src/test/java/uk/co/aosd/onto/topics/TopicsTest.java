@@ -51,13 +51,14 @@ public class TopicsTest {
         // Create a Topic. A topic is an activity for researching some subject area that
         // can have sub-topics, can be named and renamed, has an expert, an owner, and a
         // set of contibutors. It can refer to source information which in turn can
-        // refer to individuals, and individuals can be related to each other.
+        // refer to individuals, and individuals can refer to each other.
         //
         final Started from = new Started(randString(), Instant.ofEpochSecond(0), Instant.ofEpochSecond(0));
         final Stopped to = new Stopped(randString(), null, null);
         final Class<Membership<OwnerRole>> owners = new ClassImpl<>(randString(), Set.of());
         final Class<Membership<ExpertRole>> experts = new ClassImpl<>(randString(), Set.of());
         final Class<Signifier<String>> names = new ClassImpl<>(randString(), Set.of());
+        final Class<Signifier<String>> descriptions = new ClassImpl<>(randString(), Set.of());
         final Class<Topic> subTopics = new ClassImpl<>(randString(), Set.of());
         final Class<Membership<ContributorRole>> contributors = new ClassImpl<>(randString(), Set.of());
         final Class<Source> sources = new ClassImpl<>(randString(), Set.of());
@@ -69,6 +70,7 @@ public class TopicsTest {
             randString(),
             "Researching Ontologies",
             names,
+            descriptions,
             subTopics,
             owners,
             experts,
@@ -154,7 +156,8 @@ public class TopicsTest {
         contributorSet.add(contributor);
         final Class<Membership<ContributorRole>> contributors = new ClassImpl<>(t.contributors().identifier(), contributorSet);
 
-        return new Topic(t.identifier(), t.actionsDescription(), t.names(), t.subTopics(), t.owners(), t.experts(), contributors, t.sources(), t.individuals(),
+        return new Topic(t.identifier(), t.actionsDescription(), t.names(), t.descriptions(), t.subTopics(), t.owners(), t.experts(), contributors, t.sources(),
+            t.individuals(),
             t.sourceReferences(), t.individualReferences(), t.beginning(), t.ending());
     }
 
@@ -174,7 +177,8 @@ public class TopicsTest {
 
         final Class<Membership<ExpertRole>> experts = new ClassImpl<>(randString(), expertsSet);
 
-        return new Topic(t.identifier(), t.actionsDescription(), t.names(), t.subTopics(), t.owners(), experts, t.contributors(), t.sources(), t.individuals(),
+        return new Topic(t.identifier(), t.actionsDescription(), t.names(), t.descriptions(), t.subTopics(), t.owners(), experts, t.contributors(), t.sources(),
+            t.individuals(),
             t.sourceReferences(), t.individualReferences(), t.beginning(), t.ending());
     }
 
@@ -194,7 +198,8 @@ public class TopicsTest {
 
         final Class<Membership<OwnerRole>> owners = new ClassImpl<>(randString(), ownersSet);
 
-        return new Topic(t.identifier(), t.actionsDescription(), t.names(), t.subTopics(), owners, t.experts(), t.contributors(), t.sources(), t.individuals(),
+        return new Topic(t.identifier(), t.actionsDescription(), t.names(), t.descriptions(), t.subTopics(), owners, t.experts(), t.contributors(), t.sources(),
+            t.individuals(),
             t.sourceReferences(), t.individualReferences(), t.beginning(), t.ending());
     }
 
@@ -206,6 +211,7 @@ public class TopicsTest {
         String identifier,
         String actionsDescription,
         Class<Signifier<String>> names,
+        Class<Signifier<String>> descriptions,
         Class<Topic> subTopics,
         Class<Membership<OwnerRole>> owners,
         Class<Membership<ExpertRole>> experts,
