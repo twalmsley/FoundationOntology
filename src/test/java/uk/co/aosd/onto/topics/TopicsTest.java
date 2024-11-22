@@ -59,17 +59,26 @@ public class TopicsTest {
         final Stopped to = new Stopped(randString(), null, null);
         final Class<Membership<OwnerRole>> owners = new ClassImpl<>(randString(), Set.of());
         final Class<Membership<ExpertRole>> experts = new ClassImpl<>(randString(), Set.of());
-        final Class<Signifier<String>> names = new ClassImpl<>(randString(), Set.of());
-        final Class<Signifier<String>> descriptions = new ClassImpl<>(randString(), Set.of());
+        final Language english = new LanguageImpl(randString(), "English");
+        final Resignified topicNamed = new Resignified(randString(), Instant.ofEpochSecond(0), Instant.ofEpochSecond(0));
+        final Resignified topicRenamed = new Resignified(randString(), null, null);
+        final Signifier<String> name = new SignifierImpl<String>(randString(), "Ontologies Topic", english, topicNamed, topicRenamed);
+        final Class<Signifier<String>> names = new ClassImpl<>(randString(), Set.of(name));
+        final Resignified topicDescribed = new Resignified(randString(), null, null);
+        final Resignified topicDescriptionUpdated = new Resignified(randString(), null, null);
+        final Signifier<String> description = new SignifierImpl<String>(randString(), "Research into Ontologies", english, topicDescribed,
+            topicDescriptionUpdated);
+        final Class<Signifier<String>> descriptions = new ClassImpl<>(randString(), Set.of(description));
         final Class<Topic> subTopics = new ClassImpl<>(randString(), Set.of());
         final Class<Membership<ContributorRole>> contributors = new ClassImpl<>(randString(), Set.of());
         final Created sourceCreated = new Created(randString(), Instant.ofEpochSecond(0), Instant.ofEpochSecond(1));
         final Deleted sourceDeleted = new Deleted(randString(), null, null);
         final Source source = new Source(randString(), "http://www.google.com", sourceCreated, sourceDeleted);
         final Class<Source> sources = new ClassImpl<>(randString(), Set.of(source));
-        final Class<Individual<? extends Event, ? extends Event>> individuals = new ClassImpl<>(randString(), Set.of());
-        final Class<SourceReference> sourceReferences = new ClassImpl<>(randString(), Set.of());
-        // This source references itself - possibly not realistic.
+        final Individual<Started, Stopped> individual = new Thing(randString(), new Started(randString(), null, null), new Stopped(randString(), null, null));
+        final Class<Individual<? extends Event, ? extends Event>> individuals = new ClassImpl<>(randString(), Set.of(individual));
+        final SourceReference sourceReference = new SourceReference(randString(), source, SourceReferenceType.DOCUMENT, individual);
+        final Class<SourceReference> sourceReferences = new ClassImpl<>(randString(), Set.of(sourceReference));
         final IndividualReference individualReference = new IndividualReference(randString(), IndividualReferenceType.WORKS_WITH, "References", source, source,
             from, to);
         final Class<IndividualReference> individualReferences = new ClassImpl<>(randString(), Set.of(individualReference));
@@ -95,7 +104,6 @@ public class TopicsTest {
         // Create a Human as the owner, expert, and contributor
         final Birth birth = new Birth(randString(), Instant.ofEpochSecond(0), Instant.ofEpochSecond(0));
         final Death death = new Death(randString(), null, null);
-        final Language english = new LanguageImpl(randString(), "English");
         final Class<Language> languages = new ClassImpl<>(randString(), Set.of(english));
         final DNA dna = new DNAImpl(randString(), "gattaca");
         final Resignified namedFrom = new Resignified(randString(), Instant.ofEpochSecond(0), Instant.ofEpochSecond(0));
@@ -280,5 +288,8 @@ public class TopicsTest {
     }
 
     private static record ContributorRole(String identifier, String name) implements Role {
+    }
+
+    private static final record Thing(String identifier, Started beginning, Stopped ending) implements Individual<Started, Stopped> {
     }
 }
