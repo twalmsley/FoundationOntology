@@ -67,4 +67,7 @@ public class MoneyTest {
 
 record Widget<C extends Currency>(String identifier, MonetaryValue<C> value, Built beginning, Scrapped ending)
     implements ValuedAsset<C>, Individual<Built, Scrapped> {
+    public Widget {
+        ensureValid(beginning, ending);
+    }
 }

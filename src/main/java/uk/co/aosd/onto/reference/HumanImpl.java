@@ -21,5 +21,7 @@ public record HumanImpl(
     Language nativeLanguage,
     Class<Language> languages,
     DNA dna) implements Human {
-
+    public HumanImpl {
+        ensureValid(beginning, ending);
+    }
 }

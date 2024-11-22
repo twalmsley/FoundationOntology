@@ -12,5 +12,7 @@ import uk.co.aosd.onto.signifying.Signifying;
  */
 public record SignifyingImpl<T>(String identifier, String actionsDescription, T name, Language language, UniquelyIdentifiable named,
     Resignified beginning, Resignified ending) implements Signifying<T> {
-
+    public SignifyingImpl {
+        ensureValid(beginning, ending);
+    }
 }

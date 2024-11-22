@@ -38,7 +38,7 @@ public class JsonUtils {
             .allowIfSubType(Set.class)
             .allowIfSubType(ScalarValue.class)
             .build();
-        objectMapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL_AND_ENUMS);
+        objectMapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
     }
 
     /**

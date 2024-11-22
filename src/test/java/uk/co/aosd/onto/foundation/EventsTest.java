@@ -36,7 +36,7 @@ public class EventsTest {
     private static final Instant T_1400 = Instant.parse("2024-01-01T14:00:00.00Z");
 
     @Test
-    public void test() {
+    public void testNonOverlappingEvents() {
         // The Started event occurred between 12:00 and 13:00
         final var started = new Started(randString(), T_1200, T_1300);
         // The Stopped event occurred between 13:00 and 14:00
@@ -49,6 +49,71 @@ public class EventsTest {
         final var range = lunch.range().orElseThrow();
         assertEquals(Duration.ofMinutes(5L), range.min());
         assertEquals(Duration.ofHours(2L), range.max());
+    }
+
+    @Test
+    public void testAbuttingEvents() {
+        // The Started event occurred between 12:00 and 13:00
+        final var started = new Started(randString(), T_1200, T_1300);
+        // The Stopped event occurred between 13:00 and 14:00
+        final var stopped = new Stopped(randString(), T_1300, T_1400);
+
+        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
+        // in this case we don't know the information accurately.
+        final var lunch = new Lunch(randString(), "Eating lunch", started, stopped);
+
+        final var range = lunch.range().orElseThrow();
+        assertEquals(Duration.ofMinutes(0L), range.min());
+        assertEquals(Duration.ofHours(2L), range.max());
+    }
+
+    @Test
+    public void testOverlappingEvents() {
+        // The Started event occurred between 12:00 and 13:00
+        final var started = new Started(randString(), T_1200, T_1305);
+        // The Stopped event occurred between 13:00 and 14:00
+        final var stopped = new Stopped(randString(), T_1300, T_1400);
+
+        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
+        // in this case we don't know the information accurately.
+        final var lunch = new Lunch(randString(), "Eating lunch", started, stopped);
+
+        final var range = lunch.range().orElseThrow();
+        assertEquals(Duration.ofMinutes(-5L), range.min());
+        assertEquals(Duration.ofHours(2L), range.max());
+    }
+
+    @Test
+    public void testSecondStartsBeforeFirst() {
+        // The Started event occurred between 12:00 and 13:00
+        final var started = new Started(randString(), T_1300, T_1400);
+        // The Stopped event occurred between 13:00 and 14:00
+        final var stopped = new Stopped(randString(), T_1200, T_1400);
+
+        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
+        // in this case we don't know the information accurately.
+        try {
+            new Lunch(randString(), "Eating lunch", started, stopped);
+            fail("Expected a RuntimeException");
+        } catch (final Exception e) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testSecondStartSameAsFirst() {
+        // The Started event occurred between 12:00 and 13:00
+        final var started = new Started(randString(), T_1300, T_1400);
+        // The Stopped event occurred between 13:00 and 14:00
+        final var stopped = new Stopped(randString(), T_1300, T_1400);
+
+        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
+        // in this case we don't know the information accurately.
+        try {
+            new Lunch(randString(), "Eating lunch", started, stopped);
+        } catch (final Exception e) {
+            fail("Unexpected RuntimeException");
+        }
     }
 
     /**
@@ -77,5 +142,8 @@ public class EventsTest {
     }
 
     private static record Lunch(String identifier, String actionsDescription, Started beginning, Stopped ending) implements Activity<Started, Stopped> {
+        public Lunch {
+            ensureValid(beginning, ending);
+        }
     }
 }

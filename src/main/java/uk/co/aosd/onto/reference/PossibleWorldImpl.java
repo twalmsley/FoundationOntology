@@ -15,5 +15,7 @@ import uk.co.aosd.onto.foundation.PossibleWorld;
  */
 public record PossibleWorldImpl(String identifier, Set<Individual<? extends Event, ? extends Event>> parts, Created beginning,
     Deleted ending) implements PossibleWorld {
-
+    public PossibleWorldImpl {
+        ensureValid(beginning, ending);
+    }
 }

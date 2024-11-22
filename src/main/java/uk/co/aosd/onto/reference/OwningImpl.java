@@ -13,5 +13,7 @@ import uk.co.aosd.onto.ownership.Owning;
  */
 public record OwningImpl<A extends Event, B extends Event, C extends Event, D extends Event>(String identifier, String actionsDescription,
     Individual<A, B> owner, Individual<C, D> owned, TransferredFrom beginning, TransferredTo ending) implements Owning<A, B, C, D> {
-
+    public OwningImpl {
+        ensureValid(beginning, ending);
+    }
 }

@@ -9,4 +9,7 @@ import uk.co.aosd.onto.events.Scrapped;
  * @author Tony Walmsley
  */
 public record Car(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
+    public Car {
+        ensureValid(beginning, ending);
+    }
 }

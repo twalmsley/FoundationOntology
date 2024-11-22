@@ -63,10 +63,16 @@ public class TopicsTest {
         final Class<Signifier<String>> descriptions = new ClassImpl<>(randString(), Set.of());
         final Class<Topic> subTopics = new ClassImpl<>(randString(), Set.of());
         final Class<Membership<ContributorRole>> contributors = new ClassImpl<>(randString(), Set.of());
-        final Class<Source> sources = new ClassImpl<>(randString(), Set.of());
+        final Created sourceCreated = new Created(randString(), Instant.ofEpochSecond(0), Instant.ofEpochSecond(1));
+        final Deleted sourceDeleted = new Deleted(randString(), null, null);
+        final Source source = new Source(randString(), "http://www.google.com", sourceCreated, sourceDeleted);
+        final Class<Source> sources = new ClassImpl<>(randString(), Set.of(source));
         final Class<Individual<? extends Event, ? extends Event>> individuals = new ClassImpl<>(randString(), Set.of());
         final Class<SourceReference> sourceReferences = new ClassImpl<>(randString(), Set.of());
-        final Class<IndividualReference> individualReferences = new ClassImpl<>(randString(), Set.of());
+        // This source references itself - possibly not realistic.
+        final IndividualReference individualReference = new IndividualReference(randString(), IndividualReferenceType.WORKS_WITH, "References", source, source,
+            from, to);
+        final Class<IndividualReference> individualReferences = new ClassImpl<>(randString(), Set.of(individualReference));
 
         final var topic1 = new Topic(
             randString(),
@@ -220,6 +226,9 @@ public class TopicsTest {
         Class<IndividualReference> individualReferences,
         Started beginning,
         Stopped ending) implements Activity<Started, Stopped>, Named {
+        public Topic {
+            ensureValid(beginning, ending);
+        }
     }
 
     private static record Source(
@@ -227,6 +236,9 @@ public class TopicsTest {
         String reference,
         Created beginning,
         Deleted ending) implements Individual<Created, Deleted> {
+        public Source {
+            ensureValid(beginning, ending);
+        }
     }
 
     private static record SourceReference(
@@ -244,6 +256,9 @@ public class TopicsTest {
         Individual<? extends Event, ? extends Event> to,
         Started beginning,
         Stopped ending) implements Activity<Started, Stopped> {
+        public IndividualReference {
+            ensureValid(beginning, ending);
+        }
     }
 
     private static enum SourceReferenceType {

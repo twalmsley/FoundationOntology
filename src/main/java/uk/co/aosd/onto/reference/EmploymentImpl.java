@@ -13,5 +13,7 @@ import uk.co.aosd.onto.organisation.Organisation;
  */
 public record EmploymentImpl<C>(String identifier, Organisation employer, Human employee, String actionsDescription,
     C contract, Appointed beginning, Removed ending) implements Employment<C> {
-
+    public EmploymentImpl {
+        ensureValid(beginning, ending);
+    }
 }

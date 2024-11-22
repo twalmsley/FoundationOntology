@@ -130,9 +130,15 @@ public class PotusExample {
 record Nation<R extends Role>(String identifier, Territory territory, Class<Membership<R>> members, String purpose,
     Class<Signifier<String>> names, Class<Organisation> units, Formed beginning, Dissolved ending)
     implements Organisation {
+    public Nation {
+        ensureValid(beginning, ending);
+    }
 }
 
 record Territory(String identifier, Formed beginning, Dissolved ending) implements Individual<Formed, Dissolved> {
+    public Territory {
+        ensureValid(beginning, ending);
+    }
 
 }
 

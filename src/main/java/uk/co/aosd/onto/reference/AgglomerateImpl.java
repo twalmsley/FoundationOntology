@@ -15,5 +15,7 @@ import uk.co.aosd.onto.foundation.Individual;
  */
 public record AgglomerateImpl(String identifier, Set<Individual<? extends Event, ? extends Event>> parts, Aggregated beginning,
     Disaggregated ending) implements Agglomerate {
-
+    public AgglomerateImpl {
+        ensureValid(beginning, ending);
+    }
 }

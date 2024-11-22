@@ -15,4 +15,7 @@ import uk.co.aosd.onto.signifying.Signifier;
  */
 public record OrganisationImpl<R extends Role>(String identifier, Class<Membership<R>> members, String purpose, Class<Organisation> units,
     Class<Signifier<String>> names, Formed beginning, Dissolved ending) implements Organisation {
+    public OrganisationImpl {
+        ensureValid(beginning, ending);
+    }
 }

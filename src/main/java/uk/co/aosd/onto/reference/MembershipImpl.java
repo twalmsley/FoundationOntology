@@ -13,4 +13,7 @@ import uk.co.aosd.onto.organisation.Membership;
  */
 public record MembershipImpl<R extends Role>(String identifier, Human member, R role, Appointed beginning,
     Removed ending) implements Membership<R> {
+    public MembershipImpl {
+        ensureValid(beginning, ending);
+    }
 }

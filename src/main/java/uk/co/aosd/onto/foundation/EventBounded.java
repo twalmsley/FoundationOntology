@@ -30,4 +30,14 @@ public interface EventBounded<B extends Event, E extends Event> {
         }
         return Optional.empty();
     }
+
+    /**
+     * Check that the from and to Instants are in the right order.
+     */
+    default void ensureValid(B start, E end) {
+        if (start.from() != null && end.from() != null && !(start.from().isBefore(end.from()) || start.from().equals(end.from()))) {
+            throw new RuntimeException("EventBounded: from must be before to.");
+        }
+    }
+
 }
