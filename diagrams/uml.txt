@@ -50,6 +50,18 @@ interface uk.co.aosd.onto.foundation.Event {
 interface uk.co.aosd.onto.foundation.EventBounded {
 	{method}  {abstract} +beginning () : uk.co.aosd.onto.foundation.Event
 	{method}  {abstract} +ending () : uk.co.aosd.onto.foundation.Event
+	{method} +range () : java.util.Optional
+}
+
+
+class uk.co.aosd.onto.foundation.EventBounded$Range {
+	{field} -max : java.time.Duration
+	{field} -min : java.time.Duration
+	{method} +equals ( paramObject1 : Object ) : boolean
+	{method} +hashCode () : int
+	{method} +max () : java.time.Duration
+	{method} +min () : java.time.Duration
+	{method} +toString () : String
 }
 
 
@@ -93,6 +105,7 @@ interface uk.co.aosd.onto.foundation.State {
 
 interface uk.co.aosd.onto.foundation.TimePeriod {
 	{method} +duration () : java.util.Optional
+	{method}  {static} +durationBetween ( paramInstant1 : java.time.Instant , paramInstant2 : java.time.Instant ) : java.util.Optional
 	{method}  {abstract} +from () : java.time.Instant
 	{method}  {abstract} +to () : java.time.Instant
 }

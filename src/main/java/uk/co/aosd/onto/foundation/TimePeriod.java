@@ -5,7 +5,8 @@ import java.time.Instant;
 import java.util.Optional;
 
 /**
- * A thing that has a beginning and an ending in the time dimension, possibly unknown.
+ * A thing that has a beginning and an ending in the time dimension, possibly
+ * unknown.
  *
  * @author Tony Walmsley
  */
@@ -21,8 +22,20 @@ public interface TimePeriod {
      * @return Duration
      */
     default Optional<Duration> duration() {
-        final var beginning = from();
-        final var ending = to();
+        return durationBetween(from(), to());
+    }
+
+    /**
+     * A default calculation of the duration between the beginning and ending
+     * Instants.
+     *
+     * @param beginning
+     *            Instant
+     * @param ending
+     *            Instant
+     * @return Duration
+     */
+    static Optional<Duration> durationBetween(final Instant beginning, final Instant ending) {
         if (beginning != null && ending != null) {
             return Optional.of(Duration.between(beginning, ending));
         }
