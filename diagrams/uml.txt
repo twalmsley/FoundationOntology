@@ -360,7 +360,6 @@ uk.co.aosd.onto.units.Units$Meters ..|>  uk.co.aosd.onto.foundation.Unit
 uk.co.aosd.onto.units.Units$PoundsSterling ..|>  uk.co.aosd.onto.money.Currency
 uk.co.aosd.onto.units.Units$Seconds ..|>  uk.co.aosd.onto.foundation.Unit
 
-hide fields
 hide methods
 hide null
 
