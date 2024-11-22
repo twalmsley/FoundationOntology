@@ -11,6 +11,7 @@ import uk.co.aosd.onto.money.Currency;
 public interface Units {
     static final Kilograms KILOGRAMS = new Kilograms("KilogramUnits", "Kilograms", "kg");
     static final Meters METERS = new Meters("MetersUnits", "Meters", "m");
+    static final Seconds SECONDS = new Seconds("SecondsTimeUnit", "Seconds", "s");
 
     static final Dollars DOLLARS = new Dollars("USDollars", "United States Dollar", "USD", '$');
     static final Euros EUROS = new Euros("Euros", "Euros", "EUR", '€');
@@ -26,6 +27,12 @@ public interface Units {
      * Meters.
      */
     static record Meters(String identifier, String name, String abbreviation) implements Unit {
+    }
+
+    /**
+     * Seconds.
+     */
+    static record Seconds(String identifier, String name, String abbreviation) implements Unit {
     }
 
     /**
