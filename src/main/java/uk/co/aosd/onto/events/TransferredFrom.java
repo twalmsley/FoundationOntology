@@ -10,5 +10,8 @@ import uk.co.aosd.onto.foundation.Event;
  * @author Tony Walmsley
  */
 public record TransferredFrom(String identifier, Instant from, Instant to) implements Event {
+    public TransferredFrom {
+        ensureValid(from, to);
+    }
 
 }

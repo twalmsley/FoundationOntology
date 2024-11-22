@@ -26,6 +26,15 @@ public interface TimePeriod {
     }
 
     /**
+     * Check that the from and to Instants are in the right order.
+     */
+    default void ensureValid(Instant from, Instant to) {
+        if (from != null && to != null && !(from.isBefore(to) || from.equals(to))) {
+            throw new RuntimeException("TimePeriod: from must be before to.");
+        }
+    }
+
+    /**
      * A default calculation of the duration between the beginning and ending
      * Instants.
      *

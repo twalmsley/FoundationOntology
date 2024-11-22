@@ -43,8 +43,8 @@ public class OwnershipTest {
     private static final Instant JAN_1ST_1999_START = Instant.parse("1999-01-01T00:00:00.00Z");
     private static final Instant JAN_1ST_2024_END = Instant.parse("2024-01-01T23:59:59.00Z");
     private static final Instant JAN_1ST_2024_START = Instant.parse("2024-01-01T00:00:00.00Z");
-    private static final Instant MAY_24TH_1941_END = Instant.parse("1941-04-24T23:59:59.99Z");
     private static final Instant MAY_24TH_1941_START = Instant.parse("1941-05-24T00:00:00.00Z");
+    private static final Instant MAY_24TH_1941_END = Instant.parse("1941-05-24T23:59:59.99Z");
     private static final Instant NOV_11TH_2024_MIDDAY = Instant.parse("2024-11-11T12:00:00.00Z");
     private static final Instant NOV_11TH_2024_START = Instant.parse("2024-11-11T00:00:00.00Z");
 

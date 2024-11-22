@@ -1,6 +1,8 @@
 package uk.co.aosd.onto.foundation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -55,18 +57,18 @@ public class EventsTest {
      */
     @Test
     public void testBadEvents() {
-        // The Started event occurred between 12:00 and 13:00
-        final var started = new Started(randString(), T_1300, T_1200);
-        // The Stopped event occurred between 13:00 and 14:00
-        final var stopped = new Stopped(randString(), T_1400, T_1200);
+        try {
+            new Started(randString(), T_1300, T_1200);
+            fail("Expected a RuntimeException");
+        } catch (final RuntimeException e) {
+            assertTrue(true);
+        }
 
-        // Lunch could be up to 2 hours long, but could also be less than 5 minutes;
-        // in this case we don't know the information accurately.
-        final var lunch = new Lunch(randString(), "Eating lunch", started, stopped);
-
-        final var range = lunch.range().orElseThrow();
-        assertEquals(Duration.ofHours(2L), range.min());
-        assertEquals(Duration.ofHours(-1L), range.max());
+        try {
+            new Started(randString(), T_1300, T_1300);
+        } catch (final RuntimeException e) {
+            fail("Unexpected RuntimeException");
+        }
 
     }
 

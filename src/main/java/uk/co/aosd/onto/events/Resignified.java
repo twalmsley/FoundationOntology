@@ -10,5 +10,8 @@ import uk.co.aosd.onto.foundation.Event;
  * @author Tony Walmsley
  */
 public record Resignified(String identifier, Instant from, Instant to) implements Event {
+    public Resignified {
+        ensureValid(from, to);
+    }
 
 }

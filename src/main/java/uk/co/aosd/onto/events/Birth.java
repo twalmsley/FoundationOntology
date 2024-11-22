@@ -10,5 +10,8 @@ import uk.co.aosd.onto.foundation.Event;
  * @author Tony Walmsley
  */
 public record Birth(String identifier, Instant from, Instant to) implements Event {
+    public Birth {
+        ensureValid(from, to);
+    }
 
 }

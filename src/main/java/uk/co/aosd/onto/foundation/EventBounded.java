@@ -14,7 +14,10 @@ public interface EventBounded<B extends Event, E extends Event> {
     E ending();
 
     /**
-     * Calculate the minimum and maximum durations between two events.
+     * Calculate the minimum and maximum durations between two events. The minimum
+     * is the time between the end of the first event and the start of the second
+     * event, while the maximum is the duration between the start of the first event
+     * and the end of the second event.
      *
      * @return Optional Range
      */

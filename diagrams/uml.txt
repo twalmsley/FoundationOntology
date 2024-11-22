@@ -106,6 +106,7 @@ interface uk.co.aosd.onto.foundation.State {
 interface uk.co.aosd.onto.foundation.TimePeriod {
 	{method} +duration () : java.util.Optional
 	{method}  {static} +durationBetween ( paramInstant1 : java.time.Instant , paramInstant2 : java.time.Instant ) : java.util.Optional
+	{method} +ensureValid () : void
 	{method}  {abstract} +from () : java.time.Instant
 	{method}  {abstract} +to () : java.time.Instant
 }
