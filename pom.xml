@@ -5,7 +5,7 @@
 
     <groupId>uk.co.aosd.onto</groupId>
     <artifactId>functional-ontology</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
 
     <name>functional-ontology</name>
     <url>https://github.com/twalmsley/FoundationOntology</url>
@@ -143,6 +143,6 @@
         <connection>scm:git:git@github.com:twalmsley/FoundationOntology.git</connection>
         <developerConnection>scm:git:git@github.com:twalmsley/FoundationOntology.git</developerConnection>
         <url>https://github.com/twalmsley/FoundationOntology</url>
-        <tag>v0.0.4</tag>
+        <tag>HEAD</tag>
     </scm>
 </project>
