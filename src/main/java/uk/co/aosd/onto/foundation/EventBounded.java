@@ -3,6 +3,8 @@ package uk.co.aosd.onto.foundation;
 import java.time.Duration;
 import java.util.Optional;
 
+import uk.co.aosd.onto.util.Range;
+
 /**
  * A thing that has a beginning and ending events, possibly unknown.
  *

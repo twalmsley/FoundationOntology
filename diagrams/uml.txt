@@ -69,17 +69,6 @@ interface uk.co.aosd.onto.foundation.Property {
 }
 
 
-class uk.co.aosd.onto.foundation.Range {
-	{field} -max : Object
-	{field} -min : Object
-	{method} +equals ( paramObject1 : Object ) : boolean
-	{method} +hashCode () : int
-	{method} +max () : Object
-	{method} +min () : Object
-	{method} +toString () : String
-}
-
-
 interface uk.co.aosd.onto.foundation.Role {
 	{method}  {abstract} +name () : String
 }

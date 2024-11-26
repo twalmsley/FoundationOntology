@@ -1,4 +1,4 @@
-package uk.co.aosd.onto.foundation;
+package uk.co.aosd.onto.util;
 
 /**
  * Represents the uncertainty over some value.
