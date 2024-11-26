@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>uk.co.aosd.onto</groupId>
-    <artifactId>functional-ontology</artifactId>
+    <artifactId>foundation-ontology</artifactId>
     <version>0.0.6-SNAPSHOT</version>
 
-    <name>functional-ontology</name>
+    <name>foundation-ontology</name>
     <url>https://github.com/twalmsley/FoundationOntology</url>
 
     <properties>
