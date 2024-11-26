@@ -10,18 +10,18 @@ import java.util.UUID;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
-import uk.co.aosd.onto.events.Appointed;
-import uk.co.aosd.onto.events.Birth;
-import uk.co.aosd.onto.events.Created;
-import uk.co.aosd.onto.events.Death;
-import uk.co.aosd.onto.events.Deleted;
-import uk.co.aosd.onto.events.Dissolved;
-import uk.co.aosd.onto.events.Formed;
-import uk.co.aosd.onto.events.Removed;
-import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.organisation.Organisation;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
 import uk.co.aosd.onto.reference.PossibleWorldImpl;
+import uk.co.aosd.onto.reference.events.AppointedImpl;
+import uk.co.aosd.onto.reference.events.BirthImpl;
+import uk.co.aosd.onto.reference.events.CreatedImpl;
+import uk.co.aosd.onto.reference.events.DeathImpl;
+import uk.co.aosd.onto.reference.events.DeletedImpl;
+import uk.co.aosd.onto.reference.events.DissolvedImpl;
+import uk.co.aosd.onto.reference.events.FormedImpl;
+import uk.co.aosd.onto.reference.events.RemovedImpl;
+import uk.co.aosd.onto.reference.events.ResignifiedImpl;
 import uk.co.aosd.onto.services.OntologyServices;
 
 /**
@@ -42,18 +42,18 @@ public class OrganisationTest {
     public void testCreateOrganisations() throws JsonProcessingException {
 
         // Create the required Events
-        final var personNamed = new Resignified(randString(), FROM, UNKNOWN_TIME);
-        final var notRenamed = new Resignified(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var acmeNamed = new Resignified(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var acmeRenamed = new Resignified(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var born = new Birth(randString(), FROM, TO);
-        final var died = new Death(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var incorporated = new Formed(randString(), FROM, TO);
-        final var dissolved = new Dissolved(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var appointed = new Appointed(randString(), FROM, TO);
-        final var dismissed = new Removed(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var epochStart = new Created(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
-        final var epochEnd = new Deleted(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var personNamed = new ResignifiedImpl(randString(), FROM, UNKNOWN_TIME);
+        final var notRenamed = new ResignifiedImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var acmeNamed = new ResignifiedImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var acmeRenamed = new ResignifiedImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var born = new BirthImpl(randString(), FROM, TO);
+        final var died = new DeathImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var incorporated = new FormedImpl(randString(), FROM, TO);
+        final var dissolved = new DissolvedImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var appointed = new AppointedImpl(randString(), FROM, TO);
+        final var dismissed = new RemovedImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var epochStart = new CreatedImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
+        final var epochEnd = new DeletedImpl(randString(), UNKNOWN_TIME, UNKNOWN_TIME);
 
         // Create the languages
         final var english = svc.createLanguage(randString(), "British English");

@@ -15,6 +15,8 @@ import uk.co.aosd.onto.foundation.Individual;
 import uk.co.aosd.onto.foundation.JsonUtils;
 import uk.co.aosd.onto.reference.ModelImpl;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
+import uk.co.aosd.onto.reference.events.BuiltImpl;
+import uk.co.aosd.onto.reference.events.ScrappedImpl;
 import uk.co.aosd.onto.services.OntologyServices;
 import uk.co.aosd.onto.units.Units;
 
@@ -27,8 +29,8 @@ public class MoneyTest {
 
     private static final OntologyServices svc = new OntologyServicesImpl();
 
-    private static final Built FROM = new Built("x", Instant.parse("2024-01-01T12:00:00.00Z"), Instant.parse("2024-01-01T12:01:00.00Z"));
-    private static final Scrapped TO = new Scrapped("y", Instant.parse("2024-01-11T12:00:00.00Z"), Instant.parse("2024-01-11T12:01:00.00Z"));
+    private static final Built FROM = new BuiltImpl("x", Instant.parse("2024-01-01T12:00:00.00Z"), Instant.parse("2024-01-01T12:01:00.00Z"));
+    private static final Scrapped TO = new ScrappedImpl("y", Instant.parse("2024-01-11T12:00:00.00Z"), Instant.parse("2024-01-11T12:01:00.00Z"));
 
     @Test
     public void test() throws JsonProcessingException {

@@ -1,5 +1,6 @@
 {
-    "java.project.explorer.showNonJavaResources": false,
+    "java.project.explorer.showNonJavaResources": true,
     "java.configuration.updateBuildConfiguration": "automatic",
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.dependency.packagePresentation": "hierarchical"
 }

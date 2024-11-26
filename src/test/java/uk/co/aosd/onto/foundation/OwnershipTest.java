@@ -11,18 +11,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
-import uk.co.aosd.onto.events.Birth;
-import uk.co.aosd.onto.events.Built;
-import uk.co.aosd.onto.events.Death;
-import uk.co.aosd.onto.events.Resignified;
-import uk.co.aosd.onto.events.Scrapped;
-import uk.co.aosd.onto.events.Started;
-import uk.co.aosd.onto.events.Stopped;
-import uk.co.aosd.onto.events.TransferredFrom;
-import uk.co.aosd.onto.events.TransferredTo;
 import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.reference.OntologyServicesImpl;
 import uk.co.aosd.onto.reference.TransferringOfOwnershipImpl;
+import uk.co.aosd.onto.reference.events.BirthImpl;
+import uk.co.aosd.onto.reference.events.BuiltImpl;
+import uk.co.aosd.onto.reference.events.DeathImpl;
+import uk.co.aosd.onto.reference.events.ResignifiedImpl;
+import uk.co.aosd.onto.reference.events.ScrappedImpl;
+import uk.co.aosd.onto.reference.events.StartedImpl;
+import uk.co.aosd.onto.reference.events.StoppedImpl;
+import uk.co.aosd.onto.reference.events.TransferredFromImpl;
+import uk.co.aosd.onto.reference.events.TransferredToImpl;
 import uk.co.aosd.onto.services.OntologyServices;
 
 /**
@@ -61,13 +61,13 @@ public class OwnershipTest {
         final var car = getCar();
 
         // Record that Alice owns the car for a time period.
-        final var aliceBuysCar = new TransferredFrom("bought1", JAN_1ST_2024_START, JAN_1ST_2024_END);
-        final var aliceSellsCar = new TransferredTo("sold1", null, null);
+        final var aliceBuysCar = new TransferredFromImpl("bought1", JAN_1ST_2024_START, JAN_1ST_2024_END);
+        final var aliceSellsCar = new TransferredToImpl("sold1", null, null);
         final var aliceOwnsCar = svc.createOwnership("aliceOwnsCar", "Car Purchase", alice, car, aliceBuysCar, aliceSellsCar);
 
         // Transfer ownership when Alice sells the car to Bob
-        final var transferActivityBegins = new Started("transferBegins", NOV_11TH_2024_START, NOV_11TH_2024_START);
-        final var transferActivityEnds = new Stopped("transferEnds", NOV_11TH_2024_MIDDAY, NOV_11TH_2024_MIDDAY);
+        final var transferActivityBegins = new StartedImpl("transferBegins", NOV_11TH_2024_START, NOV_11TH_2024_START);
+        final var transferActivityEnds = new StoppedImpl("transferEnds", NOV_11TH_2024_MIDDAY, NOV_11TH_2024_MIDDAY);
 
         final var transfer = svc.transferOwnership("carSoldToBob", "Car Sold", aliceOwnsCar, bob, transferActivityBegins, transferActivityEnds);
 
@@ -100,17 +100,17 @@ public class OwnershipTest {
     }
 
     private Car getCar() {
-        final var built = new Built("built", JAN_1ST_1999_START, JAN_1ST_1999_END);
-        final var scrapped = new Scrapped("scrapped", null, null);
+        final var built = new BuiltImpl("built", JAN_1ST_1999_START, JAN_1ST_1999_END);
+        final var scrapped = new ScrappedImpl("scrapped", null, null);
         final var car = new Car("car", built, scrapped);
         return car;
     }
 
     private Human getBob(final DNA dna, final Language english, final Class<Language> languages) {
-        final var bobBorn = new Birth("bobBorn", MAY_24TH_1941_START, MAY_24TH_1941_END);
-        final var bobDied = new Death("bobDied", null, null);
-        final var bobNamed = new Resignified("bobNamed", null, null);
-        final var bobRenamed = new Resignified("bobRenamed", null, null);
+        final var bobBorn = new BirthImpl("bobBorn", MAY_24TH_1941_START, MAY_24TH_1941_END);
+        final var bobDied = new DeathImpl("bobDied", null, null);
+        final var bobNamed = new ResignifiedImpl("bobNamed", null, null);
+        final var bobRenamed = new ResignifiedImpl("bobRenamed", null, null);
         final var bobName = svc.createSignifier("bobName", "Bob Dylan", english, bobNamed, bobRenamed);
         final var bobNames = Set.of(bobName);
         final var bobNamesClass = svc.createClass("bobNames", bobNames);
@@ -119,10 +119,10 @@ public class OwnershipTest {
     }
 
     private Human getAlice(final DNA dna, final Language english, final Class<Language> languages) {
-        final var aliceBorn = new Birth("aliceBorn", FEB_4TH_1948_START, FEB_4TH_1948_END);
-        final var aliceDied = new Death("aliceDied", null, null);
-        final var aliceNamed = new Resignified("aliceNamed", null, null);
-        final var aliceRenamed = new Resignified("aliceRenamed", null, null);
+        final var aliceBorn = new BirthImpl("aliceBorn", FEB_4TH_1948_START, FEB_4TH_1948_END);
+        final var aliceDied = new DeathImpl("aliceDied", null, null);
+        final var aliceNamed = new ResignifiedImpl("aliceNamed", null, null);
+        final var aliceRenamed = new ResignifiedImpl("aliceRenamed", null, null);
         final var aliceName = svc.createSignifier("aliceName", "Alice Cooper", english, aliceNamed, aliceRenamed);
         final var aliceNames = Set.of(aliceName);
         final var aliceNamesClass = svc.createClass("aliceNames", aliceNames);
