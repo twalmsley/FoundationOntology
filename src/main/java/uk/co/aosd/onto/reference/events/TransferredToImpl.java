@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.TransferredTo;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.TransferredTo;
  *
  * @author Tony Walmsley
  */
-public record TransferredToImpl(String identifier, Instant from, Instant to) implements TransferredTo {
-    public TransferredToImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class TransferredToImpl implements TransferredTo {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

@@ -12,7 +12,7 @@ import uk.co.aosd.onto.foundation.Event;
  */
 public interface TransferringOfOwnership<A extends Event, B extends Event, C extends Event, D extends Event> extends Activity<TransferredFrom, TransferredTo> {
 
-    Owning<A, B, C, D> from();
+    Owning<A, B, C, D> getFrom();
 
-    Owning<A, B, C, D> to();
+    Owning<A, B, C, D> getTo();
 }

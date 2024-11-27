@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Stopped;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.Stopped;
  *
  * @author Tony Walmsley
  */
-public record StoppedImpl(String identifier, Instant from, Instant to) implements Stopped {
-    public StoppedImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class StoppedImpl implements Stopped {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

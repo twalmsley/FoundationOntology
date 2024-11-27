@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.units;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.foundation.Unit;
 import uk.co.aosd.onto.money.Currency;
 
@@ -20,36 +23,75 @@ public interface Units {
     /**
      * Kilograms.
      */
-    static record Kilograms(String identifier, String name, String abbreviation) implements Unit {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    static class Kilograms implements Unit {
+        private String identifier;
+        private String name;
+        private String abbreviation;
     }
 
     /**
      * Meters.
      */
-    static record Meters(String identifier, String name, String abbreviation) implements Unit {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    static class Meters implements Unit {
+        private String identifier;
+        private String name;
+        private String abbreviation;
     }
 
     /**
      * Seconds.
      */
-    static record Seconds(String identifier, String name, String abbreviation) implements Unit {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    static class Seconds implements Unit {
+        private String identifier;
+        private String name;
+        private String abbreviation;
     }
 
     /**
      * Dollars.
      */
-    static record Dollars(String identifier, String name, String abbreviation, char symbol) implements Currency {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    static class Dollars implements Currency {
+        private String identifier;
+        private String name;
+        private String abbreviation;
+        private char symbol;
     }
 
     /**
      * Euros.
      */
-    static record Euros(String identifier, String name, String abbreviation, char symbol) implements Currency {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    static class Euros implements Currency {
+        private String identifier;
+        private String name;
+        private String abbreviation;
+        private char symbol;
     }
 
     /**
      * Pounds Sterling.
      */
-    static record PoundsSterling(String identifier, String name, String abbreviation, char symbol) implements Currency {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    static class PoundsSterling implements Currency {
+        private String identifier;
+        private String name;
+        private String abbreviation;
+        private char symbol;
     }
 }

@@ -13,5 +13,5 @@ import uk.co.aosd.onto.events.Disaggregated;
  * @author Tony Walmsley
  */
 public interface Agglomerate extends Individual<Aggregated, Disaggregated> {
-    Set<Individual<? extends Event, ? extends Event>> parts();
+    Set<Individual<? extends Event, ? extends Event>> getParts();
 }

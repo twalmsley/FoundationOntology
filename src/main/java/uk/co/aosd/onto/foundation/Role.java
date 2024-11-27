@@ -7,5 +7,5 @@ package uk.co.aosd.onto.foundation;
  */
 public interface Role extends UniquelyIdentifiable {
 
-    String name();
+    String getName();
 }

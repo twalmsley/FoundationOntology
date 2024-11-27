@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.reference;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Aggregated;
 import uk.co.aosd.onto.events.Disaggregated;
 import uk.co.aosd.onto.foundation.Aggregate;
@@ -11,9 +14,13 @@ import uk.co.aosd.onto.foundation.Unit;
  *
  * @author Tony Walmsley
  */
-public record AggregateImpl<N extends Number, U extends Unit, T>(String identifier, Class<T> kind, ScalarValue<N, U> quantity,
-    Aggregated beginning, Disaggregated ending) implements Aggregate<N, U, T> {
-    public AggregateImpl {
-        ensureValid(beginning, ending);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class AggregateImpl<N extends Number, U extends Unit, T> implements Aggregate<N, U, T> {
+    private String identifier;
+    private Class<T> kind;
+    private ScalarValue<N, U> quantity;
+    private Aggregated beginning;
+    private Disaggregated ending;
 }

@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Birth;
 
 /**
@@ -9,9 +12,12 @@ import uk.co.aosd.onto.events.Birth;
  *
  * @author Tony Walmsley
  */
-public record BirthImpl(String identifier, Instant from, Instant to) implements Birth {
-    public BirthImpl {
-        ensureValid(from, to);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class BirthImpl implements Birth {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 
 }

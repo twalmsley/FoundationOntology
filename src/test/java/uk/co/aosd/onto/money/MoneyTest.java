@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.Instant;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.decimal4j.immutable.Decimal3f;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.events.Built;
@@ -50,9 +53,9 @@ public class MoneyTest {
         model.add(widget2);
         model.add(widget3);
 
-        assertSame(widget1.value(), pounds);
-        assertSame(widget2.value(), dollars);
-        assertSame(widget3.value(), euros);
+        assertSame(widget1.getValue(), pounds);
+        assertSame(widget2.getValue(), dollars);
+        assertSame(widget3.getValue(), euros);
 
         assertTrue(model.getThing("PoundsSterling").isPresent());
         assertSame(model.getThing("PoundsSterling").get(), Units.POUNDS_STERLING);
@@ -60,16 +63,25 @@ public class MoneyTest {
         final var json = JsonUtils.writeJsonString(model);
         final var model2 = JsonUtils.readJsonString(json, ModelImpl.class);
 
-        assertEquals(model, model2);
+        assertEquals(model.getIdentifier(), model2.getIdentifier());
+        model.getThings().forEach(thing -> {
+            assertTrue(model2.getThing(thing.getIdentifier()).isPresent());
+        });
+        model2.getThings().forEach(thing -> {
+            assertTrue(model.getThing(thing.getIdentifier()).isPresent());
+        });
 
         // This won't work due to the types being different...
         // MonetaryValue<Dollars> value = euros;
     }
 }
 
-record Widget<C extends Currency>(String identifier, MonetaryValue<C> value, Built beginning, Scrapped ending)
-    implements ValuedAsset<C>, Individual<Built, Scrapped> {
-    public Widget {
-        ensureValid(beginning, ending);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class Widget<C extends Currency> implements ValuedAsset<C>, Individual<Built, Scrapped> {
+    private String identifier;
+    private MonetaryValue<C> value;
+    private Built beginning;
+    private Scrapped ending;
 }

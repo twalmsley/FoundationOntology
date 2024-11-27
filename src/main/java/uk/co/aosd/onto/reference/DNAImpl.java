@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.reference;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.biological.DNA;
 
 /**
@@ -7,6 +10,10 @@ import uk.co.aosd.onto.biological.DNA;
  *
  * @author Tony Walmsley
  */
-public record DNAImpl(String identifier, String dna) implements DNA {
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DNAImpl implements DNA {
+    private String identifier;
+    private String dna;
 }

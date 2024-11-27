@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Dissolved;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.Dissolved;
  *
  * @author Tony Walmsley
  */
-public record DissolvedImpl(String identifier, Instant from, Instant to) implements Dissolved {
-    public DissolvedImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DissolvedImpl implements Dissolved {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

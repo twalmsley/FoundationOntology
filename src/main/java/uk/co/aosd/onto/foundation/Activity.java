@@ -13,5 +13,5 @@ public interface Activity<B extends Event, E extends Event> extends Individual<B
      * @return String This will be modelled better at some point, but could
      *         represent source code or some other procedural language.
      */
-    String actionsDescription();
+    String getActionsDescription();
 }

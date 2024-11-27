@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference;
 
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Created;
 import uk.co.aosd.onto.events.Deleted;
 import uk.co.aosd.onto.foundation.Event;
@@ -13,9 +16,12 @@ import uk.co.aosd.onto.foundation.PossibleWorld;
  *
  * @author Tony Walmsley
  */
-public record PossibleWorldImpl(String identifier, Set<Individual<? extends Event, ? extends Event>> parts, Created beginning,
-    Deleted ending) implements PossibleWorld {
-    public PossibleWorldImpl {
-        ensureValid(beginning, ending);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PossibleWorldImpl implements PossibleWorld {
+    private String identifier;
+    private Set<Individual<? extends Event, ? extends Event>> parts;
+    private Created beginning;
+    private Deleted ending;
 }

@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Removed;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.Removed;
  *
  * @author Tony Walmsley
  */
-public record RemovedImpl(String identifier, Instant from, Instant to) implements Removed {
-    public RemovedImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RemovedImpl implements Removed {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

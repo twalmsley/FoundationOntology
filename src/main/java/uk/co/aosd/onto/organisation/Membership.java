@@ -13,7 +13,7 @@ import uk.co.aosd.onto.foundation.Role;
  */
 public interface Membership<R extends Role> extends Individual<Appointed, Removed> {
 
-    Human member();
+    Human getMember();
 
-    R role();
+    R getRole();
 }

@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference;
 
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.foundation.ScalarProperty;
 import uk.co.aosd.onto.foundation.ScalarValue;
 import uk.co.aosd.onto.foundation.UniquelyIdentifiable;
@@ -12,7 +15,11 @@ import uk.co.aosd.onto.foundation.Unit;
  *
  * @author Tony Walmsley
  */
-public record ScalarPropertyImpl<T extends UniquelyIdentifiable, U extends Number, V extends Unit>(String identifier,
-    ScalarValue<U, V> property, Set<T> members) implements ScalarProperty<T, U, V> {
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ScalarPropertyImpl<T extends UniquelyIdentifiable, U extends Number, V extends Unit> implements ScalarProperty<T, U, V> {
+    private String identifier;
+    private ScalarValue<U, V> property;
+    private Set<T> members;
 }

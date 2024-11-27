@@ -13,5 +13,5 @@ public interface DNA extends UniquelyIdentifiable {
      *
      * @return String
      */
-    String dna();
+    String getDna();
 }

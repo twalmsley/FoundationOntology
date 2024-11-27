@@ -11,9 +11,9 @@ import uk.co.aosd.onto.language.Language;
  * @author Tony Walmsley
  */
 public interface Signifying<V> extends Activity<Resignified, Resignified> {
-    V name();
+    V getName();
 
-    UniquelyIdentifiable named();
+    UniquelyIdentifiable getNamed();
 
-    Language language();
+    Language getLanguage();
 }

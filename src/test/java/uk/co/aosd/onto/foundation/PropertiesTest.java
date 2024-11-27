@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.events.Built;
 import uk.co.aosd.onto.events.Scrapped;
@@ -43,7 +46,7 @@ public class PropertiesTest {
         final var carState1 = svc.createState(randString(), car1, LIFE_START, UNKNOWN_END);
         final var redCars = new ColouredCars(randString(), Color.RED, Set.of(carState1));
 
-        assertSame(car1, redCars.members().iterator().next().individual());
+        assertSame(car1, redCars.getMembers().iterator().next().getIndividual());
     }
 
     /**
@@ -54,7 +57,7 @@ public class PropertiesTest {
         final var car1 = new Car(randString(), LIFE_START, UNKNOWN_END);
         final var car1IsRed = new CarColour(randString(), car1, Color.RED, LIFE_START_TIME, LIFE_END_TIME);
 
-        assertSame(car1, car1IsRed.individual());
+        assertSame(car1, car1IsRed.getIndividual());
     }
 
     /**
@@ -68,10 +71,10 @@ public class PropertiesTest {
 
         // Convert the ColouredCars property into a list of CarColour Attributes
         final var attributes = redCars
-            .members()
+            .getMembers()
             .stream()
             .map(state -> {
-                return new CarColour(randString(), state.individual(), redCars.property(), state.beginning().from(), state.ending().from());
+                return new CarColour(randString(), state.getIndividual(), redCars.getProperty(), state.getBeginning().getFrom(), state.getEnding().getFrom());
             }).toList();
 
         // Convert the list of CarColour Attributes into a ColouredCars Property
@@ -81,13 +84,13 @@ public class PropertiesTest {
             attributes
                 .stream()
                 .map(attr -> {
-                    return svc.createState(randString(), attr.individual(), new BuiltImpl(randString(), attr.from(), LIFE_END_TIME),
-                        new ScrappedImpl(randString(), attr.to(), LIFE_END_TIME));
+                    return svc.createState(randString(), attr.getIndividual(), new BuiltImpl(randString(), attr.getFrom(), LIFE_END_TIME),
+                        new ScrappedImpl(randString(), attr.getTo(), LIFE_END_TIME));
                 }).collect(Collectors.toSet()));
 
         // Apart from the IDs, redCars and redCars2 will be identical (checked manually
         // using https://jsondiff.com/)
-        assertEquals(redCars.members().size(), redCars2.members().size());
+        assertEquals(redCars.getMembers().size(), redCars2.getMembers().size());
 
         // JsonUtils.dumpJson(redCars);
         // JsonUtils.dumpJson(redCars2);
@@ -120,11 +123,11 @@ public class PropertiesTest {
         // Same at run-time, but not at compile time due to type erasure.
         assertEquals(m3.getClass(), kg1000.getClass());
 
-        assertNotEquals(m3.unit().getClass(), kg1000.unit().getClass());
+        assertNotEquals(m3.getUnit().getClass(), kg1000.getUnit().getClass());
 
-        assertEquals(1000.0D, weight1.property().value());
-        assertEquals(1100.0D, weight2.property().value());
-        assertEquals(1200.0D, weight3.property().value());
+        assertEquals(1000.0D, weight1.getProperty().getValue());
+        assertEquals(1100.0D, weight2.getProperty().getValue());
+        assertEquals(1200.0D, weight3.getProperty().getValue());
     }
 
     private static String randString() {
@@ -136,18 +139,44 @@ enum Color {
     RED, BLUE, GREEN
 }
 
-record ColouredCars(String identifier, Color property, Set<State<Built, Scrapped, Car>> members)
-    implements Property<State<Built, Scrapped, Car>, Color> {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class ColouredCars implements Property<State<Built, Scrapped, Car>, Color> {
+    private String identifier;
+    private Color property;
+    private Set<State<Built, Scrapped, Car>> members;
 }
 
-record CarColour(String identifier, Car individual, Color property, Instant from, Instant to)
-    implements Attribute<Car, Color> {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class CarColour implements Attribute<Car, Color> {
+    private String identifier;
+    private Car individual;
+    private Color property;
+    private Instant from;
+    private Instant to;
 }
 
-record CarWeight(String identifier, Car individual, ScalarValue<Double, Kilograms> property, Instant from, Instant to)
-    implements ScalarAttribute<Car, Double, Kilograms> {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class CarWeight implements ScalarAttribute<Car, Double, Kilograms> {
+    private String identifier;
+    private Car individual;
+    private ScalarValue<Double, Kilograms> property;
+    private Instant from;
+    private Instant to;
 }
 
-record CarLength(String identifier, Car individual, ScalarValue<Double, Meters> property, Instant from, Instant to)
-    implements ScalarAttribute<Car, Double, Meters> {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class CarLength implements ScalarAttribute<Car, Double, Meters> {
+    private String identifier;
+    private Car individual;
+    private ScalarValue<Double, Meters> property;
+    private Instant from;
+    private Instant to;
 }

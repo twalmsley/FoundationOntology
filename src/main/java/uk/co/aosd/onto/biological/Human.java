@@ -11,7 +11,7 @@ import uk.co.aosd.onto.signifying.Named;
  */
 public interface Human extends Named, GenomicBiologicalEntity {
 
-    Language nativeLanguage();
+    Language getNativeLanguage();
 
-    Class<Language> languages();
+    Class<Language> getLanguages();
 }

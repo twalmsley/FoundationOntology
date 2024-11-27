@@ -13,7 +13,7 @@ import uk.co.aosd.onto.foundation.Individual;
  */
 public interface Owning<A extends Event, B extends Event, C extends Event, D extends Event> extends Activity<TransferredFrom, TransferredTo> {
 
-    Individual<A, B> owner();
+    Individual<A, B> getOwner();
 
-    Individual<C, D> owned();
+    Individual<C, D> getOwned();
 }

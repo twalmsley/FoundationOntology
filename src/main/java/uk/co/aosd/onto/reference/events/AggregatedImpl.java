@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Aggregated;
 
 /**
@@ -9,8 +12,11 @@ import uk.co.aosd.onto.events.Aggregated;
  *
  * @author Tony Walmsley
  */
-public record AggregatedImpl(String identifier, Instant from, Instant to) implements Aggregated {
-    public AggregatedImpl {
-        ensureValid(from, to);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class AggregatedImpl implements Aggregated {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

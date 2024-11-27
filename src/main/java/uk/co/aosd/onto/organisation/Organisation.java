@@ -18,19 +18,19 @@ public interface Organisation extends Named, Individual<Formed, Dissolved> {
      *
      * @return String A description of the purpose.
      */
-    String purpose();
+    String getPurpose();
 
     /**
      * The members of the organisation.
      *
      * @return Class of Memberships
      */
-    Class<? extends Membership<?>> members();
+    Class<? extends Membership<?>> getMembers();
 
     /**
      * Organisations can have units and sub-units.
      *
      * @return Class of Organisation
      */
-    Class<? extends Organisation> units();
+    Class<? extends Organisation> getUnits();
 }

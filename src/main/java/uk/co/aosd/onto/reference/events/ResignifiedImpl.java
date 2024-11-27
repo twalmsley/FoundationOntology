@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Resignified;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.Resignified;
  *
  * @author Tony Walmsley
  */
-public record ResignifiedImpl(String identifier, Instant from, Instant to) implements Resignified {
-    public ResignifiedImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ResignifiedImpl implements Resignified {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

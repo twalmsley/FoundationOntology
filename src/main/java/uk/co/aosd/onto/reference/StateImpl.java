@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.reference;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.foundation.Event;
 import uk.co.aosd.onto.foundation.Individual;
 import uk.co.aosd.onto.foundation.State;
@@ -9,9 +12,12 @@ import uk.co.aosd.onto.foundation.State;
  *
  * @author Tony Walmsley
  */
-public record StateImpl<B extends Event, E extends Event, V extends Individual<B, E>>(String identifier, V individual, B beginning,
-    E ending) implements State<B, E, V> {
-    public StateImpl {
-        ensureValid(beginning, ending);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class StateImpl<B extends Event, E extends Event, V extends Individual<B, E>> implements State<B, E, V> {
+    private String identifier;
+    private V individual;
+    private B beginning;
+    private E ending;
 }

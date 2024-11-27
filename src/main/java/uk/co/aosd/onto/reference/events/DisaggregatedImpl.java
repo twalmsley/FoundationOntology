@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Disaggregated;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.Disaggregated;
  *
  * @author Tony Walmsley
  */
-public record DisaggregatedImpl(String identifier, Instant from, Instant to) implements Disaggregated {
-    public DisaggregatedImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DisaggregatedImpl implements Disaggregated {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

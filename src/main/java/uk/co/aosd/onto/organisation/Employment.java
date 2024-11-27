@@ -11,9 +11,9 @@ import uk.co.aosd.onto.foundation.Activity;
  * @author Tony Walmsley
  */
 public interface Employment<C> extends Activity<Appointed, Removed> {
-    Human employee();
+    Human getEmployee();
 
-    Organisation employer();
+    Organisation getEmployer();
 
-    C contract();
+    C getContract();
 }

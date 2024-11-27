@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Death;
 
 /**
@@ -9,9 +12,12 @@ import uk.co.aosd.onto.events.Death;
  *
  * @author Tony Walmsley
  */
-public record DeathImpl(String identifier, Instant from, Instant to) implements Death {
-    public DeathImpl {
-        ensureValid(from, to);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DeathImpl implements Death {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 
 }

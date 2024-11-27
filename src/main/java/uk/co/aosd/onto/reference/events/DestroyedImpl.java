@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Destroyed;
 
 /**
@@ -9,9 +12,12 @@ import uk.co.aosd.onto.events.Destroyed;
  *
  * @author Tony Walmsley
  */
-public record DestroyedImpl(String identifier, Instant from, Instant to) implements Destroyed {
-    public DestroyedImpl {
-        ensureValid(from, to);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DestroyedImpl implements Destroyed {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 
 }

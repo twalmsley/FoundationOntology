@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Assembled;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.Assembled;
  *
  * @author Tony Walmsley
  */
-public record AssembledImpl(String identifier, Instant from, Instant to) implements Assembled {
-    public AssembledImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class AssembledImpl implements Assembled {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

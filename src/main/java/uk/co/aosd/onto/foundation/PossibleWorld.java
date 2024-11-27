@@ -12,5 +12,5 @@ import uk.co.aosd.onto.events.Deleted;
  * @author Tony Walmsley
  */
 public interface PossibleWorld extends Individual<Created, Deleted> {
-    Set<Individual<? extends Event, ? extends Event>> parts();
+    Set<Individual<? extends Event, ? extends Event>> getParts();
 }

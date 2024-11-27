@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.reference;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
 import uk.co.aosd.onto.events.Birth;
@@ -13,15 +16,15 @@ import uk.co.aosd.onto.signifying.Signifier;
  *
  * @author Tony Walmsley
  */
-public record HumanImpl(
-    String identifier,
-    Birth beginning,
-    Death ending,
-    Class<Signifier<String>> names,
-    Language nativeLanguage,
-    Class<Language> languages,
-    DNA dna) implements Human {
-    public HumanImpl {
-        ensureValid(beginning, ending);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class HumanImpl implements Human {
+    private String identifier;
+    private Birth beginning;
+    private Death ending;
+    private Class<Signifier<String>> names;
+    private Language nativeLanguage;
+    private Class<Language> languages;
+    private DNA dna;
 }

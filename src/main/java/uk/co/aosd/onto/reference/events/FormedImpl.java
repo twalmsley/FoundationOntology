@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Formed;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.Formed;
  *
  * @author Tony Walmsley
  */
-public record FormedImpl(String identifier, Instant from, Instant to) implements Formed {
-    public FormedImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class FormedImpl implements Formed {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

@@ -8,6 +8,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.events.Started;
 import uk.co.aosd.onto.events.Stopped;
@@ -93,7 +96,7 @@ public class EventsTest {
         final var stopped = new StoppedImpl(randString(), T_1200, T_1400);
 
         try {
-            new Lunch(randString(), "Eating lunch", started, stopped);
+            new Lunch(randString(), "Eating lunch", started, stopped).ensureValid(started, stopped);
             fail("Expected a RuntimeException");
         } catch (final Exception e) {
             assertTrue(true);
@@ -121,7 +124,7 @@ public class EventsTest {
     @Test
     public void testBadEvents() {
         try {
-            new StartedImpl(randString(), T_1300, T_1200);
+            new StartedImpl(randString(), T_1300, T_1200).ensureValid(T_1300, T_1200);
             fail("Expected a RuntimeException");
         } catch (final RuntimeException e) {
             assertTrue(true);
@@ -139,9 +142,13 @@ public class EventsTest {
         return UUID.randomUUID().toString();
     }
 
-    private static record Lunch(String identifier, String actionsDescription, Started beginning, Stopped ending) implements Activity<Started, Stopped> {
-        public Lunch {
-            ensureValid(beginning, ending);
-        }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class Lunch implements Activity<Started, Stopped> {
+        private String identifier;
+        private String actionsDescription;
+        private Started beginning;
+        private Stopped ending;
     }
 }

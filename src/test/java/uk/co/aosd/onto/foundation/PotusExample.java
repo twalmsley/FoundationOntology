@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.events.Appointed;
@@ -134,23 +137,41 @@ public class PotusExample {
 
 }
 
-record Nation<R extends Role>(String identifier, Territory territory, Class<Membership<R>> members, String purpose,
-    Class<Signifier<String>> names, Class<Organisation> units, Formed beginning, Dissolved ending)
-    implements Organisation {
-    public Nation {
-        ensureValid(beginning, ending);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class Nation<R extends Role> implements Organisation {
+    private String identifier;
+    private Territory territory;
+    private Class<Membership<R>> members;
+    private String purpose;
+    private Class<Signifier<String>> names;
+    private Class<Organisation> units;
+    private Formed beginning;
+    private Dissolved ending;
 }
 
-record Territory(String identifier, Formed beginning, Dissolved ending) implements Individual<Formed, Dissolved> {
-    public Territory {
-        ensureValid(beginning, ending);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class Territory implements Individual<Formed, Dissolved> {
+    private String identifier;
+    private Formed beginning;
+    private Dissolved ending;
 }
 
-record PresidentOfTheUsa(String identifier, String name) implements Role {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class PresidentOfTheUsa implements Role {
+    private String identifier;
+    private String name;
 }
 
-record CitizenOfTheUsa(String identifier, String name) implements Role {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class CitizenOfTheUsa implements Role {
+    private String identifier;
+    private String name;
 }

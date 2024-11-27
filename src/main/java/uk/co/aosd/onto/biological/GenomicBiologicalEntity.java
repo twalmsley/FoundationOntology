@@ -16,5 +16,5 @@ public interface GenomicBiologicalEntity extends Individual<Birth, Death> {
      *
      * @return Optional DNA.
      */
-    DNA dna();
+    DNA getDna();
 }

@@ -15,5 +15,6 @@ public interface Model extends UniquelyIdentifiable {
 
     Optional<UniquelyIdentifiable> getThing(String identifier);
 
-    Set<UniquelyIdentifiable> things();
+    Set<UniquelyIdentifiable> getThings();
+
 }

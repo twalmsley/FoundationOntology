@@ -10,6 +10,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.biological.Human;
@@ -157,9 +160,9 @@ public class TopicsTest {
         final Topic updatedWithContributor = addContributor(updatedWithExpert, contributorMembership, user1);
 
         // Check the result.
-        assertTrue(updatedWithContributor.owners().members().contains(ownerMembership));
-        assertTrue(updatedWithContributor.experts().members().contains(expertMembership));
-        assertTrue(updatedWithContributor.contributors().members().contains(contributorMembership));
+        assertTrue(updatedWithContributor.getOwners().getMembers().contains(ownerMembership));
+        assertTrue(updatedWithContributor.getExperts().getMembers().contains(expertMembership));
+        assertTrue(updatedWithContributor.getContributors().getMembers().contains(contributorMembership));
 
         final var json = JsonUtils.writeJsonString(updatedWithContributor);
         final var deserialised = JsonUtils.readJsonString(json, Topic.class);
@@ -182,12 +185,13 @@ public class TopicsTest {
     private static Topic addContributor(final Topic t, final Membership<ContributorRole> contributor, final User updater) {
 
         final Set<Membership<ContributorRole>> contributorSet = new HashSet<>();
-        contributorSet.addAll(t.contributors().members());
+        contributorSet.addAll(t.getContributors().getMembers());
         contributorSet.add(contributor);
-        final Class<Membership<ContributorRole>> contributors = new ClassImpl<>(t.contributors().identifier(), contributorSet);
+        final Class<Membership<ContributorRole>> contributors = new ClassImpl<>(t.getContributors().getIdentifier(), contributorSet);
 
-        return new Topic(t.identifier(), t.actionsDescription(), t.names(), t.descriptions(), t.subTopics(), t.owners(), t.experts(), contributors, t.sources(),
-            t.individuals(), t.sourceReferences(), t.individualReferences(), t.beginning(), t.ending(), t.createdBy(), updater);
+        return new Topic(t.getIdentifier(), t.getActionsDescription(), t.getNames(), t.getDescriptions(), t.getSubTopics(), t.getOwners(), t.getExperts(),
+            contributors, t.getSources(), t.getIndividuals(), t.getSourceReferences(), t.getIndividualReferences(), t.getBeginning(), t.getEnding(),
+            t.getCreatedBy(), updater);
     }
 
     /**
@@ -201,13 +205,14 @@ public class TopicsTest {
      */
     private Topic addExpert(final Topic t, final Membership<ExpertRole> expert, final User updater) {
         final Set<Membership<ExpertRole>> expertsSet = new HashSet<>();
-        expertsSet.addAll(t.experts().members());
+        expertsSet.addAll(t.getExperts().getMembers());
         expertsSet.add(expert);
 
         final Class<Membership<ExpertRole>> experts = new ClassImpl<>(randString(), expertsSet);
 
-        return new Topic(t.identifier(), t.actionsDescription(), t.names(), t.descriptions(), t.subTopics(), t.owners(), experts, t.contributors(), t.sources(),
-            t.individuals(), t.sourceReferences(), t.individualReferences(), t.beginning(), t.ending(), t.createdBy(), updater);
+        return new Topic(t.getIdentifier(), t.getActionsDescription(), t.getNames(), t.getDescriptions(), t.getSubTopics(), t.getOwners(), experts,
+            t.getContributors(), t.getSources(), t.getIndividuals(), t.getSourceReferences(), t.getIndividualReferences(), t.getBeginning(), t.getEnding(),
+            t.getCreatedBy(), updater);
     }
 
     /**
@@ -221,75 +226,79 @@ public class TopicsTest {
      */
     private static Topic addOwner(final Topic t, final Membership<OwnerRole> owner, final User updater) {
         final Set<Membership<OwnerRole>> ownersSet = new HashSet<>();
-        ownersSet.addAll(t.owners().members());
+        ownersSet.addAll(t.getOwners().getMembers());
         ownersSet.add(owner);
 
         final Class<Membership<OwnerRole>> owners = new ClassImpl<>(randString(), ownersSet);
 
-        return new Topic(t.identifier(), t.actionsDescription(), t.names(), t.descriptions(), t.subTopics(), owners, t.experts(), t.contributors(), t.sources(),
-            t.individuals(), t.sourceReferences(), t.individualReferences(), t.beginning(), t.ending(), t.createdBy(), updater);
+        return new Topic(t.getIdentifier(), t.getActionsDescription(), t.getNames(), t.getDescriptions(), t.getSubTopics(), owners, t.getExperts(),
+            t.getContributors(), t.getSources(), t.getIndividuals(), t.getSourceReferences(), t.getIndividualReferences(), t.getBeginning(), t.getEnding(),
+            t.getCreatedBy(), updater);
     }
 
     private static String randString() {
         return UUID.randomUUID().toString();
     }
 
-    private static record Topic(
-        String identifier,
-        String actionsDescription,
-        Class<Signifier<String>> names,
-        Class<Signifier<String>> descriptions,
-        Class<Topic> subTopics,
-        Class<Membership<OwnerRole>> owners,
-        Class<Membership<ExpertRole>> experts,
-        Class<Membership<ContributorRole>> contributors,
-        Class<Source> sources,
-        Class<Individual<? extends Event, ? extends Event>> individuals,
-        Class<SourceReference> sourceReferences,
-        Class<IndividualReference> individualReferences,
-        Started beginning,
-        Stopped ending,
-        User createdBy,
-        User updatedBy) implements Activity<Started, Stopped>, Named {
-        public Topic {
-            ensureValid(beginning, ending);
-        }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class Topic implements Activity<Started, Stopped>, Named {
+        private String identifier;
+        private String actionsDescription;
+        private Class<Signifier<String>> names;
+        private Class<Signifier<String>> descriptions;
+        private Class<Topic> subTopics;
+        private Class<Membership<OwnerRole>> owners;
+        private Class<Membership<ExpertRole>> experts;
+        private Class<Membership<ContributorRole>> contributors;
+        private Class<Source> sources;
+        private Class<Individual<? extends Event, ? extends Event>> individuals;
+        private Class<SourceReference> sourceReferences;
+        private Class<IndividualReference> individualReferences;
+        private Started beginning;
+        private Stopped ending;
+        private User createdBy;
+        private User updatedBy;
     }
 
-    private static record Source(
-        String identifier,
-        String reference,
-        Created beginning,
-        Deleted ending,
-        User createdBy,
-        User updatedBy) implements Individual<Created, Deleted> {
-        public Source {
-            ensureValid(beginning, ending);
-        }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class Source implements Individual<Created, Deleted> {
+        private String identifier;
+        private String reference;
+        private Created beginning;
+        private Deleted ending;
+        private User createdBy;
+        private User updatedBy;
     }
 
-    private static record SourceReference(
-        String identifier,
-        Source source,
-        SourceReferenceType type,
-        Individual<? extends Event, ? extends Event> individual,
-        User createdBy,
-        User updatedBy) implements UniquelyIdentifiable {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class SourceReference implements UniquelyIdentifiable {
+        private String identifier;
+        private Source source;
+        private SourceReferenceType type;
+        private Individual<? extends Event, ? extends Event> individual;
+        private User createdBy;
+        private User updatedBy;
     }
 
-    private static record IndividualReference(
-        String identifier,
-        IndividualReferenceType type,
-        String actionsDescription,
-        Individual<? extends Event, ? extends Event> from,
-        Individual<? extends Event, ? extends Event> to,
-        Started beginning,
-        Stopped ending,
-        User createdBy,
-        User updatedBy) implements Activity<Started, Stopped> {
-        public IndividualReference {
-            ensureValid(beginning, ending);
-        }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class IndividualReference implements Activity<Started, Stopped> {
+        private String identifier;
+        private IndividualReferenceType type;
+        private String actionsDescription;
+        private Individual<? extends Event, ? extends Event> from;
+        private Individual<? extends Event, ? extends Event> to;
+        private Started beginning;
+        private Stopped ending;
+        private User createdBy;
+        private User updatedBy;
     }
 
     private static enum SourceReferenceType {
@@ -304,27 +313,49 @@ public class TopicsTest {
     private static final OwnerRole ownerRole = new OwnerRole(randString(), "Owner");
     private static final ContributorRole contributorRole = new ContributorRole(randString(), "Contributor");
 
-    private static record ExpertRole(String identifier, String name) implements Role {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class ExpertRole implements Role {
+        private String identifier;
+        private String name;
     }
 
-    private static record OwnerRole(String identifier, String name) implements Role {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class OwnerRole implements Role {
+        private String identifier;
+        private String name;
     }
 
-    private static record ContributorRole(String identifier, String name) implements Role {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static class ContributorRole implements Role {
+        private String identifier;
+        private String name;
     }
 
-    private static final record Thing(String identifier, Started beginning, Stopped ending) implements Individual<Started, Stopped> {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static final class Thing implements Individual<Started, Stopped> {
+        private String identifier;
+        private Started beginning;
+        private Stopped ending;
     }
 
-    private static final record User(String identifier,
-        Birth beginning,
-        Death ending,
-        Class<Signifier<String>> names,
-        Language nativeLanguage,
-        Class<Language> languages,
-        DNA dna) implements Human {
-        public User {
-            ensureValid(beginning, ending);
-        }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private static final class User implements Human {
+        private String identifier;
+        private Birth beginning;
+        private Death ending;
+        private Class<Signifier<String>> names;
+        private Language nativeLanguage;
+        private Class<Language> languages;
+        private DNA dna;
     }
 }

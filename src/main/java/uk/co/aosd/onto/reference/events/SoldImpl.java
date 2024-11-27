@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Sold;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.Sold;
  *
  * @author Tony Walmsley
  */
-public record SoldImpl(String identifier, Instant from, Instant to) implements Sold {
-    public SoldImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class SoldImpl implements Sold {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

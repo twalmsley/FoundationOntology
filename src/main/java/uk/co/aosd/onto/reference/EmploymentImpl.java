@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.reference;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.biological.Human;
 import uk.co.aosd.onto.events.Appointed;
 import uk.co.aosd.onto.events.Removed;
@@ -11,9 +14,15 @@ import uk.co.aosd.onto.organisation.Organisation;
  *
  * @author Tony Walmsley
  */
-public record EmploymentImpl<C>(String identifier, Organisation employer, Human employee, String actionsDescription,
-    C contract, Appointed beginning, Removed ending) implements Employment<C> {
-    public EmploymentImpl {
-        ensureValid(beginning, ending);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class EmploymentImpl<C> implements Employment<C> {
+    private String identifier;
+    private Organisation employer;
+    private Human employee;
+    private String actionsDescription;
+    private C contract;
+    private Appointed beginning;
+    private Removed ending;
 }

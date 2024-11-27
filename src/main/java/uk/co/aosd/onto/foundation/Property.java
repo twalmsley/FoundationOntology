@@ -8,5 +8,5 @@ package uk.co.aosd.onto.foundation;
  * @author Tony Walmsley
  */
 public interface Property<T extends UniquelyIdentifiable, U> extends Class<T> {
-    U property();
+    U getProperty();
 }

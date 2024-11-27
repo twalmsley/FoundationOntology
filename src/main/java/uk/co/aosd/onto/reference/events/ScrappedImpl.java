@@ -2,6 +2,9 @@ package uk.co.aosd.onto.reference.events;
 
 import java.time.Instant;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Scrapped;
 
 /**
@@ -9,9 +12,11 @@ import uk.co.aosd.onto.events.Scrapped;
  *
  * @author Tony Walmsley
  */
-public record ScrappedImpl(String identifier, Instant from, Instant to) implements Scrapped {
-    public ScrappedImpl {
-        ensureValid(from, to);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ScrappedImpl implements Scrapped {
+    private String identifier;
+    private Instant from;
+    private Instant to;
 }

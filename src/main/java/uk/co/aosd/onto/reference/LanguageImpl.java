@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.reference;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.language.Language;
 
 /**
@@ -7,6 +10,10 @@ import uk.co.aosd.onto.language.Language;
  *
  * @author Tony Walmsley
  */
-public record LanguageImpl(String identifier, String name) implements Language {
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class LanguageImpl implements Language {
+    private String identifier;
+    private String name;
 }

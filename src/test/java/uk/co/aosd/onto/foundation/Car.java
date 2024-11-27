@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.foundation;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.events.Built;
 import uk.co.aosd.onto.events.Scrapped;
 
@@ -8,8 +11,11 @@ import uk.co.aosd.onto.events.Scrapped;
  *
  * @author Tony Walmsley
  */
-public record Car(String identifier, Built beginning, Scrapped ending) implements Individual<Built, Scrapped> {
-    public Car {
-        ensureValid(beginning, ending);
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Car implements Individual<Built, Scrapped> {
+    private String identifier;
+    private Built beginning;
+    private Scrapped ending;
 }

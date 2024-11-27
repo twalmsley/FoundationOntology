@@ -1,45 +1,45 @@
 @startuml
 
 interface uk.co.aosd.onto.biological.DNA {
-	{method}  {abstract} +dna () : String
+	{method}  {abstract} +getDna () : String
 }
 
 
 interface uk.co.aosd.onto.biological.GenomicBiologicalEntity {
-	{method}  {abstract} +dna () : uk.co.aosd.onto.biological.DNA
+	{method}  {abstract} +getDna () : uk.co.aosd.onto.biological.DNA
 }
 
 
 interface uk.co.aosd.onto.biological.Human {
-	{method}  {abstract} +languages () : uk.co.aosd.onto.foundation.Class
-	{method}  {abstract} +nativeLanguage () : uk.co.aosd.onto.language.Language
+	{method}  {abstract} +getLanguages () : uk.co.aosd.onto.foundation.Class
+	{method}  {abstract} +getNativeLanguage () : uk.co.aosd.onto.language.Language
 }
 
 
 interface uk.co.aosd.onto.foundation.Activity {
-	{method}  {abstract} +actionsDescription () : String
+	{method}  {abstract} +getActionsDescription () : String
 }
 
 
 interface uk.co.aosd.onto.foundation.Agglomerate {
-	{method}  {abstract} +parts () : java.util.Set
+	{method}  {abstract} +getParts () : java.util.Set
 }
 
 
 interface uk.co.aosd.onto.foundation.Aggregate {
-	{method}  {abstract} +kind () : Class
-	{method}  {abstract} +quantity () : uk.co.aosd.onto.foundation.ScalarValue
+	{method}  {abstract} +getKind () : Class
+	{method}  {abstract} +getQuantity () : uk.co.aosd.onto.foundation.ScalarValue
 }
 
 
 interface uk.co.aosd.onto.foundation.Attribute {
-	{method}  {abstract} +individual () : uk.co.aosd.onto.foundation.Individual
-	{method}  {abstract} +property () : Object
+	{method}  {abstract} +getIndividual () : uk.co.aosd.onto.foundation.Individual
+	{method}  {abstract} +getProperty () : Object
 }
 
 
 interface uk.co.aosd.onto.foundation.Class {
-	{method}  {abstract} +members () : java.util.Set
+	{method}  {abstract} +getMembers () : java.util.Set
 }
 
 
@@ -48,9 +48,9 @@ interface uk.co.aosd.onto.foundation.Event {
 
 
 interface uk.co.aosd.onto.foundation.EventBounded {
-	{method}  {abstract} +beginning () : uk.co.aosd.onto.foundation.Event
-	{method}  {abstract} +ending () : uk.co.aosd.onto.foundation.Event
 	{method} +ensureValid ( paramEvent1 : uk.co.aosd.onto.foundation.Event , paramEvent2 : uk.co.aosd.onto.foundation.Event ) : void
+	{method}  {abstract} +getBeginning () : uk.co.aosd.onto.foundation.Event
+	{method}  {abstract} +getEnding () : uk.co.aosd.onto.foundation.Event
 	{method} +range () : java.util.Optional
 }
 
@@ -60,17 +60,17 @@ interface uk.co.aosd.onto.foundation.Individual {
 
 
 interface uk.co.aosd.onto.foundation.PossibleWorld {
-	{method}  {abstract} +parts () : java.util.Set
+	{method}  {abstract} +getParts () : java.util.Set
 }
 
 
 interface uk.co.aosd.onto.foundation.Property {
-	{method}  {abstract} +property () : Object
+	{method}  {abstract} +getProperty () : Object
 }
 
 
 interface uk.co.aosd.onto.foundation.Role {
-	{method}  {abstract} +name () : String
+	{method}  {abstract} +getName () : String
 }
 
 
@@ -83,13 +83,13 @@ interface uk.co.aosd.onto.foundation.ScalarProperty {
 
 
 interface uk.co.aosd.onto.foundation.ScalarValue {
-	{method}  {abstract} +unit () : uk.co.aosd.onto.foundation.Unit
-	{method}  {abstract} +value () : Number
+	{method}  {abstract} +getUnit () : uk.co.aosd.onto.foundation.Unit
+	{method}  {abstract} +getValue () : Number
 }
 
 
 interface uk.co.aosd.onto.foundation.State {
-	{method}  {abstract} +individual () : uk.co.aosd.onto.foundation.Individual
+	{method}  {abstract} +getIndividual () : uk.co.aosd.onto.foundation.Individual
 }
 
 
@@ -97,38 +97,38 @@ interface uk.co.aosd.onto.foundation.TimePeriod {
 	{method} +duration () : java.util.Optional
 	{method}  {static} +durationBetween ( paramInstant1 : java.time.Instant , paramInstant2 : java.time.Instant ) : java.util.Optional
 	{method} +ensureValid ( paramInstant1 : java.time.Instant , paramInstant2 : java.time.Instant ) : void
-	{method}  {abstract} +from () : java.time.Instant
-	{method}  {abstract} +to () : java.time.Instant
+	{method}  {abstract} +getFrom () : java.time.Instant
+	{method}  {abstract} +getTo () : java.time.Instant
 }
 
 
 interface uk.co.aosd.onto.foundation.UniquelyIdentifiable {
-	{method}  {abstract} +identifier () : String
+	{method}  {abstract} +getIdentifier () : String
 }
 
 
 interface uk.co.aosd.onto.foundation.Unit {
-	{method}  {abstract} +abbreviation () : String
-	{method}  {abstract} +name () : String
+	{method}  {abstract} +getAbbreviation () : String
+	{method}  {abstract} +getName () : String
 }
 
 
 interface uk.co.aosd.onto.language.Language {
-	{method}  {abstract} +name () : String
+	{method}  {abstract} +getName () : String
 }
 
 
 interface uk.co.aosd.onto.model.Model {
 	{method}  {abstract} +add ( paramUniquelyIdentifiable1 : uk.co.aosd.onto.foundation.UniquelyIdentifiable ) : void
 	{method}  {abstract} +getThing ( paramString1 : String ) : java.util.Optional
-	{method}  {abstract} +things () : java.util.Set
+	{method}  {abstract} +getThings () : java.util.Set
 }
 
 
 interface uk.co.aosd.onto.money.Currency {
-	{method}  {abstract} +abbreviation () : String
-	{method}  {abstract} +name () : String
-	{method}  {abstract} +symbol () : char
+	{method}  {abstract} +getAbbreviation () : String
+	{method}  {abstract} +getName () : String
+	{method}  {abstract} +getSymbol () : char
 }
 
 
@@ -137,39 +137,39 @@ interface uk.co.aosd.onto.money.MonetaryValue {
 
 
 interface uk.co.aosd.onto.money.ValuedAsset {
-	{method}  {abstract} +value () : uk.co.aosd.onto.money.MonetaryValue
+	{method}  {abstract} +getValue () : uk.co.aosd.onto.money.MonetaryValue
 }
 
 
 interface uk.co.aosd.onto.organisation.Employment {
-	{method}  {abstract} +contract () : Object
-	{method}  {abstract} +employee () : uk.co.aosd.onto.biological.Human
-	{method}  {abstract} +employer () : uk.co.aosd.onto.organisation.Organisation
+	{method}  {abstract} +getContract () : Object
+	{method}  {abstract} +getEmployee () : uk.co.aosd.onto.biological.Human
+	{method}  {abstract} +getEmployer () : uk.co.aosd.onto.organisation.Organisation
 }
 
 
 interface uk.co.aosd.onto.organisation.Membership {
-	{method}  {abstract} +member () : uk.co.aosd.onto.biological.Human
-	{method}  {abstract} +role () : uk.co.aosd.onto.foundation.Role
+	{method}  {abstract} +getMember () : uk.co.aosd.onto.biological.Human
+	{method}  {abstract} +getRole () : uk.co.aosd.onto.foundation.Role
 }
 
 
 interface uk.co.aosd.onto.organisation.Organisation {
-	{method}  {abstract} +members () : uk.co.aosd.onto.foundation.Class
-	{method}  {abstract} +purpose () : String
-	{method}  {abstract} +units () : uk.co.aosd.onto.foundation.Class
+	{method}  {abstract} +getMembers () : uk.co.aosd.onto.foundation.Class
+	{method}  {abstract} +getPurpose () : String
+	{method}  {abstract} +getUnits () : uk.co.aosd.onto.foundation.Class
 }
 
 
 interface uk.co.aosd.onto.ownership.Owning {
-	{method}  {abstract} +owned () : uk.co.aosd.onto.foundation.Individual
-	{method}  {abstract} +owner () : uk.co.aosd.onto.foundation.Individual
+	{method}  {abstract} +getOwned () : uk.co.aosd.onto.foundation.Individual
+	{method}  {abstract} +getOwner () : uk.co.aosd.onto.foundation.Individual
 }
 
 
 interface uk.co.aosd.onto.ownership.TransferringOfOwnership {
-	{method}  {abstract} +from () : uk.co.aosd.onto.ownership.Owning
-	{method}  {abstract} +to () : uk.co.aosd.onto.ownership.Owning
+	{method}  {abstract} +getFrom () : uk.co.aosd.onto.ownership.Owning
+	{method}  {abstract} +getTo () : uk.co.aosd.onto.ownership.Owning
 }
 
 
@@ -195,20 +195,20 @@ interface uk.co.aosd.onto.services.OntologyServices {
 
 
 interface uk.co.aosd.onto.signifying.Named {
-	{method}  {abstract} +names () : uk.co.aosd.onto.foundation.Class
+	{method}  {abstract} +getNames () : uk.co.aosd.onto.foundation.Class
 }
 
 
 interface uk.co.aosd.onto.signifying.Signifier {
-	{method}  {abstract} +language () : uk.co.aosd.onto.language.Language
-	{method}  {abstract} +name () : Object
+	{method}  {abstract} +getLanguage () : uk.co.aosd.onto.language.Language
+	{method}  {abstract} +getName () : Object
 }
 
 
 interface uk.co.aosd.onto.signifying.Signifying {
-	{method}  {abstract} +language () : uk.co.aosd.onto.language.Language
-	{method}  {abstract} +name () : Object
-	{method}  {abstract} +named () : uk.co.aosd.onto.foundation.UniquelyIdentifiable
+	{method}  {abstract} +getLanguage () : uk.co.aosd.onto.language.Language
+	{method}  {abstract} +getName () : Object
+	{method}  {abstract} +getNamed () : uk.co.aosd.onto.foundation.UniquelyIdentifiable
 }
 
 
@@ -221,13 +221,6 @@ class uk.co.aosd.onto.units.Units$Dollars {
 	{field} -identifier : String
 	{field} -name : String
 	{field} -symbol : char
-	{method} +abbreviation () : String
-	{method} +equals ( paramObject1 : Object ) : boolean
-	{method} +hashCode () : int
-	{method} +identifier () : String
-	{method} +name () : String
-	{method} +symbol () : char
-	{method} +toString () : String
 }
 
 
@@ -236,13 +229,6 @@ class uk.co.aosd.onto.units.Units$Euros {
 	{field} -identifier : String
 	{field} -name : String
 	{field} -symbol : char
-	{method} +abbreviation () : String
-	{method} +equals ( paramObject1 : Object ) : boolean
-	{method} +hashCode () : int
-	{method} +identifier () : String
-	{method} +name () : String
-	{method} +symbol () : char
-	{method} +toString () : String
 }
 
 
@@ -250,12 +236,6 @@ class uk.co.aosd.onto.units.Units$Kilograms {
 	{field} -abbreviation : String
 	{field} -identifier : String
 	{field} -name : String
-	{method} +abbreviation () : String
-	{method} +equals ( paramObject1 : Object ) : boolean
-	{method} +hashCode () : int
-	{method} +identifier () : String
-	{method} +name () : String
-	{method} +toString () : String
 }
 
 
@@ -263,12 +243,6 @@ class uk.co.aosd.onto.units.Units$Meters {
 	{field} -abbreviation : String
 	{field} -identifier : String
 	{field} -name : String
-	{method} +abbreviation () : String
-	{method} +equals ( paramObject1 : Object ) : boolean
-	{method} +hashCode () : int
-	{method} +identifier () : String
-	{method} +name () : String
-	{method} +toString () : String
 }
 
 
@@ -277,13 +251,6 @@ class uk.co.aosd.onto.units.Units$PoundsSterling {
 	{field} -identifier : String
 	{field} -name : String
 	{field} -symbol : char
-	{method} +abbreviation () : String
-	{method} +equals ( paramObject1 : Object ) : boolean
-	{method} +hashCode () : int
-	{method} +identifier () : String
-	{method} +name () : String
-	{method} +symbol () : char
-	{method} +toString () : String
 }
 
 
@@ -291,12 +258,6 @@ class uk.co.aosd.onto.units.Units$Seconds {
 	{field} -abbreviation : String
 	{field} -identifier : String
 	{field} -name : String
-	{method} +abbreviation () : String
-	{method} +equals ( paramObject1 : Object ) : boolean
-	{method} +hashCode () : int
-	{method} +identifier () : String
-	{method} +name () : String
-	{method} +toString () : String
 }
 
 

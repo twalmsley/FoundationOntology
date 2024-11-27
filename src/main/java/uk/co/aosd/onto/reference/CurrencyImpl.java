@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.reference;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uk.co.aosd.onto.money.Currency;
 
 /**
@@ -7,6 +10,12 @@ import uk.co.aosd.onto.money.Currency;
  *
  * @author Tony Walmsley
  */
-public record CurrencyImpl(String identifier, String abbreviation, String name, char symbol) implements Currency {
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class CurrencyImpl implements Currency {
+    private String identifier;
+    private String abbreviation;
+    private String name;
+    private char symbol;
 }

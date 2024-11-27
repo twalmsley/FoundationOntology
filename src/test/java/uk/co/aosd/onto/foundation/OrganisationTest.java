@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import uk.co.aosd.onto.biological.DNA;
 import uk.co.aosd.onto.organisation.Organisation;
@@ -111,5 +114,10 @@ public class OrganisationTest {
     }
 }
 
-record CeoRole(String identifier, String name) implements Role {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class CeoRole implements Role {
+    String identifier;
+    String name;
 }

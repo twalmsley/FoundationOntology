@@ -11,9 +11,9 @@ import uk.co.aosd.onto.util.Range;
  * @author Tony Walmsley
  */
 public interface EventBounded<B extends Event, E extends Event> {
-    B beginning();
+    B getBeginning();
 
-    E ending();
+    E getEnding();
 
     /**
      * Calculate the minimum and maximum durations between two events. The minimum
@@ -24,8 +24,8 @@ public interface EventBounded<B extends Event, E extends Event> {
      * @return Optional Range
      */
     default Optional<Range<Duration>> range() {
-        final var min = TimePeriod.durationBetween(beginning().to(), ending().from());
-        final var max = TimePeriod.durationBetween(beginning().from(), ending().to());
+        final var min = TimePeriod.durationBetween(getBeginning().getTo(), getEnding().getFrom());
+        final var max = TimePeriod.durationBetween(getBeginning().getFrom(), getEnding().getTo());
 
         if (min.isPresent() && max.isPresent()) {
             return Optional.of(new Range<>(min.get(), max.get()));
@@ -37,7 +37,7 @@ public interface EventBounded<B extends Event, E extends Event> {
      * Check that the from and to Instants are in the right order.
      */
     default void ensureValid(B start, E end) {
-        if (start.from() != null && end.from() != null && !(start.from().isBefore(end.from()) || start.from().equals(end.from()))) {
+        if (start.getFrom() != null && end.getFrom() != null && !(start.getFrom().isBefore(end.getFrom()) || start.getFrom().equals(end.getFrom()))) {
             throw new RuntimeException("EventBounded: from must be before to.");
         }
     }

@@ -6,7 +6,7 @@ package uk.co.aosd.onto.foundation;
  * @author Tony Walmsley
  */
 public interface ScalarValue<T extends Number, U extends Unit> {
-    T value();
+    T getValue();
 
-    U unit();
+    U getUnit();
 }

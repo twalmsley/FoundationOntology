@@ -11,9 +11,9 @@ import java.util.Optional;
  * @author Tony Walmsley
  */
 public interface TimePeriod {
-    Instant from();
+    Instant getFrom();
 
-    Instant to();
+    Instant getTo();
 
     /**
      * A default calculation of the duration between the beginning and ending
@@ -22,7 +22,7 @@ public interface TimePeriod {
      * @return Duration
      */
     default Optional<Duration> duration() {
-        return durationBetween(from(), to());
+        return durationBetween(getFrom(), getTo());
     }
 
     /**

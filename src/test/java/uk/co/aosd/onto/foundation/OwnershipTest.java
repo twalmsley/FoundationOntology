@@ -76,27 +76,27 @@ public class OwnershipTest {
 
         assertEquals(transfer, transfer2);
 
-        assertSame(NOV_11TH_2024_START, transfer.beginning().from());
-        assertSame(NOV_11TH_2024_START, transfer.beginning().to());
-        assertSame(NOV_11TH_2024_MIDDAY, transfer.ending().from());
-        assertSame(NOV_11TH_2024_MIDDAY, transfer.ending().to());
+        assertSame(NOV_11TH_2024_START, transfer.getBeginning().getFrom());
+        assertSame(NOV_11TH_2024_START, transfer.getBeginning().getTo());
+        assertSame(NOV_11TH_2024_MIDDAY, transfer.getEnding().getFrom());
+        assertSame(NOV_11TH_2024_MIDDAY, transfer.getEnding().getTo());
 
-        assertSame(aliceOwnsCar.identifier(), transfer.from().identifier());
-        assertSame(aliceOwnsCar.actionsDescription(), transfer.from().actionsDescription());
-        assertSame(alice, transfer.from().owner());
-        assertSame(car, transfer.from().owned());
-        assertSame(aliceOwnsCar.beginning(), transfer.from().beginning());
-        assertSame(transferActivityEnds.from(), transfer.from().ending().from());
-        assertSame(transferActivityEnds.to(), transfer.from().ending().to());
+        assertSame(aliceOwnsCar.getIdentifier(), transfer.getFrom().getIdentifier());
+        assertSame(aliceOwnsCar.getActionsDescription(), transfer.getFrom().getActionsDescription());
+        assertSame(alice, transfer.getFrom().getOwner());
+        assertSame(car, transfer.getFrom().getOwned());
+        assertSame(aliceOwnsCar.getBeginning(), transfer.getFrom().getBeginning());
+        assertSame(transferActivityEnds.getFrom(), transfer.getFrom().getEnding().getFrom());
+        assertSame(transferActivityEnds.getTo(), transfer.getFrom().getEnding().getTo());
 
-        assertSame("carSoldToBob", transfer.to().identifier());
-        assertSame("Car Sold", transfer.to().actionsDescription());
-        assertSame(bob, transfer.to().owner());
-        assertSame(car, transfer.to().owned());
-        assertSame(transferActivityBegins.from(), transfer.to().beginning().from());
-        assertSame(transferActivityBegins.to(), transfer.to().beginning().to());
-        assertNull(transfer.to().ending().to());
-        assertNull(transfer.to().ending().to());
+        assertSame("carSoldToBob", transfer.getTo().getIdentifier());
+        assertSame("Car Sold", transfer.getTo().getActionsDescription());
+        assertSame(bob, transfer.getTo().getOwner());
+        assertSame(car, transfer.getTo().getOwned());
+        assertSame(transferActivityBegins.getFrom(), transfer.getTo().getBeginning().getFrom());
+        assertSame(transferActivityBegins.getTo(), transfer.getTo().getBeginning().getTo());
+        assertNull(transfer.getTo().getEnding().getTo());
+        assertNull(transfer.getTo().getEnding().getTo());
     }
 
     private Car getCar() {

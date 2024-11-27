@@ -6,5 +6,5 @@ package uk.co.aosd.onto.foundation;
  * @author Tony Walmsley
  */
 public interface UniquelyIdentifiable {
-    String identifier();
+    String getIdentifier();
 }
