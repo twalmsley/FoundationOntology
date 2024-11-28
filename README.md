@@ -2,6 +2,10 @@
 
 This library is a work-in-progress to define a Top Level Ontology in Java that is compatible with [HQDM](https://github.com/hqdmTop/hqdmFramework) and easier for developers to use than [MagmaCore](https://github.com/gchq/MagmaCore). Only time will tell if this will be successful.
 
+The library defines a set of interfaces that can be implemented in other libraries to provide features such as persistence. Currently the following libraries exist:
+- [FoundationOntologyMem](https://github.com/twalmsley/FoundationOntologyMem) which is an in-memory implemenation useful for testing and experimentation.
+- [FoundationOntologyJpa](https://github.com/twalmsley/FoundationOntologyJPA) which is a Java Persistence API implemenation for use with a relational database.
+
 **Note: For the moment the focus will be on the foundation package and the other packages will be developed fully later.**
 
 See [this blog post](https://twalmsley.github.io/blog1/blog1.html) for a discussion of HQDM and [this blog post](https://twalmsley.github.io/blog2/blog2.html) for the background to this library.
@@ -37,10 +41,6 @@ A representation of the ownership of things.
 ## Signifying
 
 Models the representation of things by signs.
-
-## Reference
-
-A set of Java Records implementing most of the interfaces. These implementations can be used in applications or other implementations can be developed and used instead.
 
 ## Units
 
