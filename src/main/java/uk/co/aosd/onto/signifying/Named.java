@@ -1,5 +1,6 @@
 package uk.co.aosd.onto.signifying;
 
+import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.foundation.Class;
 
 /**
@@ -7,7 +8,7 @@ import uk.co.aosd.onto.foundation.Class;
  *
  * @author Tony Walmsley
  */
-public interface Named {
+public interface Named<T extends Resignified> {
 
-    Class<Signifier<String>> getNames();
+    Class<Signifier<String, T>> getNames();
 }

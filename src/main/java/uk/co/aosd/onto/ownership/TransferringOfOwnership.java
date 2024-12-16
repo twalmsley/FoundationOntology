@@ -10,9 +10,10 @@ import uk.co.aosd.onto.foundation.Event;
  *
  * @author Tony Walmsley
  */
-public interface TransferringOfOwnership<A extends Event, B extends Event, C extends Event, D extends Event> extends Activity<TransferredFrom, TransferredTo> {
+public interface TransferringOfOwnership<A extends Event, B extends Event, C extends Event, D extends Event, T extends TransferredFrom, U extends TransferredTo>
+    extends Activity<T, U> {
 
-    Owning<A, B, C, D> getFrom();
+    Owning<A, B, C, D, T, U> getFrom();
 
-    Owning<A, B, C, D> getTo();
+    Owning<A, B, C, D, T, U> getTo();
 }

@@ -9,7 +9,7 @@ import uk.co.aosd.onto.foundation.Individual;
  *
  * @author Tony Walmsley
  */
-public interface GenomicBiologicalEntity extends Individual<Birth, Death> {
+public interface GenomicBiologicalEntity<T extends Birth, U extends Death> extends Individual<T, U> {
 
     /**
      * DNA is a distinguishing feature of living things, whether it is known or not.

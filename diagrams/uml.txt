@@ -173,27 +173,6 @@ interface uk.co.aosd.onto.ownership.TransferringOfOwnership {
 }
 
 
-interface uk.co.aosd.onto.services.OntologyServices {
-	{method}  {abstract} +createAgglomerate ( paramString1 : String , paramSet2 : java.util.Set , paramAggregated3 : uk.co.aosd.onto.events.Aggregated , paramDisaggregated4 : uk.co.aosd.onto.events.Disaggregated ) : uk.co.aosd.onto.foundation.Agglomerate
-	{method}  {abstract} +createAggregate ( paramString1 : String , paramClass2 : Class , paramScalarValue3 : uk.co.aosd.onto.foundation.ScalarValue , paramAggregated4 : uk.co.aosd.onto.events.Aggregated , paramDisaggregated5 : uk.co.aosd.onto.events.Disaggregated ) : uk.co.aosd.onto.foundation.Aggregate
-	{method}  {abstract} +createClass ( paramString1 : String , paramSet2 : java.util.Set ) : uk.co.aosd.onto.foundation.Class
-	{method}  {abstract} +createCurrency ( paramString1 : String , paramString2 : String , paramString3 : String , paramchar4 : char ) : uk.co.aosd.onto.money.Currency
-	{method}  {abstract} +createDna ( paramString1 : String , paramString2 : String ) : uk.co.aosd.onto.biological.DNA
-	{method}  {abstract} +createHuman ( paramString1 : String , paramBirth2 : uk.co.aosd.onto.events.Birth , paramDeath3 : uk.co.aosd.onto.events.Death , paramClass4 : uk.co.aosd.onto.foundation.Class , paramLanguage5 : uk.co.aosd.onto.language.Language , paramClass6 : uk.co.aosd.onto.foundation.Class , paramDNA7 : uk.co.aosd.onto.biological.DNA ) : uk.co.aosd.onto.biological.Human
-	{method}  {abstract} +createLanguage ( paramString1 : String , paramString2 : String ) : uk.co.aosd.onto.language.Language
-	{method}  {abstract} +createMembership ( paramString1 : String , paramHuman2 : uk.co.aosd.onto.biological.Human , paramRole3 : uk.co.aosd.onto.foundation.Role , paramAppointed4 : uk.co.aosd.onto.events.Appointed , paramRemoved5 : uk.co.aosd.onto.events.Removed ) : uk.co.aosd.onto.organisation.Membership
-	{method}  {abstract} +createModel ( paramString1 : String ) : uk.co.aosd.onto.model.Model
-	{method}  {abstract} +createMonetaryValue ( paramDecimal3f1 : org.decimal4j.immutable.Decimal3f , paramCurrency2 : uk.co.aosd.onto.money.Currency ) : uk.co.aosd.onto.money.MonetaryValue
-	{method}  {abstract} +createOrganisation ( paramString1 : String , paramClass2 : uk.co.aosd.onto.foundation.Class , paramString3 : String , paramClass4 : uk.co.aosd.onto.foundation.Class , paramClass5 : uk.co.aosd.onto.foundation.Class , paramFormed6 : uk.co.aosd.onto.events.Formed , paramDissolved7 : uk.co.aosd.onto.events.Dissolved ) : uk.co.aosd.onto.organisation.Organisation
-	{method}  {abstract} +createOwnership ( paramString1 : String , paramString2 : String , paramIndividual3 : uk.co.aosd.onto.foundation.Individual , paramIndividual4 : uk.co.aosd.onto.foundation.Individual , paramTransferredFrom5 : uk.co.aosd.onto.events.TransferredFrom , paramTransferredTo6 : uk.co.aosd.onto.events.TransferredTo ) : uk.co.aosd.onto.ownership.Owning
-	{method}  {abstract} +createPossibleWorld ( paramString1 : String , paramSet2 : java.util.Set , paramCreated3 : uk.co.aosd.onto.events.Created , paramDeleted4 : uk.co.aosd.onto.events.Deleted ) : uk.co.aosd.onto.foundation.PossibleWorld
-	{method}  {abstract} +createScalarValue ( paramNumber1 : Number , paramUnit2 : uk.co.aosd.onto.foundation.Unit ) : uk.co.aosd.onto.foundation.ScalarValue
-	{method}  {abstract} +createSignifier ( paramString1 : String , paramObject2 : Object , paramLanguage3 : uk.co.aosd.onto.language.Language , paramResignified4 : uk.co.aosd.onto.events.Resignified , paramResignified5 : uk.co.aosd.onto.events.Resignified ) : uk.co.aosd.onto.signifying.Signifier
-	{method}  {abstract} +createState ( paramString1 : String , paramIndividual2 : uk.co.aosd.onto.foundation.Individual , paramEvent3 : uk.co.aosd.onto.foundation.Event , paramEvent4 : uk.co.aosd.onto.foundation.Event ) : uk.co.aosd.onto.foundation.State
-	{method}  {abstract} +transferOwnership ( paramString1 : String , paramString2 : String , paramOwning3 : uk.co.aosd.onto.ownership.Owning , paramIndividual4 : uk.co.aosd.onto.foundation.Individual , paramStarted5 : uk.co.aosd.onto.events.Started , paramStopped6 : uk.co.aosd.onto.events.Stopped ) : uk.co.aosd.onto.ownership.TransferringOfOwnership
-}
-
-
 interface uk.co.aosd.onto.signifying.Named {
 	{method}  {abstract} +getNames () : uk.co.aosd.onto.foundation.Class
 }

@@ -10,7 +10,7 @@ import uk.co.aosd.onto.language.Language;
  *
  * @author Tony Walmsley
  */
-public interface Signifying<V> extends Activity<Resignified, Resignified> {
+public interface Signifying<V, T extends Resignified> extends Activity<T, T> {
     V getName();
 
     UniquelyIdentifiable getNamed();

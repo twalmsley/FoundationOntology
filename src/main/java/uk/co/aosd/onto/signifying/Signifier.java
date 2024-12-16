@@ -9,7 +9,7 @@ import uk.co.aosd.onto.language.Language;
  *
  * @author Tony Walmsley
  */
-public interface Signifier<V> extends Individual<Resignified, Resignified> {
+public interface Signifier<V, T extends Resignified> extends Individual<T, T> {
     V getName();
 
     Language getLanguage();

@@ -9,7 +9,7 @@ import uk.co.aosd.onto.events.Disaggregated;
  *
  * @author Tony Walmsley
  */
-public interface Aggregate<N extends Number, U extends Unit, T> extends Individual<Aggregated, Disaggregated> {
+public interface Aggregate<N extends Number, U extends Unit, T, V extends Aggregated, W extends Disaggregated> extends Individual<V, W> {
     ScalarValue<N, U> getQuantity();
 
     /**

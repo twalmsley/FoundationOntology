@@ -1,5 +1,8 @@
 package uk.co.aosd.onto.biological;
 
+import uk.co.aosd.onto.events.Birth;
+import uk.co.aosd.onto.events.Death;
+import uk.co.aosd.onto.events.Resignified;
 import uk.co.aosd.onto.foundation.Class;
 import uk.co.aosd.onto.language.Language;
 import uk.co.aosd.onto.signifying.Named;
@@ -9,9 +12,9 @@ import uk.co.aosd.onto.signifying.Named;
  *
  * @author Tony Walmsley
  */
-public interface Human extends Named, GenomicBiologicalEntity {
+public interface Human<T extends Birth, U extends Death, V extends Resignified, L extends Language> extends Named<V>, GenomicBiologicalEntity<T, U> {
 
-    Language getNativeLanguage();
+    L getNativeLanguage();
 
-    Class<Language> getLanguages();
+    Class<L> getLanguages();
 }
