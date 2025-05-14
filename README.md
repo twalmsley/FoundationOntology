@@ -21,6 +21,36 @@ Key architectural principles:
 - **Temporal awareness**: Most entities have a beginning and ending in time
 - **Unique identification**: All entities have a unique identifier
 - **Composability**: Complex entities can be built from simpler ones
+- **Factory pattern**: Entity creation is abstracted through factory interfaces
+
+### Core Design Patterns
+
+The ontology uses several design patterns to promote good software engineering practices:
+
+1. **Factory Pattern**: The `OntologyFactory` interface provides a standard way to create ontology entities without exposing implementation details. This allows different implementations (memory-based, JPA-based, etc.) to be used interchangeably.
+
+2. **Interface Segregation**: The ontology is composed of small, focused interfaces that can be combined to create more complex behaviors.
+
+3. **Temporal Modeling**: Entities exist in time and are bounded by events that mark their beginning and end.
+
+4. **Composition over Inheritance**: The design favors composition of interfaces over deep class hierarchies.
+
+### Project Structure
+
+```
+src/main/java/uk/co/aosd/onto/
+├── foundation/       # Core ontology interfaces
+├── biological/       # Biological entity interfaces
+├── events/           # Specific event type interfaces
+├── language/         # Language representation interfaces
+├── model/            # Model interfaces for knowledge representation
+├── money/            # Monetary value interfaces
+├── organisation/     # Organisation structure interfaces
+├── ownership/        # Ownership representation interfaces
+├── signifying/       # Sign and signification interfaces
+├── units/            # Unit interfaces for measurements
+└── util/             # Utility interfaces and classes
+```
 
 ## Getting Started
 
@@ -80,6 +110,69 @@ model.add(deathEvent);
 model.add(person);
 ```
 
+### Using the Factory Pattern
+
+The recommended approach is to use the factory pattern, which provides better abstraction and flexibility:
+
+```java
+// Create a factory instance
+OntologyFactory factory = new SimpleOntologyFactory();
+
+// Create a model using the factory
+Model model = factory.createModel("factory-example-model");
+
+// Create events
+Event birthEvent = factory.createEvent("birth-event", 
+        Instant.parse("2023-01-01T00:00:00Z"), 
+        Instant.parse("2023-01-01T00:01:00Z"));
+
+Event deathEvent = factory.createEvent("death-event", 
+        Instant.parse("2023-12-31T23:59:00Z"), 
+        Instant.parse("2023-12-31T23:59:59Z"));
+
+// Create an individual bounded by these events
+Individual<? extends Event, ? extends Event> person = 
+        factory.createIndividual("person-1", birthEvent, deathEvent);
+
+// Add everything to the model
+model.add(birthEvent);
+model.add(deathEvent);
+model.add(person);
+```
+
+### Working with Possible Worlds
+
+Possible Worlds represent different scenarios or models of reality:
+
+```java
+// Create events for a possible world
+Created worldCreation = factory.createCreatedEvent("world-creation", 
+        Instant.parse("2022-01-01T00:00:00Z"), 
+        Instant.parse("2022-01-01T00:01:00Z"));
+
+Deleted worldDeletion = factory.createDeletedEvent("world-deletion", 
+        Instant.parse("2024-12-31T23:59:00Z"), 
+        Instant.parse("2024-12-31T23:59:59Z"));
+
+// Create a possible world
+PossibleWorld<? extends Created, ? extends Deleted> possibleWorld = 
+        factory.createPossibleWorld("scenario-1", worldCreation, worldDeletion);
+
+// Add individuals to the possible world
+// This would depend on your implementation of PossibleWorld
+```
+
+## Example Classes
+
+The project includes several example implementations to demonstrate how to use the ontology:
+
+1. **SimpleModelExample**: Shows basic usage of the core interfaces.
+2. **PossibleWorldExample**: Demonstrates how to create and use possible worlds.
+3. **SimpleOntologyFactory**: Provides an in-memory implementation of the factory pattern.
+4. **FactoryExample**: Shows how to use the factory pattern to create and manipulate entities.
+
+These examples can be found in the `src/test/java/uk/co/aosd/onto/examples` directory.
+
 ## Getting Involved
 
 Feel free to raise issues, but it will be best to start a discussion first then issues can be raised once a discussion has progressed far enough to draw some concrete conclusions.
@@ -97,6 +190,7 @@ Key interfaces include:
 - `TimePeriod` - Represents something with a beginning and end in time
 - `Class` - Represents a set of objects of a particular type
 - `PossibleWorld` - Represents a complete way the world is or could have been
+- `EventBounded` - Represents entities bounded by beginning and ending events
 
 ## Biological
 
@@ -121,3 +215,19 @@ Models the representation of things by signs.
 ## Units
 
 Defines some standard units for ScalarValues and MonetaryValues.
+
+## Events
+
+Contains specialized event types that represent specific kinds of occurrences, such as:
+- `Created` - When something comes into existence
+- `Deleted` - When something ceases to exist
+- `Birth` - The beginning of a biological organism
+- `Death` - The ending of a biological organism
+- `Started` - When an activity begins
+- `Stopped` - When an activity ends
+
+## Util
+
+Utility interfaces and classes that support the ontology, including:
+- `Range` - Represents uncertainty over some value
+- `OntologyFactory` - Factory interface for creating ontology entities
