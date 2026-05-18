@@ -239,6 +239,20 @@ class uk.co.aosd.onto.units.Units$Meters {
 }
 
 
+class uk.co.aosd.onto.units.Units$Minutes {
+	{field} -abbreviation : String
+	{field} -identifier : String
+	{field} -name : String
+}
+
+
+class uk.co.aosd.onto.units.Units$Natural {
+	{field} -abbreviation : String
+	{field} -identifier : String
+	{field} -name : String
+}
+
+
 class uk.co.aosd.onto.units.Units$PoundsSterling {
 	{field} -abbreviation : String
 	{field} -identifier : String
@@ -296,12 +310,16 @@ uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Dollars : DOLLARS
 uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Euros : EUROS
 uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Kilograms : KILOGRAMS
 uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Meters : METERS
+uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Minutes : MINUTES
+uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Natural : NATURAL
 uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$PoundsSterling : POUNDS_STERLING
 uk.co.aosd.onto.units.Units *--  uk.co.aosd.onto.units.Units$Seconds : SECONDS
 uk.co.aosd.onto.units.Units$Dollars ..|>  uk.co.aosd.onto.money.Currency
 uk.co.aosd.onto.units.Units$Euros ..|>  uk.co.aosd.onto.money.Currency
 uk.co.aosd.onto.units.Units$Kilograms ..|>  uk.co.aosd.onto.foundation.Unit
 uk.co.aosd.onto.units.Units$Meters ..|>  uk.co.aosd.onto.foundation.Unit
+uk.co.aosd.onto.units.Units$Minutes ..|>  uk.co.aosd.onto.foundation.Unit
+uk.co.aosd.onto.units.Units$Natural ..|>  uk.co.aosd.onto.foundation.Unit
 uk.co.aosd.onto.units.Units$PoundsSterling ..|>  uk.co.aosd.onto.money.Currency
 uk.co.aosd.onto.units.Units$Seconds ..|>  uk.co.aosd.onto.foundation.Unit
 

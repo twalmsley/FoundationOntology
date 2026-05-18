@@ -15,6 +15,8 @@ public interface Units {
     static final Kilograms KILOGRAMS = new Kilograms("KilogramUnits", "Kilograms", "kg");
     static final Meters METERS = new Meters("MetersUnits", "Meters", "m");
     static final Seconds SECONDS = new Seconds("SecondsTimeUnit", "Seconds", "s");
+    static final Minutes MINUTES = new Minutes("MinutesTimeUnit", "Minutes", "min");
+    static final Natural NATURAL = new Natural("NaturalNumbers", "Naturals", "ℕ");
 
     static final Dollars DOLLARS = new Dollars("USDollars", "United States Dollar", "USD", '$');
     static final Euros EUROS = new Euros("Euros", "Euros", "EUR", '€');
@@ -51,6 +53,30 @@ public interface Units {
     @NoArgsConstructor
     @Getter
     static class Seconds implements Unit {
+        private String identifier;
+        private String name;
+        private String abbreviation;
+    }
+
+    /**
+     * Minutes.
+     */
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    static class Minutes implements Unit {
+        private String identifier;
+        private String name;
+        private String abbreviation;
+    }
+
+    /**
+     * Naturals.
+     */
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    static class Natural implements Unit {
         private String identifier;
         private String name;
         private String abbreviation;
