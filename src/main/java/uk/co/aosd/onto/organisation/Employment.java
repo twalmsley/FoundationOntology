@@ -21,7 +21,7 @@ public interface Employment<C, T extends Appointed, U extends Removed, V extends
 
     Human<Y, Z, X, L> getEmployee();
 
-    Organisation<V, W, X> getEmployer();
+    Organisation<V, W, X, L> getEmployer();
 
     C getContract();
 }

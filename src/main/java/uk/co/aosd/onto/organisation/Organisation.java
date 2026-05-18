@@ -3,16 +3,16 @@ package uk.co.aosd.onto.organisation;
 import uk.co.aosd.onto.events.Dissolved;
 import uk.co.aosd.onto.events.Formed;
 import uk.co.aosd.onto.events.Resignified;
+import uk.co.aosd.onto.foundation.Agent;
 import uk.co.aosd.onto.foundation.Class;
-import uk.co.aosd.onto.foundation.Individual;
-import uk.co.aosd.onto.signifying.Named;
+import uk.co.aosd.onto.language.Language;
 
 /**
  * A represention of organisations.
  *
  * @author Tony Walmsley
  */
-public interface Organisation<T extends Formed, U extends Dissolved, V extends Resignified> extends Named<V>, Individual<T, U> {
+public interface Organisation<T extends Formed, U extends Dissolved, V extends Resignified, L extends Language> extends Agent<T, U, V, L> {
     /**
      * Organisations have a common purpose that distinguishes them from other
      * groupings of people.
@@ -33,5 +33,5 @@ public interface Organisation<T extends Formed, U extends Dissolved, V extends R
      *
      * @return Class of Organisation
      */
-    Class<? extends Organisation<T, U, V>> getUnits();
+    Class<? extends Organisation<T, U, V, L>> getUnits();
 }

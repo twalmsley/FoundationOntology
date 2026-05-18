@@ -1,7 +1,7 @@
 package uk.co.aosd.onto.foundation;
 
 /**
- * A numeric attribute of type U, a Number, which must have a particular unit V,
+ * A numeric attribute of type N, a Number, which must have a particular unit U,
  * that applies to an Individual.
  *
  * @author Tony Walmsley
