@@ -42,6 +42,16 @@ interface uk.co.aosd.onto.foundation.Attribute {
 }
 
 
+interface uk.co.aosd.onto.foundation.BooleanAttribute {
+}
+
+
+interface uk.co.aosd.onto.foundation.BooleanValue {
+	{method}  {abstract} +getUnit () : uk.co.aosd.onto.foundation.Unit
+	{method}  {abstract} +getValue () : Boolean
+}
+
+
 interface uk.co.aosd.onto.foundation.Class {
 	{method}  {abstract} +getMembers () : java.util.Set
 }
@@ -257,6 +267,7 @@ uk.co.aosd.onto.foundation.Agglomerate ..|>  uk.co.aosd.onto.foundation.Individu
 uk.co.aosd.onto.foundation.Aggregate ..|>  uk.co.aosd.onto.foundation.Individual
 uk.co.aosd.onto.foundation.Attribute ..|>  uk.co.aosd.onto.foundation.TimePeriod
 uk.co.aosd.onto.foundation.Attribute ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
+uk.co.aosd.onto.foundation.BooleanAttribute ..|>  uk.co.aosd.onto.foundation.Attribute
 uk.co.aosd.onto.foundation.Class ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
 uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.TimePeriod
 uk.co.aosd.onto.foundation.Event ..|>  uk.co.aosd.onto.foundation.UniquelyIdentifiable
